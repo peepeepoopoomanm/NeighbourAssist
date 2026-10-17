@@ -20,12 +20,15 @@ export const categories:{id:Category;label:string;summary:string;symbol:string}[
 
 export const questions:Record<string,Question>={
  f_urgent:{id:'f_urgent',title:'Do you need help with food or essentials very soon?',hint:'For example, you may not have enough money for meals or other essential needs over the next few days.',options:opt(['yes','Yes, I need help urgently'],['no','I can manage for now'],['unsure','I am not sure'])},
+ f_need:{id:'f_need',title:'Which everyday expense is most difficult for you right now?',hint:'Select a general category. We do not need any amounts or private details.',options:opt(['food','Food and groceries'],['utilities','Utilities or household bills'],['rent','Rent or housing expenses'],['living','General living costs'],['unsure','Something else / I am not sure'])},
  f_existing:{id:'f_existing',title:'Are you already receiving ComCare assistance?',hint:'It is okay if you do not know.',options:opt(['yes','Yes'],['no','No'],['unsure','I am not sure'])},
  f_duration:{id:'f_duration',title:'For how long might you need help?',options:opt(['short','For a short period'],['long','For a long time'],['unsure','I am not sure'])},
  f_work:{id:'f_work',title:'Which best describes your situation?',hint:'We will not ask for your income, CPF balance or bank details.',options:opt(['unable','I cannot work because of age, illness or disability'],['low','I work but still struggle with expenses'],['temporary','I am temporarily out of work or caring for someone'],['unsure','Something else / I am not sure'])},
  f_age:{id:'f_age',title:'Are you 65 years old or above?',hint:'This can help us show information about Silver Support. It does not determine eligibility.',options:opt(['yes','Yes'],['no','No'],['skip','Prefer not to say'])},
  h_type:{id:'h_type',title:'What kind of home do you currently live in?',options:opt(['public_rental','An HDB public rental flat'],['owner','An HDB flat that I own'],['private_rental','A privately rented home'],['unsure','I am not sure'])},
  h_goal:{id:'h_goal',title:'What housing problem would you like help with?',options:opt(['smaller','I want to move to a smaller, more affordable home'],['rent','I struggle to pay rent'],['tenancy','I need help with who is registered to live in the flat'],['other','Something else / I am not sure'])},
+ h_context:{id:'h_context',title:'Why would you like to move or change your housing arrangements?',hint:'No need to share addresses or sensitive family details.',options:opt(['alone','I live alone now and do not need so much space'],['cost','My current home is too expensive'],['mobility','I need a home that is easier to get around'],['other','Something else / I am not sure'])},
+ h_rent:{id:'h_rent',title:'What is the main difficulty with your rent?',options:opt(['ongoing','It is difficult to afford rent each month'],['arrears','I already have unpaid rent'],['change','My rent or household circumstances have changed'],['unsure','Something else / I am not sure'])},
  c_age:{id:'c_age',title:'Are you 55 years old or above?',options:opt(['yes','Yes'],['no','No'],['unsure','Prefer not to say / not sure'])},
  c_goal:{id:'c_goal',title:'What would you like to understand?',options:opt(['withdraw','Can I withdraw some CPF savings?'],['support','Are there government payments for seniors?'],['balance','How do I check my retirement savings or payout information?'],['unsure','I am not sure'])},
  m_type:{id:'m_type',title:'Which medical expense is worrying you?',options:opt(['clinic','GP or dental clinic visits'],['bill','Hospital or other medical bills I cannot afford'],['unsure','I am not sure'])},
@@ -55,8 +58,8 @@ export const services:Record<string,Service>={
 
 export function getQuestionIds(category:Category,answers:Answers):string[]{
  switch(category){
-  case 'financial':return answers.f_urgent==='yes'?['f_urgent','contact']:answers.f_existing==='yes'?['f_urgent','f_existing','contact']:['f_urgent','f_existing','f_duration','f_work','f_age','contact'];
-  case 'housing':return ['h_type','h_goal','contact'];
+  case 'financial':return answers.f_urgent==='yes'?['f_urgent','contact']:answers.f_existing==='yes'?['f_urgent','f_need','f_existing','contact']:['f_urgent','f_need','f_existing','f_duration','f_work','f_age','contact'];
+  case 'housing':return ['h_type','h_goal',...(answers.h_goal==='smaller'?['h_context']:answers.h_goal==='rent'?['h_rent']:[]),'contact'];
   case 'cpf':return ['c_age','c_goal','contact'];
   case 'health':return ['m_type','contact'];
   case 'municipal':return ['contact'];
