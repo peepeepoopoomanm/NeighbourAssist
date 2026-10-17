@@ -1,5 +1,5 @@
 import type {Question, Answers} from './engine';
-import {questionText, reasonText, situationText, type Language} from './i18n';
+import {questionText, reasonText, situationText, type Language} from './i18n.ts';
 
 export type Audience = 'self'|'caregiver';
 type Wording = {title:string; hint?:string; options?:Record<string,string>};
