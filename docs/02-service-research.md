@@ -24,3 +24,23 @@
 - Do not require a user to state citizenship status, exact income, NRIC, CPF account balances, bank details, medical records, or addresses in the prototype.
 - Distinguish public HDB rental tenants, owners and people renting privately.
 - For a real client in immediate danger or a medical emergency, this service directory is not emergency assistance.
+
+
+## 18 October 2026 — Verified step-by-step guidance update
+
+NeighbourAssist now provides bilingual, service-specific online, telephone and in-person instructions in `src/journeys.ts` for **all 18 referral outcomes**. Users can switch contact methods directly on the result screen. Each guide has a dated official source link; if an official website changes, users are told to follow the current agency page.
+
+Significant confirmations and editorial decisions:
+
+- **ComCare**: MSF publishes individual “Apply for IA”, “Apply for SMTA” and “Apply for LTA” links, opening official SupportGoWhere channels. Urgent cases should also be told to call ComCare promptly rather than wait for an online response. ComCare hotline: 1800-222-0000 (7 am–midnight daily). Official page: https://www.msf.gov.sg/what-we-do/comcare
+- **SSO**: In-person application through an SSO is a supported alternative to online ComCare applications. Always check office-specific hours. Directory: https://www.msf.gov.sg/our-services/directories
+- **HDB rental transfer**: HDB’s official transfer flow requires the relevant branch zone and Singpass, and sends applicants to FormSG. Public rental tenant transfer conditions include existing registered tenancy, generally at least two years' occupation, and prevailing eligibility. Over-the-counter applications may be submitted at the managing HDB Branch. See https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/transfer-to-another-public-rental-flat and https://www.hdb.gov.sg/change-rental-flat-under-public-rental-scheme/get-help
+- **Public rental hardship**: HDB lists arrears instalments, SSO/social-service referrals and possible smaller-flat rightsizing; do not promise approval. https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/assistance-for-tenants
+- **HDB branch contact**: 6225-5432 for rental, leases and other residential enquiries, as currently listed at https://www.hdb.gov.sg/about-us/contact-us
+- **CPF retirement**: CPF Board provides the official Retirement Dashboard for personal withdrawable amounts and asks members to review bank/contact settings and withdrawal limits before applying. Phone: 1800-227-1188. CPF Service Centre counter visits are by appointment. https://www.cpf.gov.sg/member/retirement-income/retirement-withdrawals/withdrawing-for-immediate-retirement-needs and https://www.cpf.gov.sg/service/
+- **Silver Support**: No application is needed; eligible residents are automatically assessed. https://www.cpf.gov.sg/member/retirement-income/government-support/silver-support-scheme
+- **CHAS**: The eService portal explicitly offers login to apply, renew or view CHAS status. Hotline 1800-275-2427 during published weekday hours. https://chas.moh.gov.sg/Home/Welcome
+- **MediFund**: Applications are handled with Medical Social Workers at approved treating institutions, not by a general public online application form. https://www.moh.gov.sg/managing-expenses/schemes-and-subsidies/medifund/
+- **OneService**: The official App has a “Submit Case” flow, while the chatbot prompts users to provide a description, photo, location, time and contact details. No live emergency dispatch is provided. https://www.oneservice.gov.sg/osapp-faq/ and https://www.oneservice.gov.sg/oschatbot-faqs/
+
+**Safety**: Do not represent NeighbourAssist as a government portal, request Singpass passwords, or infer programme eligibility from brief user selections. Caregivers must use legitimate agency-authorised pathways instead of impersonating the beneficiary. Store no sensitive case information. Review translations with a fluent Singapore Chinese speaker before real deployment.
