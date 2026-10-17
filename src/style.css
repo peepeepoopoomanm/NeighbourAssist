@@ -31,3 +31,6 @@
 @media(max-width:900px){.top-inner{flex-wrap:wrap;padding-block:14px}.top-actions{flex-wrap:wrap;gap:10px}}
 @media(max-width:600px){.top-inner{align-items:flex-start}.top-actions{width:100%;justify-content:flex-start}.setting{flex-wrap:wrap}.setting select{max-width:145px}.site.text-large .question-card{padding:17px}.site.text-large .hero h1{font-size:3rem}.site.text-large .flow-actions{flex-wrap:wrap}.site.text-large .flow-actions .btn{flex:1 1 100%}.site.text-large .category-card{align-items:flex-start}.contact-guidance{padding:16px}}
 @media print{.contact-guidance{border:1px solid #8fb3a2}.contact-guidance .btn{display:none}.setting{display:none}}
+
+/* Clearly identifies whose circumstances the questionnaire is asking about. */
+.audience-notice{background:#edf6ef;border:1px solid #b9d9c4;border-radius:11px;padding:14px 18px;color:#214c40;font-weight:650;line-height:1.5;margin:18px 0 20px}
