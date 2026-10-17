@@ -68,3 +68,5 @@
 .guide-caveat{font-size:calc(.85rem * var(--read-scale));color:#5d7164;border-left:3px solid #bad4c1;padding-left:12px;margin:10px 0 20px}
 @media(max-width:600px){.contact-options{grid-template-columns:1fr}.detailed-instructions li{padding:14px 15px 14px 58px}.detailed-instructions li::before{left:13px}}
 @media print{.contact-options{display:none}.detailed-instructions li{break-inside:avoid;border-color:#becdc3;background:white}.source-line a::after{content:' (' attr(href) ')'}}
+
+.caregiver-auth-note{border-left:4px solid #bf8751;background:#fff8ec;padding:12px 15px;border-radius:0 8px 8px 0;line-height:1.6;font-size:calc(.9rem * var(--read-scale));color:#714b23;margin:14px 0}
