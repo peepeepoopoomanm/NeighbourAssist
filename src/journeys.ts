@@ -191,9 +191,11 @@ export const guides:Record<string,GuideRecord>={
 export function getGuide(service:Service,lang:Language,method:HelpMethod){
  const guide=guides[service.id];
  if(!guide)throw new Error('Missing guidance for '+service.id);
- const path=method==='unsure'?'online':method;
+ const steps=method==='unsure'
+  ? [guide[lang].online[0],guide[lang].phone[0],guide[lang].inperson[0]]
+  : guide[lang][method];
  return {
-  steps:guide[lang][path],
+  steps,
   url:guide.url,
   source:guide.source,
   phone:guide.phone??service.phone,
