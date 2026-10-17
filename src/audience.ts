@@ -63,6 +63,7 @@ export const caregiverUi={
   phoneScriptOther:'You can say: “I am helping someone find assistance. What should we do next?”',
   onlineDetail:'Help them use the official website, with their permission. Follow the agency’s application or enquiry instructions.',
   onlineUrgent:'The person you are helping may need urgent support. Contact the ComCare hotline instead of waiting for an online reply.',
+  authNote:'Do not use another person’s Singpass or bank password. Ask the official agency about its authorised representative process where needed.',
   inpersonDetail:'Check the correct office and required documents before going with them. Ask the agency about accessibility assistance if needed.',
  },
  zh:{
@@ -76,6 +77,7 @@ export const caregiverUi={
   phoneScriptOther:'您可以这样说：「我正在帮别人了解援助服务。请问我们应该如何开始？」',
   onlineDetail:'征得对方同意后，协助他们使用官方网站，并按照有关机构的指示查询或申请。',
   onlineUrgent:'对方可能急需援助。请拨打 ComCare 热线，不要只等待网上回复。',
+  authNote:'切勿使用他人的 Singpass 或银行密码。如需代办，请向官方机构询问获授权代表的正式程序。',
   inpersonDetail:'陪同对方前往前，请先确认合适的办事处和所需文件。如有需要，可询问无障碍协助。',
  },
 };
