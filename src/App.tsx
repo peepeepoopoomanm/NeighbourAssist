@@ -56,7 +56,7 @@ export default function App(){
  const secondary=result.secondary.map(s=>serviceText(s,language));
  const chosenMethod=(contactOverride??answers.contact??'unsure') as Contact;
  const guide=getGuide(result.primary,language,chosenMethod);
- const guidedService={...primary,url:guide.url,phone:guide.phone,phoneHours:guide.phoneHours};
+ const guidedService={...primary,url:guide.url,phone:guide.phone,phoneHours:language==='zh'?(primary.phoneHours??(guide.phoneHours?'周一至周五，上午 8:30 至下午 5:30':undefined)):guide.phoneHours};
  const topicName=(id:Category)=>categoryText(id,language,categories.find(c=>c.id===id)??{label:'Assistance',summary:''}).label;
  const situation=audienceSituationText(answers,language,forWhom);
  useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hans':'en';document.title=language==='zh'?'邻里助理 — 寻找援助':'NeighbourAssist — Find support';},[language]);
