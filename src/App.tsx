@@ -70,7 +70,7 @@ export default function App(){
    <button className="brand" onClick={home} aria-label="NeighbourAssist"><span className="brand-mark" aria-hidden="true">n<span>+</span></span><span>NeighbourAssist</span></button>
    <div className="top-actions"><span className="student-tag">{t.student}</span>
     <label className="setting"><span>{t.language}</span><select aria-label={t.language} value={language} onChange={e=>setLanguage(e.target.value as Language)}><option value="en">English</option><option value="zh">简体中文</option></select></label>
-    <label className="setting"><span>{t.textSize}</span><select aria-label={t.textSize} value={size} onChange={e=>setSize(e.target.value as TextSize)}><option value="normal">{t.normal}</option><option value="large">{t.large}</option><option value="extra">{t.extra}</option></select></label>
+    <label className="setting"><span>{t.textSize}</span><select aria-label={t.textSize} value={size} onChange={e=>setSize(e.target.value as TextSize)}><option value="normal">{t.normal}</option><option value="large">{t.large}</option></select></label>
    </div>
   </div></header>
   <main id="main">
