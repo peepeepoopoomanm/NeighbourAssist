@@ -54,3 +54,17 @@
  .site.text-large .category-icon .category-svg{width:43px;height:43px}
  .site.text-large .category-icon[data-category="cpf"] .category-svg{width:46px;height:46px}
 }
+
+/* On the results page, let residents change the contact route without restarting. */
+.contact-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 18px}
+.contact-option{font-size:calc(.94rem * var(--read-scale));min-height:54px;padding:12px 14px;text-align:left;line-height:1.45;color:#245544;background:#fff;border:2px solid #cbded2;border-radius:12px;font-weight:700;white-space:normal}
+.contact-option.active,.contact-option[aria-pressed="true"]{background:#e4f3e8;border-color:#13684c;color:#124b38}
+.contact-option:hover{border-color:#26795d}
+.detailed-instructions{counter-reset:steps;list-style:none;padding-left:0;display:grid;gap:12px;margin:18px 0}
+.detailed-instructions li{position:relative;border:1px solid #dce8df;border-radius:12px;background:#fbfdfa;padding:16px 17px 16px 63px;line-height:1.55;font-size:calc(1rem * var(--read-scale))}
+.detailed-instructions li::before{counter-increment:steps;content:counter(steps);position:absolute;left:16px;top:15px;width:30px;height:30px;border-radius:10px;background:#e2efe6;color:#14614c;display:grid;place-items:center;font-weight:800}
+.source-line{font-size:calc(.86rem * var(--read-scale));color:#486658;margin:14px 0 8px;overflow-wrap:anywhere}
+.source-line a{font-weight:750}
+.guide-caveat{font-size:calc(.85rem * var(--read-scale));color:#5d7164;border-left:3px solid #bad4c1;padding-left:12px;margin:10px 0 20px}
+@media(max-width:600px){.contact-options{grid-template-columns:1fr}.detailed-instructions li{padding:14px 15px 14px 58px}.detailed-instructions li::before{left:13px}}
+@media print{.contact-options{display:none}.detailed-instructions li{break-inside:avoid;border-color:#becdc3;background:white}.source-line a::after{content:' (' attr(href) ')'}}
