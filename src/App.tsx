@@ -3,10 +3,11 @@ import {categories,questions,getQuestionIds,getRecommendations,type Category,typ
 import {messages,categoryText,serviceText,type Language,type TextSize} from './i18n';
 import {audienceQuestionText,audienceReasonText,audienceSituationText,caregiverUi,type Audience} from './audience';
 import CategoryIcon from './CategoryIcon';
+import {getGuide,type HelpMethod} from './journeys';
 import './style.css';
 
 type View='home'|'quiz'|'results'|'about';
-type Contact='online'|'phone'|'inperson'|'unsure';
+type Contact=HelpMethod;
 const SSO_DIRECTORY='https://www.msf.gov.sg/our-services/directories';
 const safePhone=(phone:string)=>`tel:${phone.replace(/\D/g,'')}`;
 
@@ -43,6 +44,7 @@ export default function App(){
  const [size,setSize]=useState<TextSize>('normal');
  const [language,setLanguage]=useState<Language>('en');
  const [prepared,setPrepared]=useState<string[]>([]);
+ const [contactOverride,setContactOverride]=useState<Contact|null>(null);
  const [forWhom,setForWhom]=useState<Audience>('self');
  const topicsRef=useRef<HTMLElement|null>(null);
  const t=messages[language];
@@ -52,18 +54,20 @@ export default function App(){
  const result=getRecommendations(category,answers);
  const primary=serviceText(result.primary,language);
  const secondary=result.secondary.map(s=>serviceText(s,language));
- const chosenMethod=(answers.contact??'unsure') as Contact;
+ const chosenMethod=(contactOverride??answers.contact??'unsure') as Contact;
+ const guide=getGuide(result.primary,language,chosenMethod);
+ const guidedService={...primary,url:guide.url,phone:guide.phone,phoneHours:guide.phoneHours};
  const topicName=(id:Category)=>categoryText(id,language,categories.find(c=>c.id===id)??{label:'Assistance',summary:''}).label;
  const situation=audienceSituationText(answers,language,forWhom);
  useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hans':'en';document.title=language==='zh'?'邻里助理 — 寻找援助':'NeighbourAssist — Find support';},[language]);
  const scrollTop=()=>window.scrollTo({top:0,behavior:'instant'});
- const start=(c:Category)=>{setCategory(c);setAnswers({});setPrepared([]);setQuestionIndex(0);setView('quiz');scrollTop()};
- const home=()=>{setView('home');setAnswers({});setPrepared([]);setQuestionIndex(0);scrollTop()};
- const browse=()=>{if(view!=='home')setView('home');setAnswers({});setPrepared([]);setQuestionIndex(0);window.setTimeout(()=>topicsRef.current?.scrollIntoView({behavior:'smooth',block:'start'}),30)};
+ const start=(c:Category)=>{setCategory(c);setAnswers({});setPrepared([]);setContactOverride(null);setQuestionIndex(0);setView('quiz');scrollTop()};
+ const home=()=>{setView('home');setAnswers({});setPrepared([]);setContactOverride(null);setQuestionIndex(0);scrollTop()};
+ const browse=()=>{if(view!=='home')setView('home');setAnswers({});setPrepared([]);setContactOverride(null);setQuestionIndex(0);window.setTimeout(()=>topicsRef.current?.scrollIntoView({behavior:'smooth',block:'start'}),30)};
  const selectAnswer=(value:string)=>{
   // Forget answers to later questions if someone changes an earlier branch.
   const retained=Object.fromEntries(ids.slice(0,questionIndex).filter(id=>answers[id]).map(id=>[id,answers[id]]));
-  setAnswers({...retained,[q.id]:value});setPrepared([]);
+  setAnswers({...retained,[q.id]:value});setPrepared([]);setContactOverride(null);
  };
  const next=()=>{const updated=getQuestionIds(category,answers);if(questionIndex>=updated.length-1)setView('results');else setQuestionIndex(i=>i+1);scrollTop()};
  const back=()=>{if(view==='results'){setView('quiz');setQuestionIndex(getQuestionIds(category,answers).length-1)}else if(view==='quiz'&&questionIndex>0){setQuestionIndex(i=>i-1)}else setView('home');scrollTop()};
@@ -96,9 +100,11 @@ export default function App(){
    <div className="result-layout"><div><article className="recommendation"><div className="recommendation-top"><span className="result-symbol" aria-hidden="true">✓</span><div><span className="eyebrow">{t.startingPoint}</span><h2>{primary.name}</h2><span className="agency-name">{primary.agency}</span></div></div>
     <p className="result-desc">{primary.description}</p><div className="reason"><strong>{forWhom==='caregiver'?caregiverUi[language].why:t.why}</strong> {audienceReasonText(result.reason,language,forWhom)}</div>
     {situation&&<div className="situation-note"><strong>{forWhom==='caregiver'?caregiverUi[language].situation:t.situationTitle}</strong><p>{forWhom==='caregiver'?caregiverUi[language].suggestedMessage:t.suggestedMessage} “{situation}”</p></div>}
-    <div className="contact-heading eyebrow">{t.contactPath}</div><ContactGuidance service={primary} method={chosenMethod} lang={language} audience={forWhom}/>
-    <h3>{t.nextSteps}</h3><ol className="instruction-list">{primary.steps.map((s,i)=><li key={i}>{s}</li>)}</ol>
-    {primary.phone&&<p className="call-line">{t.officialPhone}: <a href={safePhone(primary.phone)}>{primary.phone}</a> {primary.phoneHours&&<small>({primary.phoneHours})</small>}</p>}
+    <div className="contact-heading eyebrow">{t.contactPath}</div>
+    <div className="contact-options" role="group" aria-label={t.contactPath}>{(['online','phone','inperson','unsure'] as Contact[]).map(method=><button key={method} type="button" aria-pressed={chosenMethod===method} className={'contact-option '+(chosenMethod===method?'active':'')} onClick={()=>setContactOverride(method)}>{method==='online'?t.onlineTitle:method==='phone'?t.phoneTitle:method==='inperson'?t.inpersonTitle:t.unsureTitle}</button>)}</div>
+    <ContactGuidance service={guidedService} method={chosenMethod} lang={language} audience={forWhom}/>
+    <h3>{t.guideStepsTitle}</h3><ol className="instruction-list detailed-instructions">{guide.steps.map((step,i)=><li key={i}>{step}</li>)}</ol><p className="source-line">{t.guideVerified}: <a href={guide.source} target="_blank" rel="noopener noreferrer">{t.guideSource} ↗</a> <span>· {t.guideChecked}</span></p><p className="guide-caveat">{t.guideMayChange}</p>
+    {guidedService.phone&&<p className="call-line">{t.officialPhone}: <a href={safePhone(guidedService.phone)}>{guidedService.phone}</a> {guidedService.phoneHours&&<small>({guidedService.phoneHours})</small>}</p>}
     <p className="caution">{primary.caution}</p>
    </article>{secondary.map(s=><article className="secondary-recommendation" key={s.id}><span className="eyebrow">{t.otherInfo}</span><h3>{s.name}</h3><p>{s.description}</p><a href={s.url} target="_blank" rel="noopener noreferrer">{t.learnMore} ↗</a><small>{s.caution}</small></article>)}</div>
    <aside className="checklist"><h2>{t.prepareTitle}</h2><p>{t.prepareIntro}</p>{primary.checklist.map(item=><label className="check-item" key={item}><input type="checkbox" checked={prepared.includes(item)} onChange={e=>setPrepared(p=>e.target.checked?[...p,item]:p.filter(x=>x!==item))}/><span>{item}</span></label>)}<div className="check-actions"><button onClick={()=>window.print()} className="btn btn-outline full">{t.print}</button></div><p className="check-note">{t.privacyReminder}</p></aside>
