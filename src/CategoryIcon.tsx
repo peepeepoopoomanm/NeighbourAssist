@@ -28,11 +28,11 @@ export default function CategoryIcon({category}:{category:Category}){
     <path d="M10 20v-5h4v5"/>
    </svg>;
   case 'cpf':
+   // Piggy bank: a familiar and distinct symbol for retirement savings.
    return <svg {...shared}>
-    <ellipse cx="9" cy="8" rx="4" ry="2.4"/>
-    <path d="M5 8v3c0 1.3 1.8 2.4 4 2.4s4-1.1 4-2.4V8"/>
-    <ellipse cx="15.5" cy="14.5" rx="3.5" ry="2.1"/>
-    <path d="M12 14.5v2.3c0 1.1 1.6 2.1 3.5 2.1s3.5-1 3.5-2.1v-2.3"/>
+    <path d="M7.3 8.5A7.5 7.5 0 0 1 17 8l2-1v4l2 1v4l-3 1.2A7.6 7.6 0 0 1 15.4 19H9a7 7 0 0 1-6-7.1A7 7 0 0 1 7.3 8.5Z"/>
+    <path d="M8 19v2M16 19v2M10 7V5h4"/>
+    <circle cx="16" cy="11" r=".65" fill="currentColor" stroke="none"/>
    </svg>;
   case 'health':
    return <svg viewBox="0 0 24 24" className="category-svg" focusable="false" aria-hidden="true">
