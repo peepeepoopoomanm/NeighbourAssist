@@ -18,4 +18,15 @@ test('municipal OneService referral',()=>assert.equal(rec('municipal',{}),'onese
 test('all categories have official HTTPS referral targets',()=>{for(const c of categories){const r=getRecommendations(c.id,{});assert.ok(r.primary.url.startsWith('https://'));assert.ok(r.primary.caution)}});
 test('every service has clear steps, a caution and government-owned host',()=>{for(const s of Object.values(services)){assert.ok(s.steps.length>0);assert.ok(s.caution);assert.match(new URL(s.url).hostname,/\.(gov\.sg)$|^(www\.)?life\.gov\.sg$|^supportgowhere\.life\.gov\.sg$/)}});
 
-test('existing ComCare flow skips unnecessary questions',()=>assert.deepEqual(getQuestionIds('financial',{f_urgent:'no',f_existing:'yes'}),['f_urgent','f_existing','contact']));
+test('existing ComCare flow skips unnecessary questions',()=>assert.deepEqual(getQuestionIds('financial',{f_urgent:'no',f_existing:'yes'}),['f_urgent','f_need','f_existing','contact']));
+
+// Accessibility and language coverage of all supported questions and referrals.
+import {messages,questionText,serviceText,hasChineseQuestion,hasChineseService,situationText} from '../src/i18n.ts';
+import {questions} from '../src/engine.ts';
+test('financial questions identify the expense type without demanding amounts',()=>{assert.ok(getQuestionIds('financial',{f_urgent:'no'}).includes('f_need'));assert.equal(questions.f_need.options.some(o=>o.value==='food'),true)});
+test('housing adds relevant context and rental difficulty questions',()=>{assert.deepEqual(getQuestionIds('housing',{h_goal:'smaller'}),['h_type','h_goal','h_context','contact']);assert.deepEqual(getQuestionIds('housing',{h_goal:'rent'}),['h_type','h_goal','h_rent','contact'])});
+test('urgent financial flow stays short',()=>assert.deepEqual(getQuestionIds('financial',{f_urgent:'yes'}),['f_urgent','contact']));
+test('every question and option has Simplified Chinese wording',()=>{for(const q of Object.values(questions)){assert.ok(hasChineseQuestion(q.id),`Missing question ${q.id}`);const tr=questionText(q,'zh');assert.ok(tr.title&&tr.title!==q.title,`Untranslated title ${q.id}`);for(let i=0;i<q.options.length;i++)assert.ok(tr.options[i].label!==q.options[i].label,`Untranslated option ${q.id}/${q.options[i].value}`)}});
+test('every service has Chinese instructions, cautions and checklists',()=>{for(const s of Object.values(services)){assert.ok(hasChineseService(s.id),`Missing service ${s.id}`);const tr=serviceText(s,'zh');assert.equal(tr.steps.length,s.steps.length);assert.equal(tr.checklist.length,s.checklist.length);assert.ok(tr.name!==s.name,`Untranslated service ${s.id}`);for(const step of tr.steps)assert.ok(step.length>1)}});
+test('both language packs share all interface labels',()=>assert.deepEqual(Object.keys(messages.en).sort(),Object.keys(messages.zh).sort()));
+test('specific expense and housing concerns appear as plain-language prompts',()=>{assert.match(situationText({f_need:'food'},'en'),/food/);assert.match(situationText({h_context:'alone'},'zh'),/独居/)});
