@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {categories,questions,getQuestionIds,getRecommendations,type Category,type Answers,type Service} from './engine';
-import {messages,categoryText,questionText,reasonText,serviceText,situationText,type Language,type TextSize} from './i18n';
+import {messages,categoryText,serviceText,type Language,type TextSize} from './i18n';
+import {audienceQuestionText,audienceReasonText,audienceSituationText,caregiverUi,type Audience} from './audience';
 import './style.css';
 
 type View='home'|'quiz'|'results'|'about';
@@ -8,21 +9,22 @@ type Contact='online'|'phone'|'inperson'|'unsure';
 const SSO_DIRECTORY='https://www.msf.gov.sg/our-services/directories';
 const safePhone=(phone:string)=>`tel:${phone.replace(/\D/g,'')}`;
 
-function ContactGuidance({service,method,lang}:{service:Service;method:Contact;lang:Language}){
+function ContactGuidance({service,method,lang,audience}:{service:Service;method:Contact;lang:Language;audience:Audience}){
+ const helping=audience==='caregiver';const g=caregiverUi[lang];
  const t=messages[lang];
  const isUrgent=service.id==='comcare_urgent';
  if(method==='phone')return <div className="contact-guidance" aria-live="polite">
-  <h3>{t.phoneTitle}</h3><p>{t.phoneDetail}</p>
-  {service.phone?<><a className="btn btn-primary full" href={safePhone(service.phone)}>{t.callNow}: {service.phone}</a>{service.phoneHours&&<p className="contact-detail">{t.hours}: {service.phoneHours}</p>}<p className="spoken-script">{isUrgent?t.phoneScriptUrgent:t.phoneScriptOther}</p></>:<><p>{t.phoneFallback}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.noPhone} ↗</a></>}
+  <h3>{t.phoneTitle}</h3><p>{helping?g.phoneDetail:t.phoneDetail}</p>
+  {service.phone?<><a className="btn btn-primary full" href={safePhone(service.phone)}>{t.callNow}: {service.phone}</a>{service.phoneHours&&<p className="contact-detail">{t.hours}: {service.phoneHours}</p>}<p className="spoken-script">{helping?(isUrgent?g.phoneScriptUrgent:g.phoneScriptOther):(isUrgent?t.phoneScriptUrgent:t.phoneScriptOther)}</p></>:<><p>{t.phoneFallback}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.noPhone} ↗</a></>}
  </div>;
  if(method==='inperson')return <div className="contact-guidance" aria-live="polite">
-  <h3>{t.inpersonTitle}</h3><p>{t.inpersonDetail}</p><p>{service.offline??t.inpersonDetail}</p>
+  <h3>{t.inpersonTitle}</h3><p>{helping?g.inpersonDetail:t.inpersonDetail}</p><p>{service.offline??t.inpersonDetail}</p>
   {service.id.startsWith('comcare')||service.id==='sso'?<><p>{t.inpersonSso}</p><a className="btn btn-primary full" href={SSO_DIRECTORY} target="_blank" rel="noopener noreferrer">{t.findSso} ↗</a></>:<a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.visitWebsite} ↗</a>}
   {isUrgent&&service.phone&&<p className="contact-detail">{t.urgentNote} <a href={safePhone(service.phone)}>{service.phone}</a></p>}
  </div>;
  if(method==='online')return <div className="contact-guidance" aria-live="polite">
-  <h3>{t.onlineTitle}</h3><p>{t.onlineDetail}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.visitWebsite} ↗</a>
-  {isUrgent&&<p className="urgent-note">{t.onlineUrgent} {service.phone&&<a href={safePhone(service.phone)}>{service.phone}</a>}</p>}
+  <h3>{t.onlineTitle}</h3><p>{helping?g.onlineDetail:t.onlineDetail}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.visitWebsite} ↗</a>
+  {isUrgent&&<p className="urgent-note">{helping?g.onlineUrgent:t.onlineUrgent} {service.phone&&<a href={safePhone(service.phone)}>{service.phone}</a>}</p>}
  </div>;
  return <div className="contact-guidance" aria-live="polite"><h3>{t.unsureTitle}</h3><p>{t.unsureDetail}</p>
   {service.phone&&<a className="btn btn-outline full" href={safePhone(service.phone)}>{t.callNow}: {service.phone}</a>}
@@ -40,18 +42,18 @@ export default function App(){
  const [size,setSize]=useState<TextSize>('normal');
  const [language,setLanguage]=useState<Language>('en');
  const [prepared,setPrepared]=useState<string[]>([]);
- const [forWhom,setForWhom]=useState<'self'|'caregiver'>('self');
+ const [forWhom,setForWhom]=useState<Audience>('self');
  const topicsRef=useRef<HTMLElement|null>(null);
  const t=messages[language];
  const ids=getQuestionIds(category,answers);
  const currentQuestion=questions[ids[Math.min(questionIndex,ids.length-1)]];
- const q=questionText(currentQuestion,language);
+ const q=audienceQuestionText(currentQuestion,language,forWhom);
  const result=getRecommendations(category,answers);
  const primary=serviceText(result.primary,language);
  const secondary=result.secondary.map(s=>serviceText(s,language));
  const chosenMethod=(answers.contact??'unsure') as Contact;
  const topicName=(id:Category)=>categoryText(id,language,categories.find(c=>c.id===id)??{label:'Assistance',summary:''}).label;
- const situation=situationText(answers,language);
+ const situation=audienceSituationText(answers,language,forWhom);
  useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hans':'en';document.title=language==='zh'?'邻里助理 — 寻找援助':'NeighbourAssist — Find support';},[language]);
  const scrollTop=()=>window.scrollTo({top:0,behavior:'instant'});
  const start=(c:Category)=>{setCategory(c);setAnswers({});setPrepared([]);setQuestionIndex(0);setView('quiz');scrollTop()};
@@ -84,16 +86,16 @@ export default function App(){
   {view==='quiz'&&<section className="container flow-wrap"><div className="breadcrumb"><button onClick={home}>{t.allTopics}</button><span aria-hidden="true">/</span><span>{topicName(category)}</span></div><div className="flow-layout"><div className="question-card">
    <div className="question-top"><span className="eyebrow">{topicName(category)}</span><strong>{t.question} {questionIndex+1} / {ids.length}</strong></div>
    <div className="progress" role="progressbar" aria-label={t.question} aria-valuenow={questionIndex+1} aria-valuemin={0} aria-valuemax={ids.length}><span style={{width:`${(questionIndex+1)/ids.length*100}%`}}/></div>
-   <h1 className="question-title">{q.title}</h1>{q.hint&&<p className="question-hint">{q.hint}</p>}
+   {forWhom==='caregiver'&&<p className="audience-notice" role="note">{caregiverUi[language].notice}</p>}<h1 className="question-title">{q.title}</h1>{q.hint&&<p className="question-hint">{q.hint}</p>}
    <fieldset className="answer-set"><legend className="sr-only">{t.chooseAnswer}</legend>{q.options.map(o=><label key={o.value} className={'answer '+(answers[q.id]===o.value?'answer-selected':'')}><input type="radio" name={q.id} value={o.value} checked={answers[q.id]===o.value} onChange={()=>selectAnswer(o.value)}/><span className="radio-circle" aria-hidden="true"/><span>{o.label}</span></label>)}</fieldset>
    <div className="flow-actions"><button onClick={back} className="btn btn-outline">← {t.back}</button><button disabled={!answers[q.id]} onClick={next} className="btn btn-primary">{questionIndex===ids.length-1?t.seeGuidance:t.continue} →</button></div>
    </div><aside className="support-card"><div className="support-mark">♡</div><h2>{t.privacyTitle}</h2><p>{t.privacyBody}</p><div className="support-rule"/><p>{t.privacyDetail}</p></aside></div></section>}
   {view==='results'&&<section className="container results-wrap"><div className="breadcrumb"><button onClick={home}>{t.allTopics}</button><span aria-hidden="true">/</span><span>{topicName(category)}</span><span aria-hidden="true">/</span><span>{t.guidanceLabel}</span></div>
-   <div className="result-heading"><span className="eyebrow">{t.guidanceLabel}</span><h1>{t.guidanceTitle}</h1><p>{t.guidanceIntro}</p></div>
+   <div className="result-heading"><span className="eyebrow">{t.guidanceLabel}</span><h1>{t.guidanceTitle}</h1><p>{forWhom==='caregiver'?caregiverUi[language].guidanceIntro:t.guidanceIntro}</p></div>
    <div className="result-layout"><div><article className="recommendation"><div className="recommendation-top"><span className="result-symbol" aria-hidden="true">✓</span><div><span className="eyebrow">{t.startingPoint}</span><h2>{primary.name}</h2><span className="agency-name">{primary.agency}</span></div></div>
-    <p className="result-desc">{primary.description}</p><div className="reason"><strong>{t.why}</strong> {reasonText(result.reason,language)}</div>
-    {situation&&<div className="situation-note"><strong>{t.situationTitle}</strong><p>{t.suggestedMessage} “{situation}”</p></div>}
-    <div className="contact-heading eyebrow">{t.contactPath}</div><ContactGuidance service={primary} method={chosenMethod} lang={language}/>
+    <p className="result-desc">{primary.description}</p><div className="reason"><strong>{forWhom==='caregiver'?caregiverUi[language].why:t.why}</strong> {audienceReasonText(result.reason,language,forWhom)}</div>
+    {situation&&<div className="situation-note"><strong>{forWhom==='caregiver'?caregiverUi[language].situation:t.situationTitle}</strong><p>{forWhom==='caregiver'?caregiverUi[language].suggestedMessage:t.suggestedMessage} “{situation}”</p></div>}
+    <div className="contact-heading eyebrow">{t.contactPath}</div><ContactGuidance service={primary} method={chosenMethod} lang={language} audience={forWhom}/>
     <h3>{t.nextSteps}</h3><ol className="instruction-list">{primary.steps.map((s,i)=><li key={i}>{s}</li>)}</ol>
     {primary.phone&&<p className="call-line">{t.officialPhone}: <a href={safePhone(primary.phone)}>{primary.phone}</a> {primary.phoneHours&&<small>({primary.phoneHours})</small>}</p>}
     <p className="caution">{primary.caution}</p>
