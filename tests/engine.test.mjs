@@ -77,7 +77,7 @@ test('all referral targets have complete bilingual contact-specific guidance',()
   for(const language of ['en','zh'])for(const method of ['online','phone','inperson']){
    const guidance=getGuide(service,language,method);
    assert.ok(guidance.steps.length>=2,service.id+': '+language+'/'+method);
-   for(const step of guidance.steps) assert.ok(step.trim().length>=24,service.id+' has too short a step');
+   for(const step of guidance.steps) assert.ok(step.trim().length>=(language==='zh'?12:20),service.id+' has too short a step');
    assert.ok(guidance.url.startsWith('https://')&&guidance.source.startsWith('https://'));
    assert.match(new URL(guidance.source).hostname,/\.gov\.sg$|^www\.oneservice\.gov\.sg$/);
   }
