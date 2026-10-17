@@ -1,0 +1,144 @@
+const opt = (...entries) => entries.map(([value, label]) => ({ value, label }));
+export const categories = [
+    { id: 'financial', label: 'Everyday expenses', summary: 'Food, bills, income and financial assistance', symbol: '$' },
+    { id: 'housing', label: 'Housing & rental', summary: 'Public rental flats, housing costs and rightsizing', symbol: '⌂' },
+    { id: 'cpf', label: 'CPF & retirement', summary: 'Understand CPF withdrawal or senior support options', symbol: '◎' },
+    { id: 'health', label: 'Medical costs', summary: 'Subsidies, clinic visits and hospital bills', symbol: '+' },
+    { id: 'municipal', label: 'Neighbourhood issues', summary: 'Lifts, public-area repairs, cleanliness', symbol: '▦' },
+    { id: 'unsure', label: 'Not sure', summary: 'Help me find where to start', symbol: '?' },
+];
+export const questions = {
+    f_urgent: { id: 'f_urgent', title: 'Do you need help with food or essentials very soon?', hint: 'For example, you may not have enough money for meals or other essential needs over the next few days.', options: opt(['yes', 'Yes, I need help urgently'], ['no', 'I can manage for now'], ['unsure', 'I am not sure']) },
+    f_existing: { id: 'f_existing', title: 'Are you already receiving ComCare assistance?', hint: 'It is okay if you do not know.', options: opt(['yes', 'Yes'], ['no', 'No'], ['unsure', 'I am not sure']) },
+    f_duration: { id: 'f_duration', title: 'For how long might you need help?', options: opt(['short', 'For a short period'], ['long', 'For a long time'], ['unsure', 'I am not sure']) },
+    f_work: { id: 'f_work', title: 'Which best describes your situation?', hint: 'We will not ask for your income, CPF balance or bank details.', options: opt(['unable', 'I cannot work because of age, illness or disability'], ['low', 'I work but still struggle with expenses'], ['temporary', 'I am temporarily out of work or caring for someone'], ['unsure', 'Something else / I am not sure']) },
+    f_age: { id: 'f_age', title: 'Are you 65 years old or above?', hint: 'This can help us show information about Silver Support. It does not determine eligibility.', options: opt(['yes', 'Yes'], ['no', 'No'], ['skip', 'Prefer not to say']) },
+    h_type: { id: 'h_type', title: 'What kind of home do you currently live in?', options: opt(['public_rental', 'An HDB public rental flat'], ['owner', 'An HDB flat that I own'], ['private_rental', 'A privately rented home'], ['unsure', 'I am not sure']) },
+    h_goal: { id: 'h_goal', title: 'What housing problem would you like help with?', options: opt(['smaller', 'I want to move to a smaller, more affordable home'], ['rent', 'I struggle to pay rent'], ['tenancy', 'I need help with who is registered to live in the flat'], ['other', 'Something else / I am not sure']) },
+    c_age: { id: 'c_age', title: 'Are you 55 years old or above?', options: opt(['yes', 'Yes'], ['no', 'No'], ['unsure', 'Prefer not to say / not sure']) },
+    c_goal: { id: 'c_goal', title: 'What would you like to understand?', options: opt(['withdraw', 'Can I withdraw some CPF savings?'], ['support', 'Are there government payments for seniors?'], ['balance', 'How do I check my retirement savings or payout information?'], ['unsure', 'I am not sure']) },
+    m_type: { id: 'm_type', title: 'Which medical expense is worrying you?', options: opt(['clinic', 'GP or dental clinic visits'], ['bill', 'Hospital or other medical bills I cannot afford'], ['unsure', 'I am not sure']) },
+    contact: { id: 'contact', title: 'How would you prefer to receive assistance?', hint: 'We will always show the official website as well.', options: opt(['online', 'Use an official website'], ['phone', 'Speak to someone by phone'], ['inperson', 'Ask someone in person'], ['unsure', 'I am not sure']) },
+};
+export const services = {
+    comcare_urgent: { id: 'comcare_urgent', name: 'Ask about ComCare urgent assistance', agency: 'Ministry of Social and Family Development', description: 'If you cannot afford essentials, contact ComCare to ask about urgent temporary help.', url: 'https://www.msf.gov.sg/what-we-do/comcare', phone: '1800-222-0000', phoneHours: 'Daily, 7 am–midnight', offline: 'Ask ComCare how to reach a Social Service Office (SSO) for assistance.', steps: ['Call the ComCare hotline as soon as you can.', 'Say that you need urgent assistance paying for food or other essential needs.', 'Ask what temporary help or local support is available.'], checklist: ['A brief description of the essential expense', 'Any relevant information requested by the SSO'], caution: 'Only an authorised agency can assess assistance. This site does not send an application.' },
+    comcare_smta: { id: 'comcare_smta', name: 'Ask about ComCare financial assistance', agency: 'Ministry of Social and Family Development', description: 'Short-to-Medium-Term Assistance may be relevant if your household struggles with basic living expenses.', url: 'https://supportgowhere.life.gov.sg/', phone: '1800-222-0000', phoneHours: 'Daily, 7 am–midnight', offline: 'Visit a Social Service Office; ask the hotline for the nearest office.', steps: ['Visit the official SupportGoWhere service or call ComCare.', 'Explain the difficulty paying for everyday needs.', 'Ask about an assessment by a Social Service Office.'], checklist: ['Identity details for the official application', 'Household and employment information, if requested', 'Relevant supporting documents, if requested'], caution: 'Needing help does not automatically qualify you. An SSO will assess your circumstances.' },
+    comcare_lta: { id: 'comcare_lta', name: 'Ask about ComCare Long-Term Assistance', agency: 'Ministry of Social and Family Development', description: 'Long-Term Assistance may be relevant to people permanently unable to work and with little financial support.', url: 'https://www.msf.gov.sg/what-we-do/comcare', phone: '1800-222-0000', phoneHours: 'Daily, 7 am–midnight', offline: 'Discuss your circumstances with a Social Service Office.', steps: ['Contact ComCare or your nearest Social Service Office.', 'Explain that your need for support may be long-term.', 'Ask about a full assistance assessment.'], checklist: ['Identity and household information for the official assessment', 'Relevant documents an officer requests'], caution: 'This is a suggested enquiry, not a finding of eligibility or approval.' },
+    comcare_existing: { id: 'comcare_existing', name: 'Contact your current ComCare caseworker or SSO', agency: 'Ministry of Social and Family Development', description: 'If your circumstances have changed, your existing Social Service Office can explain how to request reassessment.', url: 'https://www.msf.gov.sg/what-we-do/comcare', phone: '1800-222-0000', phoneHours: 'Daily, 7 am–midnight', offline: 'Contact your current Social Service Office.', steps: ['Contact your existing SSO or caseworker.', 'Explain what has changed and what help you need now.', 'Ask if your current assistance can be reviewed.'], checklist: ['Existing reference number, if known', 'A short explanation of what changed'], caution: 'The office will decide whether any changes are appropriate.' },
+    sso: { id: 'sso', name: 'Speak with a Social Service Office', agency: 'Ministry of Social and Family Development', description: 'An SSO can explain possible financial assistance options when you are unsure which programme fits.', url: 'https://www.msf.gov.sg/what-we-do/comcare', phone: '1800-222-0000', phoneHours: 'Daily, 7 am–midnight', offline: 'Ask the hotline for your nearest Social Service Office.', steps: ['Call ComCare or locate a Social Service Office.', 'Explain what essential expenses are difficult to afford.', 'Ask about an assessment and alternative application methods.'], checklist: ['Identity details for an official application', 'Any documents the office asks you to bring'], caution: 'This is informational guidance, not an application.' },
+    silver: { id: 'silver', name: 'Check Silver Support information', agency: 'CPF Board', description: 'Silver Support is automatically assessed for eligible seniors aged 65 and above. You do not need to apply.', url: 'https://www.cpf.gov.sg/member/retirement-income/government-support/silver-support-scheme', steps: ['Read the official Silver Support explanation.', 'If you are 65 or above, check your status using CPF’s official channels.', 'Contact CPF Board for questions.'], checklist: ['Singpass access if you decide to check status on the official portal'], caution: 'Being 65 or above alone does not establish eligibility.' },
+    hdb_transfer: { id: 'hdb_transfer', name: 'Ask HDB about transferring your public rental flat', agency: 'Housing & Development Board', description: 'Existing public-rental tenants can ask HDB about a transfer to a different flat, subject to conditions.', url: 'https://www.hdb.gov.sg/change-rental-flat-under-public-rental-scheme/get-help', offline: 'Visit the HDB Branch that manages your rental flat.', steps: ['Check HDB’s official rental-flat transfer guidance.', 'If you want a smaller rental flat, ask HDB whether a transfer is possible.', 'Apply only through HDB’s official service or visit the managing HDB Branch.'], checklist: ['Current rental tenancy information', 'Information about authorised occupants, when HDB requests it', 'Relevant documents requested by HDB through its official channel'], caution: 'Not all transfers are available. HDB assesses conditions and available units.' },
+    hdb_tenant: { id: 'hdb_tenant', name: 'Ask HDB about rental financial assistance', agency: 'Housing & Development Board', description: 'HDB describes rental assistance options, referrals and rightsizing possibilities for qualifying public-rental tenants.', url: 'https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/assistance-for-tenants', offline: 'Contact the HDB Branch managing your rental flat.', steps: ['Read HDB’s guidance for tenants facing financial difficulty.', 'Contact your managing HDB Branch to explain the problem.', 'Ask about available support and referral to an SSO where appropriate.'], checklist: ['Information about your current rental flat', 'A description of the housing payment concern'], caution: 'Do not assume that rental changes or transfers will be approved.' },
+    hdb_change: { id: 'hdb_change', name: 'Ask HDB about rental tenancy changes', agency: 'Housing & Development Board', description: 'HDB has procedures for qualifying changes of tenant and occupiers in public rental flats.', url: 'https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/change-of-tenancy', offline: 'Visit your managing HDB Branch.', steps: ['Check HDB’s official guidance on tenancy changes.', 'Identify the relevant managing HDB Branch.', 'Ask whether your household change meets the relevant conditions.'], checklist: ['Existing public rental tenancy information', 'Information about proposed tenancy changes'], caution: 'Eligibility and supporting documents are determined by HDB.' },
+    hdb_rightsize: { id: 'hdb_rightsize', name: 'Learn about rightsizing an owned HDB flat', agency: 'Housing & Development Board', description: 'Senior homeowners considering a smaller flat can review HDB’s rightsizing guidance and the Silver Housing Bonus.', url: 'https://www.hdb.gov.sg/managing-my-home/retirement-planning/monetising-flat-for-retirement/silver-housing-bonus', steps: ['Review HDB’s Silver Housing Bonus explanation.', 'Consider speaking with HDB about the financial implications of moving.', 'Do not make any sale decision based only on this guide.'], checklist: ['Information about your existing home for an official assessment', 'Questions about housing costs and retirement income'], caution: 'The Silver Housing Bonus has conditions and does not apply automatically to everyone who downsizes.' },
+    hdb_general: { id: 'hdb_general', name: 'Contact HDB for housing guidance', agency: 'Housing & Development Board', description: 'An HDB representative can clarify which housing service fits your situation.', url: 'https://www.hdb.gov.sg/', offline: 'Visit an HDB Branch or official HDB service point.', steps: ['Use HDB’s official website or visit a branch.', 'Explain whether your home is rented or owned.', 'Ask which application or assistance service is appropriate.'], checklist: ['General information about your housing situation'], caution: 'This guide does not determine your housing eligibility or tenancy rights.' },
+    cpf_withdraw: { id: 'cpf_withdraw', name: 'Understand CPF withdrawal options', agency: 'CPF Board', description: 'From age 55, some CPF savings may be withdrawable under CPF’s rules. The amount is personal and must be checked with CPF Board.', url: 'https://www.cpf.gov.sg/member/retirement-income/retirement-withdrawals/withdrawing-for-immediate-retirement-needs', steps: ['Read CPF Board’s official withdrawal information.', 'Check your own retirement dashboard through CPF’s website if you choose.', 'Consider how withdrawals can affect later retirement payouts.'], checklist: ['Singpass access for the official CPF service, if needed'], caution: 'Never share CPF credentials or account balances with NeighbourAssist. We cannot calculate the amount you can withdraw.' },
+    cpf_general: { id: 'cpf_general', name: 'Use CPF Board’s retirement guidance', agency: 'CPF Board', description: 'CPF Board provides official information about retirement savings, payouts and withdrawal conditions.', url: 'https://www.cpf.gov.sg/member', steps: ['Open the official CPF Board website.', 'Look for retirement, payout or withdrawal guidance.', 'Contact CPF Board through its official channels if you need clarification.'], checklist: ['Your questions about retirement savings'], caution: 'This guide does not provide personalised financial advice.' },
+    chas: { id: 'chas', name: 'Learn about CHAS clinic subsidies', agency: 'Ministry of Health', description: 'CHAS can reduce eligible outpatient GP and dental expenses at participating clinics.', url: 'https://chas.moh.gov.sg/Home/Welcome', phone: '1800-275-2427', phoneHours: 'Weekdays, 8:30 am–6 pm; excludes public holidays', steps: ['Read the official CHAS guidance.', 'Check your CHAS status or application options using the official service.', 'Ask CHAS for help if you cannot complete the online process.'], checklist: ['Information requested through the official CHAS service'], caution: 'Subsidy level and eligibility depend on government assessments. This guide cannot determine your benefits.' },
+    medifund: { id: 'medifund', name: 'Ask a Medical Social Worker about MediFund', agency: 'Ministry of Health', description: 'MediFund may help qualifying patients who struggle with medical bills after other means of payment.', url: 'https://www.moh.gov.sg/managing-expenses/schemes-and-subsidies/medifund/', offline: 'Approach a Medical Social Worker at the MediFund-approved healthcare institution.', steps: ['Ask the healthcare institution to refer you to a Medical Social Worker.', 'Explain your difficulty paying for care.', 'Ask about MediFund and other available options.'], checklist: ['Questions about your medical bills', 'Documents requested by the Medical Social Worker through official channels'], caution: 'MediFund eligibility is assessed by the relevant institution.' },
+    health_general: { id: 'health_general', name: 'Ask about healthcare financial help', agency: 'Ministry of Health', description: 'The appropriate source depends on whether help is needed for clinic visits, hospital bills, or other care.', url: 'https://www.moh.gov.sg/managing-expenses/schemes-and-subsidies/', steps: ['Open the Ministry of Health’s official subsidies information.', 'Identify the kind of bill or care involved.', 'If currently at a hospital, ask to speak to a Medical Social Worker.'], checklist: ['A general description of the healthcare cost'], caution: 'Do not upload medical records to NeighbourAssist.' },
+    oneservice: { id: 'oneservice', name: 'Report a neighbourhood issue through OneService', agency: 'Municipal Services Office', description: 'OneService routes municipal feedback, such as broken public lights or cleanliness problems, to the relevant agency or Town Council.', url: 'https://www.oneservice.gov.sg/', steps: ['Open the OneService website and choose its official reporting channel.', 'Describe the issue and its location through that channel.', 'Follow the official prompts for photos and contact details.'], checklist: ['Location of the issue', 'A photo and description, if the official channel requests them'], caution: 'This is for municipal issues, not financial appeals or emergency services.' },
+    lifesg: { id: 'lifesg', name: 'Find government support through LifeSG', agency: 'Government of Singapore', description: 'LifeSG offers official information and entry points for government services.', url: 'https://www.life.gov.sg/', steps: ['Open the official LifeSG website.', 'Browse services that match your concern.', 'Ask a trusted caregiver for help if needed.'], checklist: ['A short description of the kind of help you are seeking'], caution: 'This student website is not a government service and cannot file your application.' },
+};
+export function getQuestionIds(category, answers) {
+    switch (category) {
+        case 'financial': return answers.f_urgent === 'yes' ? ['f_urgent', 'contact'] : answers.f_existing === 'yes' ? ['f_urgent', 'f_existing', 'contact'] : ['f_urgent', 'f_existing', 'f_duration', 'f_work', 'f_age', 'contact'];
+        case 'housing': return ['h_type', 'h_goal', 'contact'];
+        case 'cpf': return ['c_age', 'c_goal', 'contact'];
+        case 'health': return ['m_type', 'contact'];
+        case 'municipal': return ['contact'];
+        default: return ['contact'];
+    }
+}
+export function getRecommendations(category, a) {
+    let id = 'lifesg';
+    const extra = [];
+    let reason = 'This is a suitable official starting point for further information.';
+    if (category === 'financial') {
+        if (a.f_urgent === 'yes') {
+            id = 'comcare_urgent';
+            reason = 'You indicated that food or other essential expenses need urgent attention.';
+        }
+        else if (a.f_existing === 'yes') {
+            id = 'comcare_existing';
+            reason = 'You indicated that you already receive ComCare support.';
+        }
+        else if (a.f_work === 'unable' && a.f_duration === 'long') {
+            id = 'comcare_lta';
+            reason = 'You mentioned being unable to work and needing support over a longer period.';
+        }
+        else if (['low', 'temporary'].includes(a.f_work) || a.f_duration === 'short') {
+            id = 'comcare_smta';
+            reason = 'You mentioned difficulties meeting everyday expenses or a temporary income problem.';
+        }
+        else {
+            id = 'sso';
+            reason = 'An SSO can help clarify which programme may apply.';
+        }
+        if (a.f_age === 'yes')
+            extra.push('silver');
+    }
+    else if (category === 'housing') {
+        if (a.h_type === 'public_rental' && a.h_goal === 'smaller') {
+            id = 'hdb_transfer';
+            reason = 'You said you rent an HDB public rental flat and want a smaller home.';
+        }
+        else if (a.h_type === 'public_rental' && a.h_goal === 'rent') {
+            id = 'hdb_tenant';
+            reason = 'You said you are a public-rental tenant struggling with rental costs.';
+        }
+        else if (a.h_type === 'public_rental' && a.h_goal === 'tenancy') {
+            id = 'hdb_change';
+            reason = 'You asked about the tenancy or registered occupants of a public rental flat.';
+        }
+        else if (a.h_type === 'owner' && a.h_goal === 'smaller') {
+            id = 'hdb_rightsize';
+            reason = 'You said you own an HDB flat and are considering moving to a smaller home.';
+        }
+        else if (a.h_type === 'private_rental' && a.h_goal === 'rent') {
+            id = 'sso';
+            reason = 'You mentioned difficulty paying rent in a privately rented home. An SSO can discuss possible financial support.';
+        }
+        else if (a.h_type === 'private_rental') {
+            id = 'lifesg';
+            reason = 'Private tenancy questions are different from HDB public-rental transfers. This is a general official directory, not a tenancy decision.';
+        }
+        else {
+            id = 'hdb_general';
+            reason = 'HDB can confirm which housing procedure is appropriate for your living situation.';
+        }
+    }
+    else if (category === 'cpf') {
+        if (a.c_goal === 'support') {
+            id = 'silver';
+            reason = 'You asked about support payments for seniors. Silver Support is automatically assessed.';
+        }
+        else if (a.c_goal === 'withdraw' && a.c_age === 'yes') {
+            id = 'cpf_withdraw';
+            reason = 'You said you are at least 55 and want to understand CPF withdrawal conditions.';
+        }
+        else {
+            id = 'cpf_general';
+            reason = 'CPF Board can explain the options available for your age and circumstances.';
+        }
+    }
+    else if (category === 'health') {
+        if (a.m_type === 'clinic') {
+            id = 'chas';
+            reason = 'You mentioned GP or dental clinic costs.';
+        }
+        else if (a.m_type === 'bill') {
+            id = 'medifund';
+            reason = 'You mentioned difficulty paying a hospital or other medical bill.';
+        }
+        else {
+            id = 'health_general';
+            reason = 'MOH can guide you toward the right scheme for the care involved.';
+        }
+    }
+    else if (category === 'municipal') {
+        id = 'oneservice';
+        reason = 'This concerns your neighbourhood environment or municipal facilities.';
+    }
+    return { primary: services[id], secondary: extra.map(x => services[x]).filter(s => s.id !== id), reason };
+}
