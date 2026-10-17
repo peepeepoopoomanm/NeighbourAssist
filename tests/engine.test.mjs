@@ -69,3 +69,48 @@ test('caregiver mode changes wording, not underlying referral decisions',()=>{
  assert.equal(audienceQuestionText(questions.contact,'en','caregiver').options[1].value,'phone');
  assert.match(audienceQuestionText(questions.contact,'en','caregiver').options[1].label,/their behalf/i);
 });
+
+import {guides,getGuide} from '../src/journeys.ts';
+test('all referral targets have complete bilingual contact-specific guidance',()=>{
+ for(const service of Object.values(services)){
+  assert.ok(guides[service.id], 'Missing guide for '+service.id);
+  for(const language of ['en','zh'])for(const method of ['online','phone','inperson']){
+   const guidance=getGuide(service,language,method);
+   assert.ok(guidance.steps.length>=2,service.id+': '+language+'/'+method);
+   for(const step of guidance.steps) assert.ok(step.trim().length>=24,service.id+' has too short a step');
+   assert.ok(guidance.url.startsWith('https://')&&guidance.source.startsWith('https://'));
+   assert.match(new URL(guidance.source).hostname,/\.gov\.sg$|^www\.oneservice\.gov\.sg$/);
+  }
+ }
+});
+test('specific ComCare links and HDB rental transfer steps are explained',()=>{
+ const c=getGuide(services.comcare_urgent,'en','online');
+ assert.match(c.steps.join(' '),/Apply for IA/);
+ const h=getGuide(services.hdb_transfer,'en','online');
+ assert.match(h.steps.join(' '),/zone.*HDB Branch/i);
+ assert.match(h.steps.join(' '),/FormSG/);
+ assert.match(h.steps.join(' '),/Singpass/);
+ assert.match(getGuide(services.hdb_transfer,'zh','online').steps.join(' '),/FormSG/);
+});
+test('CPF withdrawal warns about official dashboard and future implications',()=>{
+ const c=getGuide(services.cpf_withdraw,'en','online');
+ assert.match(c.steps.join(' '),/Retirement Dashboard/);
+ assert.match(c.steps.join(' '),/cooling-off/);
+});
+test('MediFund guidance does not invent an online application',()=>{
+ const c=getGuide(services.medifund,'en','online');
+ assert.match(c.steps.join(' '),/not a general self-service/);
+ assert.match(c.steps.join(' '),/Medical Social Worker/);
+});
+test('guides include correct official phone contacts where supported',()=>{
+ assert.equal(getGuide(services.hdb_transfer,'en','phone').phone,'6225-5432');
+ assert.equal(getGuide(services.cpf_withdraw,'en','phone').phone,'1800-227-1188');
+ assert.equal(getGuide(services.chas,'en','phone').phone,'1800-275-2427');
+ assert.equal(getGuide(services.comcare_smta,'en','phone').phone,'1800-222-0000');
+});
+test('unsure method presents multiple contact-route choices',()=>{
+ for(const service of Object.values(services)){
+  const a=getGuide(service,'en','unsure');
+  assert.equal(a.steps.length,3);
+ }
+});
