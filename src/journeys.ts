@@ -115,7 +115,7 @@ export const guides:Record<string,GuideRecord>={
   phone:['使用建屋局官方联络网页列出的售屋或分局咨询渠道。','说明您拥有组屋，考虑换成较小组屋以安排退休生活。','在交易前先询问乐龄安居花红条件及合适的咨询服务。'],
   inperson:['从建屋局官方联络网页查找适合的销售服务，并确认是否需要预约。','正式决定卖买之前，先咨询换小房及乐龄安居花红事宜。','向有关专业人士了解财务影响；本指南不是个人理财建议。']
  }),
- hdb_general:g('https://www.hdb.gov.sg/about-us/contact-us','https://www.hdb.gov.sg/about-us/contact-us',{
+ hdb_general:g(HDB_CONTACT,HDB_CONTACT,{
   online:['On the HDB contact page, select the part relevant to renting, owning, or housing finance.','Use the listed contact or e-service link to ask which housing process fits your situation.','Avoid sharing address or identity details with NeighbourAssist; supply them only if requested by HDB.'],
   phone:['For rental or lease enquiries, call HDB’s Branch Service Line at 6225-5432.','Describe whether the home is owned or rented and what you want to change.','Ask which department or application route to use.'],
   inperson:['Use HDB’s contact page to find the appropriate HDB Branch or Hub service.','Check whether you need an appointment before visiting.','Speak with an HDB officer about the housing enquiry and follow their advice.']
@@ -133,7 +133,7 @@ export const guides:Record<string,GuideRecord>={
   phone:['在官方热线时间拨打公积金局 1800-227-1188。','询问如何查看可提款额，以及提款对日后退休入息的影响。','如有人协助，请向公积金局查询获授权代表的正式程序；切勿分享 Singpass 密码。'],
   inperson:['通过公积金局官方联络网页预约服务中心；柜台服务须预约。','请职员解释退休提款选项，以及如何查看自己的可提款额。','不要只凭学生指南便作出提款决定。']
  },cpfPhone,cpfHours),
- cpf_general:g('https://www.cpf.gov.sg/member/retirement-income','https://www.cpf.gov.sg/service/',{
+ cpf_general:g('https://www.cpf.gov.sg/member/retirement-income',CPF_CONTACT,{
   online:['Open the CPF Board retirement information page.','Choose the topic relevant to your question, such as retirement savings, monthly payouts or withdrawal rules.','To view personal amounts, use CPF’s official sign-in; never enter Singpass credentials in NeighbourAssist.'],
   phone:['Call CPF Board at 1800-227-1188 during the published hours.','Explain whether the question is about account balances, withdrawals or monthly payouts.','Ask where to view your information or how to arrange an appointment.'],
   inperson:['Book a CPF Service Centre appointment through the CPF Board contact page.','Bring your questions about retirement savings or payouts.','Use only the official CPF service to access account-specific information.']
