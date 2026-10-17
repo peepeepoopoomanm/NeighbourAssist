@@ -78,3 +78,14 @@ Read `docs/01-project-brief.md` first, then the referral log and decision tree. 
 Initial planning and implementation were produced with assistance from ChatGPT (GPT-6). Team members should inspect, understand, and test all source code before submission. Disclose AI assistance in the Devpost writeup if required by the event rules.
 
 **Connected GitHub account:** `peepeepoopoomanm`. For the one-time new-repository step, see `GITHUB_SETUP.md`.
+
+
+## October 17 usability update (English / 简体中文)
+
+- Choose **Language / 语言** in the header to switch all React interface questions, recommendations, checklist and instructions between English and Simplified Chinese.
+- Choose **Text size / 字体大小** (Normal, Large, Extra large) to enlarge the text across answers, buttons, headings and results.
+- The financial questionnaire now asks about the broad expense category (food, utilities, rent or living expenses), without amounts; housing asks extra situation-specific questions.
+- The final contact preference changes the main action and help copy: online, telephone, in person, or unsure. Urgent ComCare pathways stay short.
+- Footer **Browse assistance topics** scrolls to the actual topic choices.
+
+**Translation status:** Simplified Chinese is a student-written draft, not an official government translation. Ask a fluent Chinese speaker to review the translated guidance and have all agency details checked before any real-world use. The `demo/` standalone preview remains an older English-only reference; the updated React application in `src/` is the authoritative version. Real cases, identity documents and financial/medical details must never be entered into this prototype.
