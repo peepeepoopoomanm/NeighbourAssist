@@ -35,7 +35,22 @@
 /* Clearly identifies whose circumstances the questionnaire is asking about. */
 .audience-notice{background:#edf6ef;border:1px solid #b9d9c4;border-radius:11px;padding:14px 18px;color:#214c40;font-weight:650;line-height:1.5;margin:18px 0 20px}
 
-/* Category icons: consistent SVG viewboxes and stroke weights across devices. */
-.category-icon .category-svg{display:block;width:40px;height:40px;flex:none;overflow:visible}
+/* Consistent icon dimensions; slight per-shape adjustments improve optical balance. */
+.category-icon .category-svg{display:block;width:42px;height:42px;flex:none;overflow:visible}
+.category-icon[data-category="financial"] .category-svg{width:44px;height:44px}
+.category-icon[data-category="cpf"] .category-svg{width:46px;height:46px}
+.category-icon[data-category="health"] .category-svg{width:42px;height:42px}
+.category-icon[data-category="unsure"] .category-svg{width:43px;height:43px}
 .site.text-large .category-icon .category-svg{width:44px;height:44px}
-@media(max-width:600px){.category-icon{flex-basis:64px;width:64px;height:64px}.category-icon .category-svg{width:38px;height:38px}.site.text-large .category-icon .category-svg{width:40px;height:40px}}
+.site.text-large .category-icon[data-category="financial"] .category-svg{width:46px;height:46px}
+.site.text-large .category-icon[data-category="cpf"] .category-svg{width:48px;height:48px}
+@media(max-width:600px){
+ .category-icon{flex-basis:64px;width:64px;height:64px}
+ .category-icon .category-svg{width:40px;height:40px}
+ .category-icon[data-category="financial"] .category-svg{width:42px;height:42px}
+ .category-icon[data-category="cpf"] .category-svg{width:44px;height:44px}
+ .category-icon[data-category="health"] .category-svg{width:40px;height:40px}
+ .category-icon[data-category="unsure"] .category-svg{width:41px;height:41px}
+ .site.text-large .category-icon .category-svg{width:43px;height:43px}
+ .site.text-large .category-icon[data-category="cpf"] .category-svg{width:46px;height:46px}
+}
