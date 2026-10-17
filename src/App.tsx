@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {categories,questions,getQuestionIds,getRecommendations,type Category,type Answers,type Service} from './engine';
 import {messages,categoryText,serviceText,type Language,type TextSize} from './i18n';
 import {audienceQuestionText,audienceReasonText,audienceSituationText,caregiverUi,type Audience} from './audience';
+import CategoryIcon from './CategoryIcon';
 import './style.css';
 
 type View='home'|'quiz'|'results'|'about';
@@ -80,7 +81,7 @@ export default function App(){
    <div className="hero-panel" aria-label={t.how}><span className="panel-label">{t.how}</span>{[[t.how1,t.how1Detail],[t.how2,t.how2Detail],[t.how3,t.how3Detail]].map(([name,detail],i)=><div className="hero-step" key={name}><span className="step-bubble">0{i+1}</span><div><strong>{name}</strong><small>{detail}</small></div></div>)}</div></div></section>
    <section ref={topicsRef} id="topics" className="container category-section"><div className="section-head"><div><span className="eyebrow">{t.startHere}</span><h2>{t.chooseTopic}</h2><p>{t.topicHint}</p></div></div>
     <div className="audience"><span className="audience-title">{t.findingFor}</span><div className="segment" role="group" aria-label={t.findingFor}><button aria-pressed={forWhom==='self'} className={forWhom==='self'?'selected':''} onClick={()=>setForWhom('self')}>{t.myself}</button><button aria-pressed={forWhom==='caregiver'} className={forWhom==='caregiver'?'selected':''} onClick={()=>setForWhom('caregiver')}>{t.caregiver}</button></div></div>
-    <div className="categories">{categories.map(c=>{const label=categoryText(c.id,language,c);return <button className="category-card" key={c.id} onClick={()=>start(c.id)}><span className="category-icon" aria-hidden="true">{c.symbol}</span><span className="category-details"><strong>{label.label}</strong><small>{label.summary}</small></span><span className="card-arrow" aria-hidden="true">→</span></button>})}</div>
+    <div className="categories">{categories.map(c=>{const label=categoryText(c.id,language,c);return <button className="category-card" key={c.id} onClick={()=>start(c.id)}><span className="category-icon" aria-hidden="true"><CategoryIcon category={c.id}/></span><span className="category-details"><strong>{label.label}</strong><small>{label.summary}</small></span><span className="card-arrow" aria-hidden="true">→</span></button>})}</div>
     <aside className="info-strip"><span className="info-icon" aria-hidden="true">i</span><div><strong>{t.guideTitle}</strong><p>{t.guideBody}</p></div></aside>
    </section></>}
   {view==='quiz'&&<section className="container flow-wrap"><div className="breadcrumb"><button onClick={home}>{t.allTopics}</button><span aria-hidden="true">/</span><span>{topicName(category)}</span></div><div className="flow-layout"><div className="question-card">
