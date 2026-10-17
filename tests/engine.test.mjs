@@ -30,3 +30,42 @@ test('every question and option has Simplified Chinese wording',()=>{for(const q
 test('every service has Chinese instructions, cautions and checklists',()=>{for(const s of Object.values(services)){assert.ok(hasChineseService(s.id),`Missing service ${s.id}`);const tr=serviceText(s,'zh');assert.equal(tr.steps.length,s.steps.length);assert.equal(tr.checklist.length,s.checklist.length);assert.ok(tr.name!==s.name,`Untranslated service ${s.id}`);for(const step of tr.steps)assert.ok(step.length>1)}});
 test('both language packs share all interface labels',()=>assert.deepEqual(Object.keys(messages.en).sort(),Object.keys(messages.zh).sort()));
 test('specific expense and housing concerns appear as plain-language prompts',()=>{assert.match(situationText({f_need:'food'},'en'),/food/);assert.match(situationText({h_context:'alone'},'zh'),/独居/)});
+
+import {audienceQuestionText,audienceReasonText,audienceSituationText,caregiverUi,hasCaregiverQuestion} from '../src/audience.ts';
+test('self-service retains the original question wording',()=>{
+ for(const lang of ['en','zh'])for(const q of Object.values(questions))
+  assert.deepEqual(audienceQuestionText(q,lang,'self'),questionText(q,lang));
+});
+test('caregiver wording exists for every question in English and Chinese',()=>{
+ for(const lang of ['en','zh'])for(const q of Object.values(questions)){
+  assert.ok(hasCaregiverQuestion(q.id,lang),'Missing caregiver wording: '+lang+'/'+q.id);
+  const cg=audienceQuestionText(q,lang,'caregiver');
+  assert.ok(cg.title!==questionText(q,lang).title,'Caregiver title unchanged: '+lang+'/'+q.id);
+  assert.deepEqual(cg.options.map(o=>o.value),q.options.map(o=>o.value));
+ }
+});
+test('caregiver urgency and housing question refer to the person in need',()=>{
+ const urgent=audienceQuestionText(questions.f_urgent,'en','caregiver');
+ assert.match(urgent.title,/person you are helping/i);
+ assert.match(urgent.options[0].label,/they need help/i);
+ const housing=audienceQuestionText(questions.h_type,'en','caregiver');
+ assert.match(housing.title,/person you are helping/i);
+ assert.match(housing.options[0].label,/They live in/i);
+ const chinese=audienceQuestionText(questions.f_urgent,'zh','caregiver');
+ assert.match(chinese.title,/协助的人/);
+ assert.match(chinese.options[0].label,/对方/);
+});
+test('caregiver results and contact scripts do not imply the helper is the applicant',()=>{
+ assert.match(caregiverUi.en.phoneScriptUrgent,/helping someone/i);
+ assert.match(caregiverUi.en.notice,/their situation/i);
+ assert.match(caregiverUi.zh.guidanceIntro,/对方/);
+ assert.match(audienceSituationText({f_need:'food'},'en','caregiver'),/helping someone/i);
+ assert.match(audienceSituationText({f_need:'food'},'zh','caregiver'),/帮助一位/);
+ assert.match(audienceReasonText('You said you rent an HDB public rental flat and want a smaller home.','en','caregiver'),/They live/i);
+});
+test('caregiver mode changes wording, not underlying referral decisions',()=>{
+ const answers={f_urgent:'yes',contact:'phone'};
+ assert.equal(getRecommendations('financial',answers).primary.id,'comcare_urgent');
+ assert.equal(audienceQuestionText(questions.contact,'en','caregiver').options[1].value,'phone');
+ assert.match(audienceQuestionText(questions.contact,'en','caregiver').options[1].label,/their behalf/i);
+});
