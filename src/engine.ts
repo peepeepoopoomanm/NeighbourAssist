@@ -36,6 +36,7 @@ export const questions:Record<string,Question>={
  h_household:{id:'h_household',title:'What best describes your current living arrangements?',hint:'We only need a general description—not names, addresses, or tenancy numbers.',options:opt(['alone','I live alone'],['family','I live with family or other household members'],['shared','I share the home with someone outside my family'],['unsure','I am not sure / prefer not to say'])},
  agency_status:{id:'agency_status',title:'Have you already contacted the responsible government agency about this problem?',hint:'For example, HDB about a flat, CPF Board about CPF, or a healthcare institution about a bill.',options:opt(['first','No, not yet'],['waiting','Yes, I am waiting for a reply'],['rejected','Yes, but my request was rejected'],['unresolved','Yes, but my problem remains unresolved'],['unsure','I am not sure'])},
  h_review:{id:'h_review',title:'What is the main reason you need the situation reviewed?',hint:'Choose a general reason. You can explain details to an official later.',options:opt(['family','My household or caregiving circumstances have changed'],['mobility','I have mobility or accessibility difficulties'],['affordability','The costs are difficult to manage'],['other','Something else / I am not sure'])},
+ c_65:{id:'c_65',title:'Are you aged 65 or above?',hint:'Silver Support is assessed automatically for eligible Singapore citizens aged 65 and above. This question does not establish eligibility.',options:opt(['yes','Yes'],['no','No'],['unsure','Not sure / prefer not to say'])},
  c_concern:{id:'c_concern',title:'What is making your CPF or retirement question difficult?',hint:'Do not share your CPF balance, Singpass login or withdrawal amount here.',options:opt(['rules','The rules or letters are confusing'],['online','I cannot easily use the online service'],['money','I need to plan for immediate expenses'],['other','Another concern / not sure'])},
  m_support:{id:'m_support',title:'Have you spoken to someone at the healthcare institution about payment help?',hint:'A Medical Social Worker can explain possible help with hospital or healthcare bills.',options:opt(['yes','Yes, I have asked for help'],['no','Not yet'],['unsure','I am not sure / it does not apply'])},
  m_barrier:{id:'m_barrier',title:'What would help you most with medical costs?',hint:'This helps us suggest an appropriate contact route, not assess eligibility.',options:opt(['bill','Understanding a bill or payment options'],['subsidy','Finding out about clinic subsidies'],['person','Speaking to a staff member for guidance'],['unsure','I am not sure'])},
@@ -76,7 +77,7 @@ export function getQuestionIds(category:Category,answers:Answers):string[]{
    ...(answers.h_goal==='smaller'?['h_context']:answers.h_goal==='rent'?['h_rent']:[]),
    ...(answers.h_type==='public_rental'&&answers.h_goal==='smaller'?['h_tenure']:[]),
    'h_household','agency_status',...(statusAnswered?['h_review']:[]),'contact'];
-  case 'cpf':return ['c_age','c_goal','c_concern','agency_status','contact'];
+  case 'cpf':return ['c_age','c_goal',...(answers.c_goal==='support'&&answers.c_age!=='no'?['c_65']:[]),'c_concern','agency_status','contact'];
   case 'health':return ['m_type',...(answers.m_type==='bill'?['m_support']:[]),'m_barrier','agency_status','contact'];
   case 'municipal':return ['n_issue','n_report','contact'];
   default:return ['u_need','agency_status','contact'];
@@ -109,7 +110,7 @@ export function getRecommendations(category:Category,a:Answers):{primary:Service
   else if(a.h_type==='private_rental'){id='lifesg';reason='Private tenancy questions are different from HDB public-rental transfers. This is a general official directory, not a tenancy decision.';}
   else {id='hdb_general';reason='HDB can confirm which housing procedure is appropriate for your living situation.';}
  } else if(category==='cpf'){
-  if(a.c_goal==='support'){id='silver';reason='You asked about support payments for seniors. Silver Support is automatically assessed.';}
+  if(a.c_goal==='support'&&a.c_65==='yes'){id='silver';reason='You asked about support payments for seniors. Silver Support is automatically assessed.';}
   else if(a.c_goal==='withdraw'&&a.c_age==='yes'){id='cpf_withdraw';reason='You said you are at least 55 and want to understand CPF withdrawal conditions.';}
   else {id='cpf_general';reason='CPF Board can explain the options available for your age and circumstances.';}
  } else if(category==='health'){
