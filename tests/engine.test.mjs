@@ -18,13 +18,13 @@ test('municipal OneService referral',()=>assert.equal(rec('municipal',{}),'onese
 test('all categories have official HTTPS referral targets',()=>{for(const c of categories){const r=getRecommendations(c.id,{});assert.ok(r.primary.url.startsWith('https://'));assert.ok(r.primary.caution)}});
 test('every service has clear steps, a caution and government-owned host',()=>{for(const s of Object.values(services)){assert.ok(s.steps.length>0);assert.ok(s.caution);assert.match(new URL(s.url).hostname,/\.(gov\.sg)$|^(www\.)?life\.gov\.sg$|^supportgowhere\.life\.gov\.sg$/)}});
 
-test('existing ComCare flow skips unnecessary questions',()=>assert.deepEqual(getQuestionIds('financial',{f_urgent:'no',f_existing:'yes'}),['f_urgent','f_need','f_existing','contact']));
+test('existing ComCare flow skips unnecessary questions',()=>assert.deepEqual(getQuestionIds('financial',{f_urgent:'no',f_existing:'yes'}),['f_urgent','f_need','f_existing','agency_status','contact']));
 
 // Accessibility and language coverage of all supported questions and referrals.
 import {messages,questionText,serviceText,hasChineseQuestion,hasChineseService,situationText} from '../src/i18n.ts';
 import {questions} from '../src/engine.ts';
 test('financial questions identify the expense type without demanding amounts',()=>{assert.ok(getQuestionIds('financial',{f_urgent:'no'}).includes('f_need'));assert.equal(questions.f_need.options.some(o=>o.value==='food'),true)});
-test('housing adds relevant context and rental difficulty questions',()=>{assert.deepEqual(getQuestionIds('housing',{h_goal:'smaller'}),['h_type','h_goal','h_context','contact']);assert.deepEqual(getQuestionIds('housing',{h_goal:'rent'}),['h_type','h_goal','h_rent','contact'])});
+test('housing adds relevant context and rental difficulty questions',()=>{assert.deepEqual(getQuestionIds('housing',{h_goal:'smaller'}),['h_type','h_goal','h_context','h_household','agency_status','contact']);assert.deepEqual(getQuestionIds('housing',{h_goal:'rent'}),['h_type','h_goal','h_rent','h_household','agency_status','contact'])});
 test('urgent financial flow stays short',()=>assert.deepEqual(getQuestionIds('financial',{f_urgent:'yes'}),['f_urgent','contact']));
 test('every question and option has Simplified Chinese wording',()=>{for(const q of Object.values(questions)){assert.ok(hasChineseQuestion(q.id),`Missing question ${q.id}`);const tr=questionText(q,'zh');assert.ok(tr.title&&tr.title!==q.title,`Untranslated title ${q.id}`);for(let i=0;i<q.options.length;i++)assert.ok(tr.options[i].label!==q.options[i].label,`Untranslated option ${q.id}/${q.options[i].value}`)}});
 test('every service has Chinese instructions, cautions and checklists',()=>{for(const s of Object.values(services)){assert.ok(hasChineseService(s.id),`Missing service ${s.id}`);const tr=serviceText(s,'zh');assert.equal(tr.steps.length,s.steps.length);assert.equal(tr.checklist.length,s.checklist.length);assert.ok(tr.name!==s.name,`Untranslated service ${s.id}`);for(const step of tr.steps)assert.ok(step.length>1)}});
@@ -113,4 +113,61 @@ test('unsure method presents multiple contact-route choices',()=>{
   const a=getGuide(service,'en','unsure');
   assert.equal(a.steps.length,3);
  }
+});
+
+import {getNextPathway} from '../src/engine.ts';
+import {getMpsPreparation,PARLIAMENT_MP_LOOKUP} from '../src/mps.ts';
+test('urgent financial needs still bypass history and MPS questions',()=>{
+ assert.deepEqual(getQuestionIds('financial',{f_urgent:'yes'}),['f_urgent','contact']);
+ assert.equal(getNextPathway('financial',{f_urgent:'yes',agency_status:'rejected'}),'urgent');
+});
+test('rejected housing cases receive a review question while first-time cases do not',()=>{
+ const first=getQuestionIds('housing',{h_type:'public_rental',h_goal:'smaller',agency_status:'first'});
+ const rejected=getQuestionIds('housing',{h_type:'public_rental',h_goal:'smaller',agency_status:'rejected'});
+ assert.ok(first.includes('h_tenure')); assert.ok(first.includes('h_household'));
+ assert.ok(!first.includes('h_review')); assert.ok(rejected.includes('h_review'));
+ assert.equal(rejected.at(-1),'contact');
+});
+test('rental tenure information does not automatically decide HDB eligibility',()=>{
+ assert.equal(rec('housing',{h_type:'public_rental',h_goal:'smaller',h_tenure:'under2'}),'hdb_transfer');
+ assert.equal(rec('housing',{h_type:'public_rental',h_goal:'smaller',h_tenure:'2plus'}),'hdb_transfer');
+});
+test('different agency histories lead to safe human-assistance pathways',()=>{
+ assert.equal(getNextPathway('housing',{agency_status:'first'}),'agency');
+ assert.equal(getNextPathway('housing',{agency_status:'waiting'}),'followup');
+ assert.equal(getNextPathway('housing',{agency_status:'rejected'}),'review');
+ assert.equal(getNextPathway('housing',{agency_status:'unresolved'}),'review');
+ assert.equal(getNextPathway('municipal',{n_report:'yes'}),'review');
+});
+test('CPF medical municipal and unsure flows ask meaningful follow-up questions',()=>{
+ assert.ok(getQuestionIds('cpf',{}).includes('c_concern'));
+ assert.ok(getQuestionIds('health',{m_type:'bill'}).includes('m_support'));
+ assert.ok(!getQuestionIds('health',{m_type:'clinic'}).includes('m_support'));
+ assert.deepEqual(getQuestionIds('municipal',{}),['n_issue','n_report','contact']);
+ assert.deepEqual(getQuestionIds('unsure',{}),['u_need','agency_status','contact']);
+});
+test('unsure users are sent toward the responsible agency without false assessment',()=>{
+ assert.equal(rec('unsure',{u_need:'housing'}),'hdb_general');
+ assert.equal(rec('unsure',{u_need:'financial'}),'sso');
+ assert.equal(rec('unsure',{u_need:'cpf'}),'cpf_general');
+ assert.equal(rec('unsure',{u_need:'health'}),'health_general');
+ assert.equal(rec('unsure',{u_need:'municipal'}),'oneservice');
+});
+test('MPS notes preserve only structured selections and can be produced in both languages',()=>{
+ const a={h_type:'public_rental',h_goal:'smaller',h_tenure:'under2',agency_status:'rejected',h_review:'mobility',contact:'online'};
+ const en=getMpsPreparation('housing',a,'en','self');
+ const zh=getMpsPreparation('housing',a,'zh','caregiver');
+ assert.match(en.topic,/Housing/);assert.match(zh.topic,/住房/);
+ assert.ok(en.items.some(i=>i.id==='agency_status'));
+ assert.ok(zh.items.some(i=>i.id==='h_tenure'));
+ assert.ok(!en.items.some(i=>i.id==='contact'));
+ assert.match(en.caution,/not an official MP appeal letter/);
+ assert.match(zh.audience,/为他人/);
+ assert.match(en.pathway,/rejection|unresolved/i);
+ assert.match(PARLIAMENT_MP_LOOKUP,/parliament.gov.sg/);
+});
+test('MPS case notes do not expose unknown values or include inputs for personal identifiers',()=>{
+ const brief=getMpsPreparation('housing',{h_type:'public_rental',h_goal:'smaller',agency_status:'rejected',contact:'phone',nric:'S1234567A'},'en','self');
+ assert.ok(!JSON.stringify(brief).includes('S1234567A'));
+ assert.ok(brief.items.every(x=>x.label&&x.answer));
 });
