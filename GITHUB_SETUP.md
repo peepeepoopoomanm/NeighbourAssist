@@ -1,41 +1,58 @@
-# NeighbourAssist — GitHub publishing handoff
+# NeighbourAssist — repository handoff
 
-GitHub account connected in ChatGPT: `peepeepoopoomanm`.
+**Current repository:** https://github.com/peepeepoopoomanm/NeighbourAssist  
+**Default branch:** `main`  
+**Status:** Existing hackathon project; **do not create another repository.**
 
-**Connector limitation:** The GitHub integration can write files to an existing repository, but does not expose a `create repository` action. A new empty repository must be created in GitHub once.
+The original instructions for creating an empty GitHub repository are obsolete. Keep this file as a concise contributor and deployment handoff.
 
-## Create the repository (one-time action)
+## First-time local setup
 
-1. Open https://github.com/new while signed in as `peepeepoopoomanm`.
-2. Set repository name to **neighbourassist**.
-3. Choose **Public** if publishing source for the hackathon. Consider making it private during development only if you will make it public before submission.
-4. **Do not** add a README, `.gitignore`, or license during creation; the source project already has README and `.gitignore`.
-5. Click **Create repository**.
-6. Then return to ChatGPT and say **“I created the empty neighbourassist GitHub repository — publish the project.”** The connected GitHub integration should now be able to add project files.
+Install a supported Node.js LTS release and Git. In a PowerShell terminal:
 
-## Manual publishing alternative
-
-From the extracted project folder on your PC, after creating the empty repo:
-
-```bash
-git init
-git add .
-git commit -m "Initialize NeighbourAssist hackathon project"
-git branch -M main
-git remote add origin https://github.com/peepeepoopoomanm/neighbourassist.git
-git push -u origin main
+```powershell
+git clone https://github.com/peepeepoopoomanm/NeighbourAssist.git
+cd NeighbourAssist
+npm install
+npm test
+npm run build
+npm run dev
 ```
 
-If your local repository already has an `origin` remote, use `git remote set-url origin ...` instead of `git remote add origin ...`.
+A development website will be available at the URL printed by Vite (usually http://localhost:5173/).
+
+## Updating a local copy
+
+From the project folder, stop the development server with Ctrl+C, then:
+
+```powershell
+git status
+git pull
+npm test
+npm run build
+npm run dev
+```
+
+If `git status` shows uncommitted work, back it up or commit it before pulling; never discard a teammate's work to resolve a conflict.
 
 ## Collaboration
 
-In the repository: Settings > Collaborators (or Collaborators and teams) > Add people. Invite your teammate's **actual GitHub username**. They must accept. This is not possible without knowing their GitHub username and granting access.
+Before granting write access, confirm the contributor's GitHub username and responsibilities. Use GitHub repository settings to manage access. Review changes and check the test/build results before merging.
 
-## Verification
+## One intended production output
 
-- The repository URL loads: https://github.com/peepeepoopoomanm/neighbourassist
-- `README.md`, `src/App.tsx`, `src/engine.ts`, `tests/engine.test.mjs`, docs and demo files exist.
-- The `.github/workflows/ci.yml` GitHub Actions workflow runs tests and tries a React build. Correct any build errors it discovers.
-- Download or clone on both machines, `npm install`, `npm run dev`, `npm test`.
-- Deployxa is separate and still requires an authenticated deployment.
+The **React + TypeScript application** lives in `src/`. Build with `npm run build`; deploy **only** the generated `dist/` directory.
+
+Do **not** distribute the older `demo/` standalone prototype as the finished website. It does not implement the current bilingual MPS preparation experience.
+
+## Pre-release safety
+
+- Confirm all published official agency links, phone details and criteria are current.
+- Recheck Simplified Chinese translations with a proficient speaker.
+- Never collect NRICs, bank statements, Singpass details, medical records or real constituent case information in the prototype.
+- Explain that NeighbourAssist is not an official government or MP appeal service.
+- Run `npm test` and `npm run build` and manually test mobile, print, caregiver and language settings.
+- Commit a reviewed dependency lockfile (`package-lock.json`) before a reproducible public release. Once committed, CI can switch from `npm install` to `npm ci`.
+- Check event submission rules and disclose AI development assistance as needed.
+
+See `README.md`, `docs/02-service-research.md`, `docs/03-decision-tree.md`, and `docs/04-mps-preparation.md`.
