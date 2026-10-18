@@ -1,6 +1,6 @@
 import {categories,questions,getNextPathway,getQuestionIds,type Answers,type Category} from './engine.ts';
 import {categoryText,questionText,type Language} from './i18n.ts';
-import type {Audience} from './audience.ts';
+import {audienceQuestionText,type Audience} from './audience.ts';
 
 // Only predetermined multiple-choice responses. No identity, addresses, free text,
 // personal documents or details are entered or transmitted by this feature.
@@ -12,10 +12,11 @@ export function getMpsPreparation(category:Category,answers:Answers,language:Lan
  const title=categoryText(category,language,categories.find(c=>c.id===category)??{label:'Assistance',summary:''}).label;
  const prompts=getQuestionIds(category,answers).filter(id=>id!=='contact'&&answers[id]&&questions[id]);
  const items=prompts.map(id=>{
-  const translated=questionText(questions[id],language);
+  const translated=audience==='caregiver'?audienceQuestionText(questions[id],language,audience):questionText(questions[id],language);
   const selected=translated.options.find(option=>option.value===answers[id]);
-  return {id,label:translated.title,answer:selected?.label??(zh?'不确定':'Not sure')};
- });
+  if(!selected)return null;
+  return {id,label:translated.title,answer:selected.label};
+ }).filter((item):item is {id:string;label:string;answer:string}=>item!==null);
  const preparation=[
   zh?'有关机构的信件、回复或申请编号（如有）':'Previous agency letters, replies or reference numbers (if any)',
   zh?'简要说明最需要解决的问题，以及为什么需要帮助':'A short explanation of what you are asking for and why',
