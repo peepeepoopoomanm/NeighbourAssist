@@ -25,13 +25,11 @@ Deploy the generated `dist/` directory to a static host.
 npm test
 ```
 
-## Offline preview without npm
-A self-contained browser-runnable preview is in `demo/`; it uses the **same referral engine source** compiled to `public/demo-engine/engine.js`.
+## Archived development preview
 
-```bash
-python -m http.server 8000
-```
-Open `http://localhost:8000/demo/` in your browser. This is a separate static preview; it is not a substitute for verifying the React build. Do not open via `file://` because JavaScript modules require HTTP serving.
+The `demo/` directory is **legacy developer reference material**, not the current NeighbourAssist website. It is English-only, uses an earlier copy of the referral engine from `public/demo-engine/`, and **does not include** the new MPS preparation feature or the latest translations. Do not share, deploy or demonstrate this older preview to residents.
+
+Use `npm run dev` for development and `npm run build` for the authoritative React application. The generated `dist/` folder is the only intended production output.
 
 ## Source structure
 - `src/engine.ts` — category questions, verified referral records, deterministic rules.
@@ -50,18 +48,9 @@ Open `http://localhost:8000/demo/` in your browser. This is a separate static pr
 - Any official links, policy statements, service hours and contact numbers must be rechecked before real-world deployment.
 - Health and urgent needs require appropriate official or emergency channels, not this prototype.
 
-## Publishing to GitHub
-1. Create a new empty repository named `neighbourassist` on GitHub **without** initial README (this project already has one).
-2. From the unzipped project root:
-```bash
-git init
-git add .
-git commit -m "Initialize NeighbourAssist hackathon prototype"
-git branch -M main
-git remote add origin https://github.com/peepeepoopoomanm/neighbourassist.git
-git push -u origin main
-```
-3. Add your friend via **Repository Settings → Collaborators**; they'll need to accept the invitation.
+## Existing GitHub repository
+
+This project is already published at https://github.com/peepeepoopoomanm/NeighbourAssist. Contributors should clone the repository, use `git pull` for upstream changes, and run `npm test` plus `npm run build` before proposing changes. The older initial-repository setup instructions in `GITHUB_SETUP.md` are retained only as historical onboarding material.
 
 ## Deployxa setup checklist
 We could not access your authenticated Deployxa account from this chat. The exact dashboard workflow may change, but the app is a Vite static React build:
