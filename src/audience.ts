@@ -21,6 +21,16 @@ const caregiverEn:WordingMap = {
  c_age:{title:'Is the person you are helping aged 55 or above?',options:{unsure:'Prefer not to say / I do not know'}},
  c_goal:{title:'What would they like to understand?',options:{withdraw:'Can they withdraw some CPF savings?',support:'Are government support payments available to them?',balance:'How can they check their retirement savings or payouts?',unsure:'I am not sure'}},
  m_type:{title:'Which medical costs are they concerned about?',options:{clinic:'Their GP or dental clinic visits',bill:'Hospital or other medical bills they cannot afford',unsure:'I am not sure'}},
+ h_tenure:{title:'How long has the person you are helping lived in their current HDB public rental flat?',hint:'HDB usually requires at least two years of occupation before a transfer request can be considered.'},
+ h_household:{title:'What best describes the living arrangements of the person you are helping?',hint:'Choose a general description, without identifying the people involved.',options:{alone:'They live alone',family:'They live with family or other household members',shared:'They share with someone outside the family',unsure:'I am not sure / prefer not to say'}},
+ agency_status:{title:'Has the person you are helping already contacted the responsible government agency?',hint:'For example, HDB, CPF Board or the hospital.',options:{first:'No, they have not contacted the agency',waiting:'Yes, they are waiting for a reply',rejected:'Yes, their request was rejected',unresolved:'Yes, their problem remains unresolved',unsure:'I am not sure'}},
+ h_review:{title:'Why might they need their housing situation reviewed?',hint:'Do not share their address or sensitive details.',options:{family:'Their household or caregiving circumstances changed',mobility:'They have mobility or accessibility difficulties',affordability:'They are struggling with housing costs',other:'Something else / I am not sure'}},
+ c_concern:{title:'What is making their CPF or retirement question difficult?',hint:'Do not enter their CPF balance or Singpass login.',options:{rules:'They find the rules or letters confusing',online:'They cannot easily use the online service',money:'They need to plan for immediate expenses',other:'Another concern / not sure'}},
+ m_support:{title:'Have they asked the healthcare institution about help with payment?',hint:'A Medical Social Worker may be able to explain suitable options.',options:{yes:'Yes, they have asked',no:'Not yet',unsure:'I am not sure / not applicable'}},
+ m_barrier:{title:'What would help them most with medical costs?',options:{bill:'Understanding their bill or payment options',subsidy:'Finding clinic subsidies',person:'Speaking with a staff member',unsure:'I am not sure'}},
+ n_issue:{title:'What neighbourhood issue do they want to report?'},
+ n_report:{title:'Have they already reported the issue through an official channel?',options:{yes:'Yes, but it remains unresolved',no:'Not yet',unsure:'I am not sure'}},
+ u_need:{title:'Which area best matches their concern?'},
  contact:{title:'How would you prefer to help them contact a service?',hint:'Please contact services on their behalf only with their permission. We will also show the official website.',options:{online:'Help them use the official website',phone:'Call on their behalf, with their permission',inperson:'Go with them to an office',unsure:'I am not sure'}},
 };
 const caregiverZh:WordingMap = {
@@ -37,6 +47,16 @@ const caregiverZh:WordingMap = {
  c_age:{title:'您正在协助的人是否已满 55 岁？',options:{unsure:'不愿透露／我不清楚'}},
  c_goal:{title:'对方希望了解哪方面的资料？',options:{withdraw:'对方可以提取部分公积金吗？',support:'对方是否可以获得长者补助？',balance:'对方应该如何查看退休储蓄或入息资料？',unsure:'我不确定'}},
  m_type:{title:'对方主要担心哪一类医疗开销？',options:{clinic:'对方的全科或牙科诊所费用',bill:'对方无法负担的医院或其他医疗账单',unsure:'我不确定'}},
+ h_tenure:{title:'您正在协助的人在目前的公共租赁组屋住了多久？',hint:'一般需居住至少两年，建屋局才可能考虑转租申请。',options:{under2:'少于两年','2plus':'两年或以上',unsure:'我不确定'}},
+ h_household:{title:'对方目前的居住安排是怎样的？',hint:'只需概括，不必提供任何人的身份资料。',options:{alone:'对方独居',family:'对方与家人或家庭成员同住',shared:'对方与非家人合住',unsure:'不确定／不愿透露'}},
+ agency_status:{title:'您正在协助的人是否已经联系过有关政府机构？',hint:'例如建屋局、公积金局或医院。',options:{first:'对方还没有联系',waiting:'对方已经联系，正在等待回复',rejected:'对方的申请或要求被拒绝',unresolved:'对方的问题仍未解决',unsure:'我不确定'}},
+ h_review:{title:'对方希望机构重新考虑哪方面的住房困难？',hint:'请勿提供对方的地址或敏感资料。',options:{family:'对方的家庭或照护情况改变了',mobility:'对方有行动或无障碍方面的困难',affordability:'对方难以负担住房费用',other:'其他／我不确定'}},
+ c_concern:{title:'对方最难理解哪方面的公积金或退休事项？',hint:'请勿提供对方的 CPF 余额或 Singpass 密码。',options:{rules:'对方看不懂有关规定或信件',online:'对方不方便使用网上服务',money:'对方需要安排眼前生活开销',other:'其他／不确定'}},
+ m_support:{title:'对方是否已向医疗机构询问付款援助？',hint:'医疗社工可解释可能的援助选项。',options:{yes:'对方已询问过',no:'还没有',unsure:'不确定／不适用'}},
+ m_barrier:{title:'对方最需要哪种医疗费用协助？',options:{bill:'了解对方的账单或付款方式',subsidy:'了解诊所补贴',person:'与职员交谈',unsure:'不确定'}},
+ n_issue:{title:'对方想反映哪一种邻里设施问题？'},
+ n_report:{title:'对方是否已通过官方渠道反映问题？',options:{yes:'是，但问题仍未解决',no:'还没有',unsure:'我不确定'}},
+ u_need:{title:'哪方面最接近对方需要的帮助？'},
  contact:{title:'您希望如何协助对方联系有关机构？',hint:'请先征得对方同意，再代为联系。我们也会显示官方网站。',options:{online:'协助对方使用官方网站',phone:'获得对方同意后，代为致电',inperson:'陪同对方亲自前往',unsure:'我不确定'}},
 };
 
