@@ -35,8 +35,10 @@ Open `http://localhost:8000/demo/` in your browser. This is a separate static pr
 
 ## Source structure
 - `src/engine.ts` — category questions, verified referral records, deterministic rules.
-- `src/App.tsx` — React UI (landing, question flow, result card, printable checklist).
+- `src/App.tsx` — React UI (landing, adaptive question flow, results, optional MPS preparation and printing).
 - `src/style.css` — responsive, large-target accessible styles.
+- `src/mps.ts` — on-device bilingual MPS preparation summary; no personal identifiers collected.
+- `src/journeys.ts` — official agency contact routes in English and Simplified Chinese.
 - `demo/index.html`, `demo/preview.js` — browser preview sharing the compiled engine.
 - `tests/engine.test.mjs` — unit tests for referrals.
 - `docs/` — brief, official referral source log, decision tree, screen wireframes and handoff.
@@ -83,9 +85,21 @@ Initial planning and implementation were produced with assistance from ChatGPT (
 ## October 17 usability update (English / 简体中文)
 
 - Choose **Language / 语言** in the header to switch all React interface questions, recommendations, checklist and instructions between English and Simplified Chinese.
-- Choose **Text size / 字体大小** (Normal, Large, Extra large) to enlarge the text across answers, buttons, headings and results.
+- Choose **Text size / 字体大小** (Normal, Large) to enlarge the text across answers, buttons, headings and results.
 - The financial questionnaire now asks about the broad expense category (food, utilities, rent or living expenses), without amounts; housing asks extra situation-specific questions.
 - The final contact preference changes the main action and help copy: online, telephone, in person, or unsure. Urgent ComCare pathways stay short.
 - Footer **Browse assistance topics** scrolls to the actual topic choices.
 
 **Translation status:** Simplified Chinese is a student-written draft, not an official government translation. Ask a fluent Chinese speaker to review the translated guidance and have all agency details checked before any real-world use. The `demo/` standalone preview remains an older English-only reference; the updated React application in `src/` is the authoritative version. Real cases, identity documents and financial/medical details must never be entered into this prototype.
+
+## October 19: Agency follow-up and Meet-the-People Session preparation
+
+NeighbourAssist now asks **why a resident needs help and whether they have contacted the responsible agency**. It distinguishes first applications, pending replies, rejected requests and unresolved problems, without making legal or eligibility decisions. Urgent food/basic-needs requests are not delayed by additional questions.
+
+- Housing, CPF, medical costs, municipal issues and “Not sure” now use more relevant adaptive questions. Housing public-rental transfers explain the usual two-year occupancy condition. CPF Silver Support guidance is restricted to people who indicate they are 65 or above.
+- Each results page retains agency instructions and offers an **optional MPS preparation** section, including the [official Parliament MP finder](https://www.parliament.gov.sg/mps/find-mps-in-my-constituency).
+- The printable MPS preparation summary contains **only fixed-choice questionnaire answers**. It is not an MP appeal letter, never sends a case to an MP, and does not ask for NRIC, home address, Singpass or medical records.
+- All newly added questions, caregiver prompts and MPS instructions are available in English and Simplified Chinese.
+- The static `demo/` folder is an older reference, not the authoritative version. Use the React application in `src/` for testing or demonstration.
+
+Read [MPS preparation design and testing](docs/04-mps-preparation.md) before deployment. Run `npm test` and `npm run build` after pulling the latest changes, then manually test bilingual and mobile journeys.
