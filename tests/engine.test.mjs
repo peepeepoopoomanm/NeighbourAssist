@@ -171,3 +171,12 @@ test('MPS case notes do not expose unknown values or include inputs for personal
  assert.ok(!JSON.stringify(brief).includes('S1234567A'));
  assert.ok(brief.items.every(x=>x.label&&x.answer));
 });
+
+test('Silver Support is only suggested when age 65 or above is indicated',()=>{
+ assert.equal(rec('cpf',{c_age:'no',c_goal:'support'}),'cpf_general');
+ assert.equal(rec('cpf',{c_age:'yes',c_goal:'support',c_65:'no'}),'cpf_general');
+ assert.equal(rec('cpf',{c_age:'yes',c_goal:'support',c_65:'unsure'}),'cpf_general');
+ assert.equal(rec('cpf',{c_age:'yes',c_goal:'support',c_65:'yes'}),'silver');
+ assert.ok(getQuestionIds('cpf',{c_age:'yes',c_goal:'support'}).includes('c_65'));
+ assert.ok(!getQuestionIds('cpf',{c_age:'no',c_goal:'support'}).includes('c_65'));
+});
