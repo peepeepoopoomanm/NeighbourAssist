@@ -180,3 +180,20 @@ test('Silver Support is only suggested when age 65 or above is indicated',()=>{
  assert.ok(getQuestionIds('cpf',{c_age:'yes',c_goal:'support'}).includes('c_65'));
  assert.ok(!getQuestionIds('cpf',{c_age:'no',c_goal:'support'}).includes('c_65'));
 });
+
+test('MPS caregiver summaries use third-person language in both languages',()=>{
+ const answers={h_type:'public_rental',h_goal:'smaller',h_context:'alone',h_tenure:'2plus',h_household:'alone',agency_status:'rejected',h_review:'mobility',contact:'phone'};
+ const en=getMpsPreparation('housing',answers,'en','caregiver');
+ const zh=getMpsPreparation('housing',answers,'zh','caregiver');
+ const englishHousing=en.items.find(x=>x.id==='h_type');
+ const chineseHousing=zh.items.find(x=>x.id==='h_type');
+ assert.match(englishHousing.label,/person you are helping/i);
+ assert.match(englishHousing.answer,/They live/);
+ assert.match(chineseHousing.label,/协助的人/);
+ assert.match(chineseHousing.answer,/对方/);
+});
+test('MPS notes discard invalid option values rather than echoing unknown data',()=>{
+ const notes=getMpsPreparation('housing',{h_type:'public_rental',h_goal:'invalid-unrecognised',agency_status:'first',contact:'phone'},'en','self');
+ assert.ok(!JSON.stringify(notes).includes('invalid-unrecognised'));
+ assert.ok(notes.items.some(x=>x.id==='h_type'));
+});
