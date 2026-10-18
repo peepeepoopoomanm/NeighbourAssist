@@ -1,4 +1,4 @@
-import {categories,questions,services,getQuestionIds,getRecommendations} from '../public/demo-engine/engine.js';
+import {categories,questions,services,getQuestionIds,getRecommendations} from './engine.js';
 const el=document.getElementById('preview');
 const state={view:'home',category:'financial',answers:{},i:0,large:false,prepared:[],forWhom:'self'};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
