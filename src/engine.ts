@@ -32,6 +32,16 @@ export const questions:Record<string,Question>={
  c_age:{id:'c_age',title:'Are you 55 years old or above?',options:opt(['yes','Yes'],['no','No'],['unsure','Prefer not to say / not sure'])},
  c_goal:{id:'c_goal',title:'What would you like to understand?',options:opt(['withdraw','Can I withdraw some CPF savings?'],['support','Are there government payments for seniors?'],['balance','How do I check my retirement savings or payout information?'],['unsure','I am not sure'])},
  m_type:{id:'m_type',title:'Which medical expense is worrying you?',options:opt(['clinic','GP or dental clinic visits'],['bill','Hospital or other medical bills I cannot afford'],['unsure','I am not sure'])},
+ h_tenure:{id:'h_tenure',title:'How long have you lived in your current HDB public rental flat?',hint:'HDB normally requires at least 2 years of occupation for a rental-flat transfer. HDB makes the actual assessment.',options:opt(['under2','Less than 2 years'],['2plus','2 years or more'],['unsure','I am not sure'])},
+ h_household:{id:'h_household',title:'What best describes your current living arrangements?',hint:'We only need a general description—not names, addresses, or tenancy numbers.',options:opt(['alone','I live alone'],['family','I live with family or other household members'],['shared','I share the home with someone outside my family'],['unsure','I am not sure / prefer not to say'])},
+ agency_status:{id:'agency_status',title:'Have you already contacted the responsible government agency about this problem?',hint:'For example, HDB about a flat, CPF Board about CPF, or a healthcare institution about a bill.',options:opt(['first','No, not yet'],['waiting','Yes, I am waiting for a reply'],['rejected','Yes, but my request was rejected'],['unresolved','Yes, but my problem remains unresolved'],['unsure','I am not sure'])},
+ h_review:{id:'h_review',title:'What is the main reason you need the situation reviewed?',hint:'Choose a general reason. You can explain details to an official later.',options:opt(['family','My household or caregiving circumstances have changed'],['mobility','I have mobility or accessibility difficulties'],['affordability','The costs are difficult to manage'],['other','Something else / I am not sure'])},
+ c_concern:{id:'c_concern',title:'What is making your CPF or retirement question difficult?',hint:'Do not share your CPF balance, Singpass login or withdrawal amount here.',options:opt(['rules','The rules or letters are confusing'],['online','I cannot easily use the online service'],['money','I need to plan for immediate expenses'],['other','Another concern / not sure'])},
+ m_support:{id:'m_support',title:'Have you spoken to someone at the healthcare institution about payment help?',hint:'A Medical Social Worker can explain possible help with hospital or healthcare bills.',options:opt(['yes','Yes, I have asked for help'],['no','Not yet'],['unsure','I am not sure / it does not apply'])},
+ m_barrier:{id:'m_barrier',title:'What would help you most with medical costs?',hint:'This helps us suggest an appropriate contact route, not assess eligibility.',options:opt(['bill','Understanding a bill or payment options'],['subsidy','Finding out about clinic subsidies'],['person','Speaking to a staff member for guidance'],['unsure','I am not sure'])},
+ n_issue:{id:'n_issue',title:'What kind of neighbourhood issue do you want to report?',options:opt(['lift','Lift or public facility problem'],['cleanliness','Cleanliness or waste'],['maintenance','Common-area maintenance or lighting'],['unsure','Something else / not sure'])},
+ n_report:{id:'n_report',title:'Have you already reported this issue through an official channel?',options:opt(['yes','Yes, but the issue is still unresolved'],['no','Not yet'],['unsure','I am not sure'])},
+ u_need:{id:'u_need',title:'Which area seems closest to your concern?',options:opt(['financial','Money for essentials'],['housing','Housing or rental'],['cpf','CPF or retirement'],['health','Healthcare costs'],['municipal','Neighbourhood facilities'],['unsure','Something else / not sure'])},
  contact:{id:'contact',title:'How would you prefer to receive assistance?',hint:'We will always show the official website as well.',options:opt(['online','Use an official website'],['phone','Speak to someone by phone'],['inperson','Ask someone in person'],['unsure','I am not sure'])},
 };
 
@@ -57,14 +67,28 @@ export const services:Record<string,Service>={
 };
 
 export function getQuestionIds(category:Category,answers:Answers):string[]{
+ const statusAnswered=answers.agency_status==='rejected'||answers.agency_status==='unresolved';
  switch(category){
-  case 'financial':return answers.f_urgent==='yes'?['f_urgent','contact']:answers.f_existing==='yes'?['f_urgent','f_need','f_existing','contact']:['f_urgent','f_need','f_existing','f_duration','f_work','f_age','contact'];
-  case 'housing':return ['h_type','h_goal',...(answers.h_goal==='smaller'?['h_context']:answers.h_goal==='rent'?['h_rent']:[]),'contact'];
-  case 'cpf':return ['c_age','c_goal','contact'];
-  case 'health':return ['m_type','contact'];
-  case 'municipal':return ['contact'];
-  default:return ['contact'];
+  // Urgent essentials are never delayed by case-history questions.
+  case 'financial':return answers.f_urgent==='yes'?['f_urgent','contact']:answers.f_existing==='yes'?['f_urgent','f_need','f_existing','agency_status','contact']:['f_urgent','f_need','f_existing','f_duration','f_work','f_age','agency_status','contact'];
+  case 'housing':return [
+   'h_type','h_goal',
+   ...(answers.h_goal==='smaller'?['h_context']:answers.h_goal==='rent'?['h_rent']:[]),
+   ...(answers.h_type==='public_rental'&&answers.h_goal==='smaller'?['h_tenure']:[]),
+   'h_household','agency_status',...(statusAnswered?['h_review']:[]),'contact'];
+  case 'cpf':return ['c_age','c_goal','c_concern','agency_status','contact'];
+  case 'health':return ['m_type',...(answers.m_type==='bill'?['m_support']:[]),'m_barrier','agency_status','contact'];
+  case 'municipal':return ['n_issue','n_report','contact'];
+  default:return ['u_need','agency_status','contact'];
  }
+}
+
+export type Pathway='urgent'|'agency'|'followup'|'review';
+export function getNextPathway(category:Category,answers:Answers):Pathway{
+ if(category==='financial'&&answers.f_urgent==='yes')return 'urgent';
+ if(answers.agency_status==='waiting')return 'followup';
+ if(answers.agency_status==='rejected'||answers.agency_status==='unresolved'||(category==='municipal'&&answers.n_report==='yes'))return 'review';
+ return 'agency';
 }
 
 export function getRecommendations(category:Category,a:Answers):{primary:Service;secondary:Service[];reason:string}{
@@ -92,6 +116,12 @@ export function getRecommendations(category:Category,a:Answers):{primary:Service
   if(a.m_type==='clinic'){id='chas';reason='You mentioned GP or dental clinic costs.';}
   else if(a.m_type==='bill'){id='medifund';reason='You mentioned difficulty paying a hospital or other medical bill.';}
   else {id='health_general';reason='MOH can guide you toward the right scheme for the care involved.';}
- } else if(category==='municipal') {id='oneservice';reason='This concerns your neighbourhood environment or municipal facilities.';}
+ } else if(category==='municipal') {id='oneservice';reason='This concerns your neighbourhood environment or municipal facilities.';} else if(category==='unsure'&&a.u_need){
+  if(a.u_need==='financial'){id='sso';reason='An SSO can help identify financial assistance routes.';}
+  else if(a.u_need==='housing'){id='hdb_general';reason='HDB can explain housing services and next steps.';}
+  else if(a.u_need==='cpf'){id='cpf_general';reason='CPF Board is the right place to clarify CPF and retirement questions.';}
+  else if(a.u_need==='health'){id='health_general';reason='MOH provides guidance on healthcare support channels.';}
+  else if(a.u_need==='municipal'){id='oneservice';reason='OneService is the official municipal feedback channel.';}
+ }
  return {primary:services[id],secondary:extra.map(x=>services[x]).filter(s=>s.id!==id),reason};
 }
