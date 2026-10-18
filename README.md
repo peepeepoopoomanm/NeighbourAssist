@@ -27,7 +27,7 @@ npm test
 
 ## Archived development preview
 
-The `demo/` directory is **legacy developer reference material**, not the current NeighbourAssist website. It is English-only, uses an earlier copy of the referral engine from `public/demo-engine/`, and **does not include** the new MPS preparation feature or the latest translations. Do not share, deploy or demonstrate this older preview to residents.
+The `demo/` directory is **legacy developer reference material**, not the current NeighbourAssist website. It is English-only, uses an earlier copy of the referral engine stored in `demo/engine.js`, and **does not include** the new MPS preparation feature or the latest translations. Do not share, deploy or demonstrate this older preview to residents.
 
 Use `npm run dev` for development and `npm run build` for the authoritative React application. The generated `dist/` folder is the only intended production output.
 
