@@ -1,71 +1,48 @@
-# Decision tree — implementation spec
-The single source of truth is `src/engine.ts` (questions, services and matching rules).
+# NeighbourAssist — referral decision tree
+
+**Last revised:** 19 October 2026  
+**Source of truth:** `src/engine.ts` (questions and routing), `src/journeys.ts` (agency contact instructions), `src/mps.ts` (optional MPS preparation).
+
+This is a deterministic directory and preparation tool, **not** an eligibility checker, approval prediction or official MP appeal service.
 
 ## Shared flow
-```
-LANDING
-  ↓ Select help category
-QUESTIONNAIRE (one question per screen, Back/Continue)
-  ↓ Answer non-sensitive category-specific questions
-REFERRAL RULES (transparent, deterministic)
-  ↓
-RESULT (reason, official agency, link, next steps, checklist, offline option if confirmed)
-```
 
-## Everyday financial assistance
-```
-Urgent need for essentials? ── YES ──> Ask contact preference ──> ComCare urgent guidance
-  │ NO / UNSURE
-Already receiving ComCare? ── YES ──> Current SSO/caseworker
-  │ NO / UNSURE
-Duration? → Work situation? → Aged 65+? → Contact preference?
-  ├─ Long-term + unable to work → Ask about ComCare Long-Term Assistance
-  ├─ Low wages / temporary work issue / short-duration need → Ask about ComCare SMTA
-  └─ Uncertain → SSO assessment
-Plus: if 65+, show *additional* Silver Support card; government assesses automatically.
-```
+1. The resident or caregiver chooses a help category.
+2. Adaptive questions ask about broad circumstances without amounts, addresses, names, NRICs or medical records.
+3. The engine chooses a **relevant official agency** and practical contact instructions. Urgent basic needs use the shortest possible route.
+4. Non-urgent flows generally ask whether the resident has already contacted the responsible agency:
+   - **First contact** → ordinary official service as a starting point.
+   - **Waiting for a reply** → encourage follow-up with the relevant agency, using an existing reference if available.
+   - **Rejected / still unresolved** → explain the option to ask the agency about review and consider MPS assistance.
+   - **Unsure** → agency enquiry remains a safe starting point.
+5. Results always include an **optional Meet-the-People Session preparation** section: official Parliament MP lookup, what to prepare, and a printable fixed-choice summary.
 
-## Housing and rental
-```
-Living situation?
-  ├─ HDB public rental:
-  │    Want smaller / more affordable unit → HDB rental flat transfer
-  │    Struggle to pay rent → HDB tenant assistance
-  │    Tenant/occupier information → HDB tenancy changes
-  │    Unclear → General HDB guidance
-  ├─ HDB owner:
-  │    Want smaller home → HDB rightsizing / Silver Housing Bonus information
-  │    Else → General HDB guidance
-  └─ Private rental with rent affordability issue → general SSO financial assistance; other private rental questions → LifeSG general directory. Unsure residence type → general HDB guidance
-Then contact preference; show known in-person branch route where applicable.
-```
-**Quality note:** Private rental disputes may need other specialist channels. Our fallback is only a service directory, not an assessment. Research the appropriate private-tenancy resource before public release.
+Attending MPS is a resident's choice regardless of their answers. No MP letter, agency case or application is actually created or transmitted.
 
-## CPF and retirement
-```
-Age 55+? → Interest?
-  ├─ Withdrawal + 55+ → CPF withdrawal guidance (not calculation)
-  ├─ Withdrawal + under 55/unsure → CPF Board general guidance
-  ├─ Senior support → Silver Support explanation (auto assessment)
-  └─ Payouts / unsure → CPF Board general guidance
-Then contact preference.
-```
+## Category routing
 
-## Medical bills
-```
-Type of expense?
-  ├─ GP / dental → CHAS
-  ├─ Hospital / medical bills difficult to afford → MediFund / hospital Medical Social Worker
-  └─ Unsure → MOH financial assistance information
-Then contact preference.
-```
+| Category | Relevant question branches | Initial agency suggestion |
+| --- | --- | --- |
+| Everyday expenses | Urgency first; if urgent, skip further financial questions. Otherwise expense type, existing ComCare, duration, ability to work, age and prior agency contact | ComCare IA enquiry / existing SSO / SMTA / LTA / SSO depending on answers. Silver Support is supplementary where age 65+ is indicated |
+| Housing and rental | Housing type, goal, contextual need or rent difficulty, duration at current public rental flat where relevant, household type and past agency contact; rejected/unresolved requests ask review reason | HDB rental transfer, HDB tenant assistance, change of tenancy, rightsizing, general HDB, or SSO for private-rent hardship |
+| CPF and retirement | Aged 55+, purpose, additional 65+ question for Silver Support, type of barrier and past agency contact | CPF general guidance, withdrawals at 55+ or automatically assessed Silver Support information at 65+ |
+| Medical costs | Care type, whether healthcare payment help was sought for bills, barrier and agency-contact status | CHAS, MediFund/Medical Social Worker, or MOH guidance |
+| Neighbourhood issues | Type of issue and whether previously reported | OneService (not an emergency response service) |
+| Not sure | Broad problem identification and previous contact | SSO, HDB, CPF, MOH, OneService, or LifeSG |
 
-## Municipal and uncertain
-- Municipal issue → OneService.
-- Other/unsure → LifeSG directory; clear explanation of limitations.
+## Important safeguards
 
-## Referral precedence
-Urgent basic needs override other financial follow-up questions. Existing ComCare overrides other non-urgent ComCare labels; additional Silver Support information may appear independently.
+- **Urgent essentials**: call ComCare promptly; MPS is not an emergency service.
+- **Silver Support**: age 65+ alone does not confirm eligibility; CPF assesses automatically for qualifying citizens.
+- **HDB public rental transfer**: HDB generally requires at least two years' residence; explain this condition explicitly when the answer is under two years. No transfer is guaranteed.
+- **Owned HDB rightsizing** is not equivalent to transferring a public rental flat.
+- **CPF withdrawals**: age 55 is a useful information gate, never a determination of an individual's withdrawable amount.
+- **Medical bills**: MediFund is assessed via a Medical Social Worker at an approved institution, not by this website.
+- **Caregivers**: ask permission; do not request someone else's Singpass or account passwords.
+- **MPS**: do not imply MPs can override agency decisions or guarantee prioritised handling or approval.
 
-## Acceptance tests
-`npm test` covers urgent, ongoing, existing benefit, Silver Support, rental transfer, public rental arrears, rightsizing, CPF age gating, CHAS/MediFund and unknown fallback routes.
+## Testing and maintenance
+
+Run `npm test` and `npm run build` after each change to question options, routes or translations. Use `docs/04-mps-preparation.md` for acceptance scenarios. Verify programme requirements and link destinations against primary agency websites before public distribution.
+
+The standalone `demo/` is an older development reference, not a maintained replica of this decision tree. The React source in `src/` is the authoritative application.
