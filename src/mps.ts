@@ -1,6 +1,6 @@
-import {categories,questions,getNextPathway,getQuestionIds,type Answers,type Category} from './engine';
-import {categoryText,questionText,type Language} from './i18n';
-import type {Audience} from './audience';
+import {categories,questions,getNextPathway,getQuestionIds,type Answers,type Category} from './engine.ts';
+import {categoryText,questionText,type Language} from './i18n.ts';
+import type {Audience} from './audience.ts';
 
 // Only predetermined multiple-choice responses. No identity, addresses, free text,
 // personal documents or details are entered or transmitted by this feature.
