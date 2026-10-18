@@ -28,7 +28,7 @@
 
 ## Launch blockers to resolve
 
-- **Dependency reproducibility:** `package-lock.json` was not found in the repository. On the development machine, run `npm install --package-lock-only`, inspect the generated lockfile for unexpected packages, commit it and push. Then use `npm ci` in GitHub Actions and in clean installations. The lock must be generated with a real package resolver; do not hand-write it.
+- **Dependency reproducibility — RESOLVED (19 October 2026):** A genuine npm-generated `package-lock.json` (lockfile v3) was committed in `36b6479`. Local `npm ci`, 49 tests and production build passed according to the development terminal. GitHub Actions now uses `npm ci` and npm caching as of `5caf95a`. Confirm the latest GitHub Actions run is green before deployment.
 - **Run latest tests/build:** `npm test` and `npm run build` after pulling all audit commits. Check CI is green.
 - **Live official links:** Click each outgoing service link and check whether its landing page, labels, phone numbers and requirements still match our instructions; include online/phone/in-person modes.
 - **Chinese language handoff:** A proficient Singapore Chinese reader should test every category and the official site transition, noting places where an English-only external form needs assisted alternatives.
