@@ -1,9 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
-import {fileURLToPath} from 'node:url';
 
-const project=fileURLToPath(new URL('../',import.meta.url));
 const read=path=>readFileSync(new URL('../'+path,import.meta.url),'utf8');
 
 test('production public assets do not include the obsolete referral engine',()=>{
