@@ -59,6 +59,7 @@ const questionZh:Record<string,QuestionZh>={
  h_household:{title:'哪项最符合您目前的居住安排？',hint:'这里只需概括情况，不需要姓名、地址或租约编号。',options:{alone:'我独自居住',family:'我与家人或其他家庭成员同住',shared:'我与非家人合住',unsure:'我不确定／不愿透露'}},
  agency_status:{title:'您是否已就此问题联系过负责的政府机构？',hint:'例如住房问题联系建屋局、公积金问题联系公积金局、医院账单则联系医疗机构。',options:{first:'还没有，这是第一次求助',waiting:'已联系，仍在等待回复',rejected:'已联系，但申请或要求被拒绝',unresolved:'已联系，但问题仍未解决',unsure:'我不确定'}},
  h_review:{title:'您最希望有关机构重新考虑哪方面的困难？',hint:'只需选择主要原因；具体情况可向官方人员解释。',options:{family:'家庭或照护情况已改变',mobility:'行动或无障碍设施方面有困难',affordability:'费用难以负担',other:'其他／我不确定'}},
+ c_65:{title:'您是否已满 65 岁？',hint:'乐龄补贴计划只会自动评估符合条件的 65 岁及以上新加坡公民；此问题不会决定资格。',options:{yes:'是',no:'否',unsure:'不确定／不愿透露'}},
  c_concern:{title:'公积金或退休事项最让您困扰的是哪方面？',hint:'请勿在此提供 CPF 存款、Singpass 登录资料或提款金额。',options:{rules:'规则或官方信件看不懂',online:'不方便使用网上服务',money:'需要为眼前生活开销作规划',other:'其他／不确定'}},
  m_support:{title:'您是否向有关医疗机构询问过账单援助？',hint:'医疗社工可以解释医院或医药费用方面的可能援助。',options:{yes:'是，已经询问过',no:'还没有',unsure:'不确定／不适用'}},
  m_barrier:{title:'关于医疗费用，您最需要哪方面的帮助？',hint:'这有助于推荐联络渠道，而非决定资格。',options:{bill:'了解账单或付款方式',subsidy:'了解诊所补贴',person:'与职员当面讨论',unsure:'我不确定'}},
