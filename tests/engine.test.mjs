@@ -345,3 +345,137 @@ test('payment hardship enquiries direct users to official contacts, not an appea
   assert.match(hardship.steps.join(' '),/payment|paying|fine|deadline/i);
  }
 });
+
+test('homepage includes nine distinct public-service categories',()=>{
+ assert.equal(categories.length,9);
+ assert.equal(new Set(categories.map(c=>c.id)).size,9);
+ assert.ok(categories.some(c=>c.id==='employment'));
+ assert.ok(categories.some(c=>c.id==='family'));
+});
+test('work and employment: unpaid salary routes to official TADM guidance',()=>{
+ assert.equal(rec('employment',{w_issue:'salary',w_status:'current'}),'work_salary');
+ assert.equal(rec('employment',{w_issue:'salary',w_status:'left'}),'work_salary');
+ assert.match(services.work_salary.url,/mom\.gov\.sg/);
+});
+test('work and employment: dismissal preserves status and short deadline question',()=>{
+ assert.deepEqual(getQuestionIds('employment',{w_issue:'dismissal'}),['w_issue','w_status','w_recency','agency_status','contact']);
+ assert.equal(rec('employment',{w_issue:'dismissal',w_status:'left'}),'work_dismissal');
+ assert.match(services.work_dismissal.caution,/deadline/i);
+});
+test('work and employment: salary, discrimination and injury have different channels',()=>{
+ assert.equal(rec('employment',{w_issue:'salary'}),'work_salary');
+ assert.equal(rec('employment',{w_issue:'fairness'}),'work_fairness');
+ assert.equal(rec('employment',{w_issue:'injury'}),'work_injury');
+ assert.match(services.work_fairness.description,/TAFEP/);
+ assert.match(services.work_injury.url,/work-injury-compensation/);
+});
+test('work and employment: unknown issue uses MOM advisory directory',()=>{
+ assert.equal(rec('employment',{w_issue:'other'}),'work_general');
+ assert.equal(rec('employment',{}),'work_general');
+ assert.equal(rec('unsure',{u_need:'employment'}),'work_general');
+});
+test('workplace harassment uses verified TAFEP advisory phone',()=>{
+ assert.equal(getGuide(services.work_fairness,'en','phone').phone,'6838 0969');
+ assert.match(getGuide(services.work_fairness,'en','phone').steps.join(' '),/TAFEP/);
+});
+test('TADM guides distinguish salary and wrongful dismissal claim deadlines',()=>{
+ assert.match(getGuide(services.work_salary,'en','online').steps.join(' '),/one-year/);
+ assert.match(getGuide(services.work_salary,'en','online').steps.join(' '),/six months/);
+ assert.match(getGuide(services.work_dismissal,'en','online').steps.join(' '),/one month/);
+ assert.match(services.work_dismissal.steps.join(' '),/one month/);
+});
+test('employment questions do not request employer names or salary amounts as inputs',()=>{
+ for(const id of ['w_issue','w_status','w_recency']){
+  const q=questions[id];
+  assert.ok(q.options.every(x=>typeof x.value==='string'&&typeof x.label==='string'));
+  assert.doesNotMatch(q.title,/enter.*name|type.*salary|enter.*number/i);
+ }
+});
+test('family urgency: immediate danger routes directly to Police 999',()=>{
+ assert.deepEqual(getQuestionIds('family',{family_safety:'danger'}),['family_safety']);
+ assert.equal(rec('family',{family_safety:'danger',family_issue:'childcare'}),'family_danger');
+ assert.equal(services.family_danger.phone,'999');
+ assert.equal(getNextPathway('family',{family_safety:'danger'}),'urgent');
+ assert.match(services.family_danger.caution,/Do not wait/i);
+});
+test('family possible abuse uses 24-hour NAVH and bypasses routine questions',()=>{
+ assert.deepEqual(getQuestionIds('family',{family_safety:'concern'}),['family_safety']);
+ assert.equal(rec('family',{family_safety:'concern',family_issue:'divorce'}),'family_protection');
+ assert.equal(services.family_protection.phone,'1800-777-0000');
+ assert.match(getGuide(services.family_protection,'en','online').steps.join(' '),/Police 999/);
+});
+test('family ordinary help requests ask topic and agency history',()=>{
+ assert.deepEqual(getQuestionIds('family',{family_safety:'no'}),['family_safety','family_issue','agency_status','contact']);
+ assert.deepEqual(getQuestionIds('family',{family_safety:'unsure'}),['family_safety','family_issue','agency_status','contact']);
+});
+test('family relationships and divorce go to FAM rather than ComCare',()=>{
+ assert.equal(rec('family',{family_safety:'no',family_issue:'relationship'}),'family_fam');
+ assert.equal(rec('family',{family_safety:'no',family_issue:'divorce'}),'family_fam');
+ assert.match(services.family_fam.url,/msf\.gov\.sg\/what-we-do\/fam/);
+});
+test('family caregiving goes to AIC instead of generic government navigation',()=>{
+ assert.equal(rec('family',{family_safety:'no',family_issue:'caregiving'}),'family_caregiving');
+ assert.equal(services.family_caregiving.phone,'1800-650-6060');
+ assert.match(new URL(services.family_caregiving.url).hostname,/aic\.sg$/);
+});
+test('family preschool support uses LifeSG or ECDA channel without fake eligibility',()=>{
+ assert.equal(rec('family',{family_safety:'no',family_issue:'childcare'}),'family_childcare');
+ assert.match(services.family_childcare.url,/life\.gov\.sg/);
+ assert.match(getGuide(services.family_childcare,'en','online').steps.join(' '),/Form 1/);
+ assert.match(services.family_childcare.caution,/not an eligibility/i);
+});
+test('family broad social difficulties go to FSC with optional existing SSO',()=>{
+ const x=getRecommendations('family',{family_safety:'no',family_issue:'financial'});
+ assert.equal(x.primary.id,'family_fsc');
+ assert.deepEqual(x.secondary.map(s=>s.id),['sso']);
+ assert.equal(rec('family',{family_safety:'no',family_issue:'other'}),'family_fsc');
+ assert.equal(rec('unsure',{u_need:'family'}),'family_fsc');
+});
+test('family emergency directions avoid misleading MPS and ComCare advice in UI',()=>{
+ const app=readFileSync(new URL('../src/App.tsx',import.meta.url),'utf8');
+ assert.match(app,/t\.familySafetyBanner/);
+ assert.match(app,/t\.familyDangerPathway/);
+ assert.match(app,/t\.familyConcernPathway/);
+ assert.match(app,/category==='family'&&\['danger','concern'\]\.includes\(answers\.family_safety\)/);
+ assert.match(app,/tel:999/);
+});
+test('all new work and family services have Chinese translations and three contact routes',()=>{
+ const ids=['work_salary','work_dismissal','work_fairness','work_injury','work_general','family_danger','family_protection','family_fam','family_fsc','family_caregiving','family_childcare'];
+ for(const id of ids){
+  assert.ok(hasChineseService(id),id);
+  assert.ok(guides[id],id);
+  const zh=serviceText(services[id],'zh');
+  assert.notEqual(zh.name,services[id].name);
+  assert.equal(zh.steps.length,services[id].steps.length);
+  assert.equal(zh.checklist.length,services[id].checklist.length);
+  for(const lang of ['en','zh'])for(const method of ['online','phone','inperson']){
+   assert.ok(getGuide(services[id],lang,method).steps.length>=2,id+' '+lang+'/'+method);
+  }
+ }
+});
+test('work and family questions have complete Chinese and caregiver wording',()=>{
+ for(const id of ['w_issue','w_status','w_recency','family_safety','family_issue']){
+  assert.ok(hasChineseQuestion(id));
+  assert.notEqual(questionText(questions[id],'zh').title,questions[id].title);
+  for(const lang of ['en','zh']){
+   assert.ok(hasCaregiverQuestion(id,lang),lang+'/'+id);
+   const a=audienceQuestionText(questions[id],lang,'caregiver');
+   assert.notEqual(a.title,questionText(questions[id],lang).title);
+   assert.deepEqual(a.options.map(o=>o.value),questions[id].options.map(o=>o.value));
+  }
+ }
+});
+test('MPS notes preserve only broad work and family selections',()=>{
+ const a=getMpsPreparation('employment',{w_issue:'salary',w_status:'left',agency_status:'rejected',contact:'online',person_name:'private name'},'en','caregiver');
+ const b=getMpsPreparation('family',{family_safety:'no',family_issue:'caregiving',agency_status:'first',contact:'phone',private_details:'private details'},'zh','caregiver');
+ assert.ok(a.items.some(x=>x.id==='w_status'));
+ assert.ok(b.items.some(x=>x.id==='family_issue'));
+ assert.ok(!JSON.stringify(a).includes('private name'));
+ assert.ok(!JSON.stringify(b).includes('private details'));
+ assert.ok(!a.items.some(x=>x.id==='contact'));
+});
+test('family emergency MPS notes do not hide safety priority',()=>{
+ const a=getMpsPreparation('family',{family_safety:'danger'},'en','self');
+ assert.match(a.items[0].answer,/immediate danger/i);
+ assert.ok(!JSON.stringify(a).includes('NRIC'));
+});
