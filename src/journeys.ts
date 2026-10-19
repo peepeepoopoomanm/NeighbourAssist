@@ -23,6 +23,7 @@ const ONESERVICE='https://www.oneservice.gov.sg/oschatbot-faqs/';
 const cpfPhone='1800-227-1188';
 const cpfHours='Mon–Fri, 8:30 am–5:30 pm';
 const hdbPhone='6225-5432';
+const hdbHours='Mon–Fri, 8am–5pm (except public holidays)';
 const g=(url:string,source:string,en:GuideRecord['en'],zh:GuideRecord['zh'],phone?:string,phoneHours?:string):GuideRecord=>({url,source,en,zh,phone,phoneHours});
 export const guides:Record<string,GuideRecord>={
  comcare_urgent:g(MSF,MSF,{
@@ -87,7 +88,7 @@ export const guides:Record<string,GuideRecord>={
   online:['打开建屋局“Transfer to Another Public Rental Flat”（申请调换另一间公共租赁组屋）网页，先阅读租约及换屋条件。','点击申请链接，并按现有租赁组屋的管理分局选择地区；之后会进入 FormSG 申请表。','按提示使用自己的 Singpass 登录并填写官方要求的资料。建屋局会审核，不能保证获批较小组屋。'],
   phone:['拨打建屋局分局热线 6225-5432，咨询公共租赁组屋换屋事宜。','说明希望搬到较小的租赁组屋，并询问现有租约由哪间分局负责。','询问申请条件、正确申请渠道，以及能否到分局当面申请。'],
   inperson:['找出负责现有租赁组屋的建屋局分局并确认联络方式。','询问是否需要先预约，或可到柜台提交换屋申请。','按建屋局要求携带租约及申请人资料。未获确认前不要自行终止现有租约。']
- },hdbPhone),
+ },hdbPhone,hdbHours),
  hdb_tenant:g('https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/assistance-for-tenants','https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/assistance-for-tenants',{
   online:['Read HDB’s “Assistance for Tenants of Public Rental Flats” page.','Look at the listed options: possible rent-arrears instalments, SSO referrals, social support, or rightsizing to a smaller rental flat.','Contact the HDB Branch handling your rental flat to ask which measure may apply; the page is guidance, not an automatic approval.'],
   phone:['Call the HDB Branch Service Line at 6225-5432.','Say whether the difficulty is monthly rental costs, outstanding rent or a change in your household.','Ask about instalments, possible rightsizing, or referral to a Social Service Office.'],
@@ -96,7 +97,7 @@ export const guides:Record<string,GuideRecord>={
   online:['阅读建屋局“Assistance for Tenants of Public Rental Flats”（公共租赁组屋租户援助）网页。','查看所列选项：租金欠款分期付款、社会服务办事处转介、其他社会支援或换成较小租赁组屋。','联络负责您租约的建屋局分局，询问适合哪项措施；网页并不代表自动获批。'],
   phone:['拨打建屋局分局热线 6225-5432。','说明困难属于每月租金、未缴租金，或家庭情况变化。','询问分期付款、换小组屋或转介社会服务办事处的选项。'],
   inperson:['联系管理现有租赁组屋的分局，确认何时可以与职员面谈。','说明哪些租金开销难以负担，并询问援助选项。','按官方指示处理分期付款、换房查询或转介事宜。']
- },hdbPhone),
+ },hdbPhone,hdbHours),
  hdb_change:g(HDB_CHANGE,HDB_CHANGE,{
   online:['Open HDB’s “Tenancy Matters for Public Rental Flats” page.','Choose the relevant topic: “Change of Occupiers” or “Change of Tenancy”. These are different requests.','Follow the official instructions for that topic and provide applicant and occupier details only in the official channel.'],
   phone:['Call HDB’s Branch Service Line at 6225-5432.','Explain whether you need to update authorised occupiers or change who holds the rental tenancy.','Ask which official application to use and whether an in-person option is appropriate.'],
@@ -105,7 +106,7 @@ export const guides:Record<string,GuideRecord>={
   online:['打开建屋局公共租赁组屋“Tenancy Matters”（租约事宜）网页。','按需要选择“Change of Occupiers”（更改登记住户）或“Change of Tenancy”（更改承租人）；两者不同。','按照有关官方指示办理，只在官方渠道提供申请人及住户资料。'],
   phone:['拨打建屋局分局热线 6225-5432。','说明需要更新登记住户，还是更改租约上的承租人。','询问应使用哪项官方申请，以及是否可以当面办理。'],
   inperson:['联系负责现有公共租赁组屋的建屋局分局。','询问更改承租人或登记住户的程序，以及是否需要预约。','只有在建屋局正式要求时，才向获授权渠道提供文件。']
- },hdbPhone),
+ },hdbPhone,hdbHours),
  hdb_rightsize:g('https://www.hdb.gov.sg/managing-my-home/retirement-planning/monetising-flat-for-retirement/silver-housing-bonus','https://www.hdb.gov.sg/managing-my-home/retirement-planning/monetising-flat-for-retirement/silver-housing-bonus',{
   online:['Read HDB’s Silver Housing Bonus page to understand rightsizing an owned home to a smaller flat.','Check the current conditions, including the next flat type, CPF Retirement Account requirements and when an SHB application is possible.','Before selling or committing to a purchase, seek independent guidance on costs, proceeds and retirement payouts.'],
   phone:['Contact HDB using its published housing sales or branch enquiry channels on the official contact page.','Say you own an HDB flat and are considering moving to a smaller flat for retirement.','Ask about Silver Housing Bonus conditions and which consultation or service is relevant before making any transaction.'],
@@ -123,7 +124,7 @@ export const guides:Record<string,GuideRecord>={
   online:['在建屋局联络网页选择与租赁、拥有组屋或住房贷款有关的部分。','使用页面列出的联络渠道或电子服务，询问适合的住房程序。','不要在 NeighbourAssist 提供地址或身份资料；只有建屋局正式要求时才提交。'],
   phone:['如需咨询租赁或租约，可拨打建屋局分局热线 6225-5432。','说明住房是自有还是租赁，以及您想解决的问题。','询问应该联系哪个部门或使用哪项申请。'],
   inperson:['从建屋局官方联络网页查找合适的分局或建屋局中心服务。','先确认到访前是否需要预约。','向职员说明住房问题并遵照指示办理。']
- },hdbPhone),
+ },hdbPhone,hdbHours),
  cpf_withdraw:g('https://www.cpf.gov.sg/member/retirement-income/retirement-withdrawals/withdrawing-for-immediate-retirement-needs','https://www.cpf.gov.sg/member/retirement-income/retirement-withdrawals/withdrawing-for-immediate-retirement-needs',{
   online:['Read CPF Board’s “Withdrawing for immediate retirement needs” page and the withdrawal conditions for your age.','Select the official Retirement Dashboard to check your personal withdrawable amount. Do not enter CPF balances here.','If you decide to apply, confirm CPF Account settings and daily withdrawal limits first; changes may require a cooling-off period. Use the official withdrawal application.'],
   phone:['Call CPF Board at 1800-227-1188 during its published hotline hours.','Ask how to check the amount you may withdraw and what it could mean for retirement payouts.','If someone is helping you, ask CPF about its authorised representative process; never share Singpass credentials.'],
