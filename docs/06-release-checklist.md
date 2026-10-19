@@ -37,6 +37,18 @@ The service directory is in `src/engine.ts` and the detailed bilingual instructi
 - Whether all external official websites are fully translated into Chinese.
 - Whether a caller actually gets through or any particular branch has appointments.
 
+## Fines & Appeals expansion — release addendum (19 October 2026)
+
+The original release checklist pre-dates the fines module. Before deploying this update, use [the fine-and-appeal source audit](08-fines-appeals-research.md) and check all of the following:
+
+- [ ] Verify the issuing agency on sample HDB, URA, Traffic Police and LTA notices before opening a recommended agency site.
+- [ ] Verify that **court summons** answers finish quickly, warn about attendance and never promise that an MP letter changes proceedings.
+- [ ] Confirm that HDB, URA and SPF **payment** requests lead to official payment pages; URA and SPF appeal-status enquiries use status pages; LTA e-scooter enquiries do not automatically use vehicle appeals.
+- [ ] Complete English, Chinese and caregiver paths, including first-time honest mistake and financial hardship. The page must not claim either is a guaranteed waiver ground.
+- [ ] Check unknown-issuer cases direct users to identify the responsible agency, rather than inventing a common appeal form.
+- [ ] Re-run the **new 73-test suite** and TypeScript/Vite build locally; verify GitHub Actions and that Deployxa serves the same commit. **The earlier 54-test passing run does not validate these new changes.**
+- [ ] Have a fluent Singapore Mandarin speaker and a non-developer run at least one fines scenario before public demonstration.
+
 ## 2. Chinese and caregiver checks
 
 - [ ] Switch to Simplified Chinese and complete **all six** help categories.
