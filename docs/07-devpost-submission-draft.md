@@ -28,7 +28,7 @@ We are describing **individual observations**, not a statistically representativ
 
 ## What our solution does
 
-NeighbourAssist starts with six plain-language concerns: everyday expenses; housing and rental; CPF and retirement; medical costs; neighbourhood issues; **fines and appeals**; or “Not sure”.
+NeighbourAssist now offers **nine plain-language categories**: everyday expenses, housing and rental, CPF and retirement, medical costs, neighbourhood issues, fines and appeals, **work and employment**, **family and social support**, and “Not sure”.
 
 Based on fixed, non-sensitive multiple-choice answers, it suggests an **official starting point** and shows practical ways to proceed online, by telephone or in person where those channels are known.
 
@@ -38,18 +38,20 @@ Based on fixed, non-sensitive multiple-choice answers, it suggests an **official
 - **Healthcare:** Clinic subsidies and hospital-bill assistance are treated differently, with guidance to a Medical Social Worker for possible MediFund assistance.
 - **Neighbourhood issues:** OneService referrals explain what a report needs, such as an issue location and photograph.
 - **Fines & Appeals:** A new agency-aware journey distinguishes HDB parking, URA parking, Traffic Police and LTA notices; checks for a court summons first; and sends payment, appeal-status or financial-difficulty enquiries to the appropriate official page where verified. It does not promise waivers for first offences or honest mistakes.
+- **Work & Employment:** Salary and dismissal concerns point to official TADM channels, workplace harassment to TAFEP, and work injuries to MOM. Filing deadlines are explained without making an eligibility decision.
+- **Family & Social Support:** Relationship and divorce concerns point to FAM, wider social concerns to Family Service Centres, caregiving to AIC and preschool enquiries to LifeSG/ECDA. Immediate danger directs users to Police 999; non-immediate abuse concerns to NAVH 1800-777-0000. Safety routes avoid a routine MPS handoff.
 - **Agency follow-up:** Residents can say they are waiting for a reply, have been rejected, or still have an unresolved issue, and see sensible next steps. Optional MPS preparation provides a **printable summary from fixed-choice answers** and a link to the official Parliament MP finder.
 
 The interface supports **English and Simplified Chinese**, **larger text**, **caregiver-specific wording**, mobile layouts and keyboard navigation. It does **not** collect NRIC numbers, addresses, CPF balances, bank records, medical records or Singpass details.
 
-**Important boundaries:** It is not affiliated with the Singapore Government. It neither submits applications or MP appeals, nor guarantees faster service, special priority, acceptance or approval. It does not cancel fines, give legal advice, file court documents or postpone court attendance. Official agencies remain responsible for decisions.
+**Important boundaries:** It is not affiliated with the Singapore Government. It does not submit benefits, employment claims, police reports or MP appeals; it cannot guarantee faster processing or approval, waive fines, provide legal advice, postpone court attendance or replace an emergency service. Official organisations remain responsible for decisions.
 
 ## How we built it
 
 - **Frontend:** React, TypeScript and Vite.
 - **Decision engine:** A deterministic rule-based referral engine, without a predictive AI eligibility model.
 - **Content:** Bilingual, agency-specific referral and contact instructions based on linked Singapore government sources.
-- **Quality checks:** Node.js test runner, TypeScript checks and Vite production build. Before the latest Fines & Appeals update, on 19 October 2026 the developer's laptop reported **54/54 automated tests passing **before the Fines & Appeals expansion**** and a successful production build. Do not present these as a substitute for human accessibility or agency-link tests.
+- **Quality checks:** Node.js test runner, TypeScript checks and Vite production build. On 19 October 2026 the developer's main PC confirmed **73/73 automated tests passing** and a successful production build for the seven-category release. The nine-category Work & Family update contains **93 tests**, but a fresh passing run is still pending. Automated tests cannot replace real user or agency-link checks.
 - **Source control and CI:** GitHub and GitHub Actions.
 - **Hosting:** Deployed via Deployxa. The provider's deployment logs reported a successful container health check and HTTPS certificate. The public site's browser-based acceptance tests should be completed before claiming it is fully live-tested.
 - **AI disclosure:** ChatGPT assisted with ideation, drafting, code changes and/or debugging during development. The team reviewed the results, maintained project decisions and ran tests. Accurately identify all AI assistants used, and do not claim work was manually written if it was AI-assisted.
@@ -107,4 +109,8 @@ Then we would introduce a sustainable process to re-check official content, supp
 
 ## Added source-backed module: Fines & Appeals
 
-Research and implementation notes: [Fines & Appeals source document](08-fines-appeals-research.md). This module was added after the original 54-test verification; **do not describe its new tests or browser behaviour as passing until the updated branch has been tested**. The latest module also changes the ideal demo: use a short fine-notice example to show why verifying the issuing agency matters.
+Research and implementation notes: [Fines & Appeals source document](08-fines-appeals-research.md). The user confirmed that the public Fines & Appeals section works, and the main PC passed the 73-test suite. The newer Work & Family changes are documented in [Work & Family source notes](09-employment-family-research.md) and **must not be claimed as tested or deployed until the new suite and live release pass**.
+
+## Additional demonstration footage for the nine-category release
+
+After the 93-test build passes and the latest Deployxa deployment is confirmed, capture a 20–30 second illustration of **Work & Employment** (choose unpaid salary and show the TADM deadline caution), and a short **Family & Social Support** view (ordinary caregiver route to AIC). Show the family safety-first question without staging an actual emergency, and explain that the Police and NAVH routes do not wait for MPS. The existing 3½-minute storyboard may need to be shortened elsewhere to remain below six minutes; record only what is actually deployed and tested.
