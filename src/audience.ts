@@ -1,4 +1,4 @@
-import type {Question, Answers} from './engine';
+import type {Question, Answers, Category} from './engine';
 import {questionText, reasonText, situationText, type Language} from './i18n.ts';
 
 export type Audience = 'self'|'caregiver';
@@ -89,6 +89,27 @@ export function audienceQuestionText(q:Question,lang:Language,audience:Audience)
  if(!override)return base;
  return {...base,title:override.title,hint:override.hint,options:base.options.map(o=>({...o,label:override.options?.[o.value]??o.label}))};
 }
+// The same validated agency-status choices are reused, but work and family
+// journeys refer to their actual services rather than unrelated HDB/CPF examples.
+const agencyStatusContext={
+ employment:{
+  en:{self:'Have you already contacted TADM, TAFEP, MOM or another relevant employment service?',caregiver:'Has the person you are helping contacted TADM, TAFEP, MOM or another employment service?'},
+  zh:{self:'您是否已向 TADM、TAFEP、人力部或其他相关雇佣机构咨询？',caregiver:'您正在协助的人是否已向 TADM、TAFEP、人力部或其他相关雇佣机构咨询？'},
+  hint:{en:'Choose your current enquiry or claim status. Do not enter employer names or case details here.',zh:'请选择咨询或索偿进度；无需在本网站提供雇主名称或个案详情。'}
+ },
+ family:{
+  en:{self:'Have you contacted an FSC, FAM, AIC, ECDA or another family-support service?',caregiver:'Has the person you are helping contacted an FSC, FAM, AIC, ECDA or another family-support service?'},
+  zh:{self:'您是否已联系家庭服务中心、FAM、AIC、ECDA 或其他家庭支援机构？',caregiver:'您正在协助的人是否已联系家庭服务中心、FAM、AIC、ECDA 或其他家庭支援机构？'},
+  hint:{en:'Choose the current enquiry status. Do not share private family circumstances here.',zh:'请选择目前的咨询进展，无需说明敏感家庭情况。'}
+ }
+};
+export function contextualQuestionText(q:Question,lang:Language,audience:Audience,category:Category):Question{
+ const base=audienceQuestionText(q,lang,audience);
+ if(q.id!=='agency_status'||(category!=='employment'&&category!=='family'))return base;
+ const ctx=agencyStatusContext[category];
+ return {...base,title:ctx[lang][audience],hint:ctx.hint[lang]};
+}
+
 export function hasCaregiverQuestion(id:string,lang:Language):boolean {
  return Boolean((lang==='zh'?caregiverZh:caregiverEn)[id]);
 }
