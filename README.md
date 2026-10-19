@@ -56,19 +56,19 @@ This project is already published at https://github.com/peepeepoopoomanm/Neighbo
 We could not access your authenticated Deployxa account from this chat. The exact dashboard workflow may change, but the app is a Vite static React build:
 1. Log in to Deployxa and inspect the available static site deployment options.
 2. If connecting GitHub, authorize and select `neighbourassist`.
-3. Build command: `npm install && npm run build` (or the platform's standard install + `npm run build`).
+3. Build command: `npm ci && npm run build` (or the platform's standard install + `npm run build`).
 4. Static output/publication folder: `dist`.
 5. Do not add unnecessary API keys or environment secrets; the MVP has no backend.
 6. Open the provided deployment URL and test the whole questionnaire and official links on mobile.
 7. Monitor credit usage before selecting a paid hosting tier.
 
 ## Documentation
-Read `docs/01-project-brief.md` first, then the referral log and decision tree. The application does not claim actual savings in travel or queue times until user testing supports those outcomes.
+Read `docs/01-project-brief.md` first, then `docs/03-decision-tree.md` and `docs/06-release-checklist.md`. The latter records official-source checks, bilingual and accessibility tests, and the static hosting handoff. The application does not claim actual savings in travel or queue times until user testing supports those outcomes.
 
 ## AI attribution
 Initial planning and implementation were produced with assistance from ChatGPT (GPT-6). Team members should inspect, understand, and test all source code before submission. Disclose AI assistance in the Devpost writeup if required by the event rules.
 
-**Connected GitHub account:** `peepeepoopoomanm`. For the one-time new-repository step, see `GITHUB_SETUP.md`.
+**Repository:** `peepeepoopoomanm/NeighbourAssist`. See `GITHUB_SETUP.md` for the current contributor handoff; the repository already exists.
 
 
 ## October 17 usability update (English / 简体中文)
