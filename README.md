@@ -1,6 +1,6 @@
 # NeighbourAssist
 
-An independent student project for Neighborhood Hacks 2026. NeighbourAssist helps Singapore residents, especially older people and their caregivers, locate official assistance channels through accessible questions and practical next steps.
+An independent student project for Neighborhood Hacks 2026. NeighbourAssist helps Singapore residents, especially older people and their caregivers, locate official financial, housing, work, family, safety and other public-service channels through accessible questions and practical next steps.
 
 **Status:** Work-in-progress hackathon prototype. Not endorsed by or connected to the Singapore Government. Not a real appeal submission service.
 
@@ -32,7 +32,7 @@ The `demo/` directory is **legacy developer reference material**, not the curren
 Use `npm run dev` for development and `npm run build` for the authoritative React application. The generated `dist/` folder is the only intended production output.
 
 ## Source structure
-- `src/engine.ts` — category questions, official-source referral records, deterministic rules (including fines and court-safe routing).
+- `src/engine.ts` — category questions, official-source referral records, deterministic rules (including fines, employment, family and urgent-protection routing).
 - `src/App.tsx` — React UI (landing, adaptive question flow, results, optional MPS preparation and printing).
 - `src/style.css` — responsive, large-target accessible styles.
 - `src/mps.ts` — on-device bilingual MPS preparation summary; no personal identifiers collected.
@@ -63,7 +63,7 @@ Deployxa's public documentation confirms React/Vite and static sites are support
 7. Monitor hosting plan limits and credit usage before selecting any paid tier. Never use the Vite development or preview server as the production start command.
 
 ## Documentation
-Read `docs/01-project-brief.md` first, then `docs/03-decision-tree.md`, `docs/06-release-checklist.md` and `docs/08-fines-appeals-research.md`. The latter records official-source checks, bilingual and accessibility tests, and the static hosting handoff. The application does not claim actual savings in travel or queue times until user testing supports those outcomes.
+Read `docs/01-project-brief.md` first, then `docs/03-decision-tree.md`, `docs/06-release-checklist.md`, `docs/08-fines-appeals-research.md` and `docs/09-employment-family-research.md`. The latter records official-source checks, bilingual and accessibility tests, and the static hosting handoff. The application does not claim actual savings in travel or queue times until user testing supports those outcomes.
 
 ## AI attribution
 Initial planning and implementation were produced with assistance from ChatGPT (GPT-6). Team members should inspect, understand, and test all source code before submission. Disclose AI assistance in the Devpost writeup if required by the event rules.
@@ -100,3 +100,14 @@ A new bilingual category helps residents identify **which government authority i
 The prototype does **not** waive fines, decide an appeal's success, submit legal representations, recommend court pleas, store notice numbers or promise that an MP can override penalties. Full official sources, supported/unsupported cases and manual acceptance tests are in [Fines & Appeals research](docs/08-fines-appeals-research.md).
 
 After pulling the latest changes, run `npm test` and `npm run build`, then manually validate the bilingual fine, court and payment routes before considering another public release. Deployxa may need an explicit redeployment unless Git-based automatic deployment is enabled and confirmed.
+
+## October 19: Work & Employment / Family & Social Support
+
+The homepage now includes **nine** choices, adding two source-researched journeys:
+
+- **Work & Employment**: TADM salary claims and possible wrongful dismissal; TAFEP workplace harassment and fairness; MOM work-injury compensation and general employment advice. Employer status and departure timing are used only to highlight possible claim deadlines, **not** to decide eligibility.
+- **Family & Social Support**: A safety question comes first. Immediate danger routes to **Police 999 / SMS 70999**; non-immediate abuse or neglect concerns to **NAVH 1800-777-0000**. Other branches show MSF family counselling (FAM), Family Service Centres (FSC), AIC caregiver support and LifeSG/ECDA childcare subsidy information. Safety cases do **not** show the normal MPS preparation section.
+
+These are guidance routes, not advice from a lawyer, employer adviser, social worker or emergency responder. They do not submit claims, applications, protection reports or custody matters; no identifying family, workplace or medical details are collected. Read the official-source notes at [Work & Family research](docs/09-employment-family-research.md).
+
+**Validation status:** The previous **73 tests passed on the developer's main PC** before this update. Source coverage has been reviewed for nine categories, 33 questions and 35 service guides, and **93 tests are now present but not yet confirmed passing**. Run `git pull`, `npm test` and `npm run build` on the new code before another Deployxa release, followed by actual browser checks.
