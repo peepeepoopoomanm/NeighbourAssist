@@ -53,14 +53,14 @@ Use `npm run dev` for development and `npm run build` for the authoritative Reac
 This project is already published at https://github.com/peepeepoopoomanm/NeighbourAssist. Contributors should clone the repository, use `git pull` for upstream changes, and run `npm test` plus `npm run build` before proposing changes. The older initial-repository setup instructions in `GITHUB_SETUP.md` are retained only as historical onboarding material.
 
 ## Deployxa setup checklist
-We could not access your authenticated Deployxa account from this chat. The exact dashboard workflow may change, but the app is a Vite static React build:
+Deployxa's public documentation confirms React/Vite and static sites are supported. Its authenticated dashboard and deployment result have **not** been independently checked. The app is a Vite static React build; follow the full staging checklist in [`docs/06-release-checklist.md`](docs/06-release-checklist.md):
 1. Log in to Deployxa and inspect the available static site deployment options.
-2. If connecting GitHub, authorize and select `neighbourassist`.
+2. If connecting GitHub, authorize only the required access and select `peepeepoopoomanm/NeighbourAssist` on the `main` branch.
 3. Build command: `npm ci && npm run build` (or the platform's standard install + `npm run build`).
 4. Static output/publication folder: `dist`.
 5. Do not add unnecessary API keys or environment secrets; the MVP has no backend.
-6. Open the provided deployment URL and test the whole questionnaire and official links on mobile.
-7. Monitor credit usage before selecting a paid hosting tier.
+6. Prefer a staging/preview URL first, then test the full questionnaire, Chinese/caregiver mode, keyboard navigation and official links on mobile.
+7. Monitor hosting plan limits and credit usage before selecting any paid tier. Never use the Vite development or preview server as the production start command.
 
 ## Documentation
 Read `docs/01-project-brief.md` first, then `docs/03-decision-tree.md` and `docs/06-release-checklist.md`. The latter records official-source checks, bilingual and accessibility tests, and the static hosting handoff. The application does not claim actual savings in travel or queue times until user testing supports those outcomes.
