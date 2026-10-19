@@ -5,7 +5,7 @@ export type TextSize='normal'|'large';
 
 const en={
  student:'Student-built prototype',language:'Language',textSize:'Text size',normal:'Normal',large:'Large',skip:'Skip to main content',
- eyebrow:'A clearer path to assistance',heroTitle:"Finding help shouldn't be hard.",heroDescription:'Not sure where to ask for financial, housing, or healthcare support? Answer a few simple questions and find an official place to start.',
+ eyebrow:'A clearer path to assistance',heroTitle:"Finding help shouldn't be hard.",heroDescription:'Not sure where to turn about assistance, housing, a fine or another government issue? Answer a few simple questions to find an official place to start.',
  noAccount:'No account needed',noSensitive:'No sensitive details asked',free:'Free to use',how:'HOW IT WORKS',how1:'Tell us what you need',how1Detail:'Choose a familiar category',how2:'Answer simple questions',how2Detail:'No income figures or documents',how3:'See your next steps',how3Detail:'Official links, contacts and guidance',
  startHere:'START HERE',chooseTopic:'What would you like help with?',topicHint:'Choose the option that best matches your situation. You can change it later.',findingFor:"I'm finding help for:",myself:'Myself',caregiver:'Someone I care for',
  guideTitle:'This is a guide, not an application.',guideBody:'NeighbourAssist is not affiliated with the Singapore Government. We help you find official channels; only those organisations can assess and approve requests.',
@@ -21,7 +21,7 @@ const en={
 };
 const zh:typeof en={
  student:'学生制作的示范网站',language:'语言',textSize:'字体大小',normal:'标准',large:'大',skip:'跳至主要内容',
- eyebrow:'让求助更清楚、更简单',heroTitle:'寻求帮助，不应如此困难。',heroDescription:'不知道该向哪里寻求经济、住房或医疗援助？回答几个简单问题，了解可以联系的官方机构。',
+ eyebrow:'让求助更清楚、更简单',heroTitle:'寻求帮助，不应如此困难。',heroDescription:'遇到经济困难、住房问题、罚单或其他政府事务，却不知道该找哪个机构？回答几个简单问题，找到合适的官方渠道。',
  noAccount:'无需注册账号',noSensitive:'无需提供敏感资料',free:'免费使用',how:'使用方法',how1:'告诉我们您的需要',how1Detail:'选择相关援助类别',how2:'回答简单问题',how2Detail:'不需填写收入金额或上传文件',how3:'查看下一步',how3Detail:'获取官方链接、联络方式与指引',
  startHere:'从这里开始',chooseTopic:'您需要哪一方面的帮助？',topicHint:'请选择最符合您情况的选项，之后仍可更改。',findingFor:'您要为谁寻求帮助？',myself:'我自己',caregiver:'我照顾的人',
  guideTitle:'这是援助指南，并非申请表。',guideBody:'邻里助理（NeighbourAssist）与新加坡政府没有隶属关系。我们协助您找到官方渠道；只有有关机构可以审核及批准申请。',
