@@ -299,3 +299,32 @@ test('MPS fine notes filter unrecognised and sensitive case entries',()=>{
  assert.ok(!JSON.stringify(brief).includes('S0000000X'));
  assert.ok(!JSON.stringify(brief).includes('identifying info'));
 });
+
+test('payment enquiries use agency payment pages rather than appeal forms',()=>{
+ const expected={
+  fine_hdb:/hdb\.gov\.sg\/parking\/parking-offences\/pay-parking-fines/,
+  fine_ura:/ura\.gov\.sg\/car-parks\/parking-offences\/payment-of-fines/,
+  fine_tp:/police\.gov\.sg\/E-Services\/Check-Outstanding-Traffic-Offences-and-Pay-Traffic-Fines/
+ };
+ for(const [id,pattern] of Object.entries(expected)){
+  const pay=getGuide(services[id],'en','online','pay');
+  const appeal=getGuide(services[id],'en','online','appeal');
+  assert.match(pay.url,pattern);
+  assert.match(pay.source,pattern);
+  assert.notEqual(pay.url,appeal.url,'Payment must not open the appeal page: '+id);
+  assert.match(pay.steps.join(' '),/pay|payment/i);
+  assert.match(getGuide(services[id],'zh','online','pay').steps.join(' '),/缴费|缴交|付款/);
+ }
+});
+test('LTA active mobility gets no invented specialist fine payment route',()=>{
+ const a=getGuide(services.fine_lta,'en','online','pay');
+ assert.equal(a.url,getGuide(services.fine_lta,'en','online','appeal').url);
+ assert.match(a.steps.join(' '),/e-scooter|active-mobility/i);
+});
+test('fines results expose deadline safeguards and chosen payment goal to the UI',()=>{
+ const source=readFileSync(new URL('../src/App.tsx',import.meta.url),'utf8');
+ assert.match(source,/category==='fines'\?answers\.p_goal/);
+ assert.match(source,/t\.fineCourtWarning/);
+ assert.match(source,/t\.finePaidWarning/);
+ assert.match(source,/t\.fineDeadlineWarning/);
+});
