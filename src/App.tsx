@@ -11,6 +11,13 @@ type View='home'|'quiz'|'results'|'about';
 type Contact=HelpMethod;
 const SSO_DIRECTORY='https://www.msf.gov.sg/our-services/directories';
 const safePhone=(phone:string)=>`tel:${phone.replace(/\D/g,'')}`;
+/** Display published operating hours accurately when the interface is in Chinese. */
+const phoneHoursZh:Record<string,string>={
+ '1800-222-0000':'每天上午 7 时至午夜',
+ '6225-5432':'周一至周五，上午 8 时至下午 5 时（公共假日除外）',
+ '1800-227-1188':'周一至周五，上午 8:30 至下午 5:30（公共假日除外）',
+ '1800-275-2427':'周一至周五，上午 8:30 至下午 6 时（公共假日除外）',
+};
 
 function ContactGuidance({service,method,lang,audience}:{service:Service;method:Contact;lang:Language;audience:Audience}){
  const helping=audience==='caregiver';const g=caregiverUi[lang];
@@ -61,7 +68,7 @@ export default function App(){
  const secondary=result.secondary.map(s=>serviceText(s,language));
  const chosenMethod=(contactOverride??answers.contact??'unsure') as Contact;
  const guide=getGuide(result.primary,language,chosenMethod);
- const guidedService={...primary,url:guide.url,phone:guide.phone,phoneHours:language==='zh'?(primary.phoneHours??(guide.phoneHours?'周一至周五，上午 8:30 至下午 5:30':undefined)):guide.phoneHours};
+ const guidedService={...primary,url:guide.url,phone:guide.phone,phoneHours:language==='zh'?(primary.phoneHours??(guide.phoneHours&&guide.phone?phoneHoursZh[guide.phone]:undefined)):guide.phoneHours};
  const topicName=(id:Category)=>categoryText(id,language,categories.find(c=>c.id===id)??{label:'Assistance',summary:''}).label;
  const situation=audienceSituationText(answers,language,forWhom);
  const pathway=getNextPathway(category,answers);
