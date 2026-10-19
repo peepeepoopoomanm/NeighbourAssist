@@ -197,3 +197,105 @@ test('MPS notes discard invalid option values rather than echoing unknown data',
  assert.ok(!JSON.stringify(notes).includes('invalid-unrecognised'));
  assert.ok(notes.items.some(x=>x.id==='h_type'));
 });
+
+
+// Fines and appeals: agency-specific information, not waiver predictions or legal advice.
+test('fines and appeals category is available with an official safe default',()=>{
+ assert.ok(categories.some(c=>c.id==='fines'));
+ assert.equal(rec('fines',{}),'fine_unknown');
+ assert.equal(rec('unsure',{u_need:'fines'}),'fine_unknown');
+});
+test('HDB parking notices use HDB appeal guidance, not URA',()=>{
+ assert.equal(rec('fines',{p_issuer:'hdb',p_stage:'notice',p_goal:'appeal'}),'fine_hdb');
+ assert.match(services.fine_hdb.url,/hdb\.gov\.sg/);
+});
+test('URA parking notices use URA appeals instead of HDB',()=>{
+ assert.equal(rec('fines',{p_issuer:'ura',p_stage:'notice'}),'fine_ura');
+ assert.match(services.fine_ura.url,/ura\.gov\.sg/);
+});
+test('Traffic Police notices use SPF appeal requirements',()=>{
+ assert.equal(rec('fines',{p_issuer:'tp',p_stage:'notice'}),'fine_tp');
+ assert.match(services.fine_tp.caution,/court date/i);
+});
+test('LTA and active mobility penalties do not claim the ordinary vehicle appeal form always applies',()=>{
+ assert.equal(rec('fines',{p_issuer:'lta',p_stage:'notice'}),'fine_lta');
+ assert.match(getGuide(services.fine_lta,'en','online').steps.join(' '),/do not assume an e-scooter/i);
+});
+test('unidentified or other issuing agency gets a non-prescriptive directory',()=>{
+ for(const p_issuer of ['other','unsure',undefined]){
+  assert.equal(rec('fines',{p_issuer,p_stage:'notice'}),'fine_unknown');
+ }
+ assert.match(services.fine_unknown.caution,/no universal/i);
+});
+test('court summons overrides every issuing agency and does not delay the court route',()=>{
+ for(const p_issuer of ['hdb','ura','tp','lta','other','unsure']){
+  assert.equal(rec('fines',{p_issuer,p_stage:'court',agency_status:'waiting'}),'fine_court');
+  assert.deepEqual(getQuestionIds('fines',{p_issuer,p_stage:'court'}),['p_issuer','p_stage','contact']);
+ }
+ assert.match(services.fine_court.caution,/Do not miss court attendance/);
+ assert.equal(getNextPathway('fines',{p_stage:'court',agency_status:'waiting'}),'agency');
+});
+test('fines appeal reason is conditional and does not collect identifying information',()=>{
+ assert.deepEqual(getQuestionIds('fines',{p_stage:'notice',p_goal:'appeal'}),['p_issuer','p_stage','p_goal','p_reason','agency_status','contact']);
+ assert.ok(!getQuestionIds('fines',{p_stage:'notice',p_goal:'pay'}).includes('p_reason'));
+ assert.ok(!getQuestionIds('fines',{p_stage:'notice',p_goal:'hardship'}).includes('p_reason'));
+ assert.ok(!getQuestionIds('fines',{p_stage:'notice',p_goal:'status'}).includes('p_reason'));
+ for(const q of ['p_issuer','p_stage','p_goal','p_reason']){
+  assert.ok(!/NRIC number|address|full name|notice number/i.test(questions[q].title));
+ }
+});
+test('fine follow-up and rejected appeals reuse safe agency history pathways',()=>{
+ assert.equal(getNextPathway('fines',{p_stage:'notice',agency_status:'waiting'}),'followup');
+ assert.equal(getNextPathway('fines',{p_stage:'notice',agency_status:'rejected'}),'review');
+});
+test('HDB, URA and Traffic Police official guidance does not promise first-time waivers',()=>{
+ for(const id of ['fine_hdb','fine_ura','fine_tp']){
+  assert.match(services[id].description+/ +services[id].caution,/first.time|first offence|first-time/i);
+  assert.match(services[id].caution,/not|do not|does not/i);
+ }
+});
+test('fine questions and answers have Chinese translations and caregiver forms',()=>{
+ for(const id of ['p_issuer','p_stage','p_goal','p_reason']){
+  assert.ok(hasChineseQuestion(id));
+  const zh=questionText(questions[id],'zh');
+  assert.notEqual(zh.title,questions[id].title);
+  for(const option of zh.options)assert.ok(/[^\x00-\x7F]/.test(option.label));
+  for(const lang of ['en','zh']){
+   assert.ok(hasCaregiverQuestion(id,lang));
+   const c=audienceQuestionText(questions[id],lang,'caregiver');
+   assert.notEqual(c.title,questionText(questions[id],lang).title);
+   assert.deepEqual(c.options.map(o=>o.value),questions[id].options.map(o=>o.value));
+  }
+ }
+});
+test('all fine services provide bilingual source-linked online phone and in-person guidance',()=>{
+ for(const id of ['fine_hdb','fine_ura','fine_tp','fine_lta','fine_court','fine_unknown']){
+  assert.ok(hasChineseService(id));
+  for(const language of ['en','zh']){
+   const translation=serviceText(services[id],language);
+   assert.equal(translation.checklist.length,services[id].checklist.length);
+   for(const method of ['online','phone','inperson']){
+    const g=getGuide(services[id],language,method);
+    assert.ok(g.steps.length>=2);
+    assert.match(new URL(g.source).hostname,/\.gov\.sg$/);
+   }
+  }
+ }
+});
+test('MPS preparation for court summonses explicitly preserves mandatory attendance',()=>{
+ const a={p_issuer:'tp',p_stage:'court',contact:'online'};
+ const en=getMpsPreparation('fines',a,'en','self');
+ const zh=getMpsPreparation('fines',a,'zh','caregiver');
+ assert.match(en.pathway,/court summons/i);
+ assert.match(en.preparation.join(' '),/court instructions/i);
+ assert.match(zh.pathway,/法庭/);
+ assert.ok(zh.items.some(i=>i.id==='p_stage'));
+ assert.ok(!en.items.some(i=>i.id==='contact'));
+});
+test('MPS fine notes filter unrecognised and sensitive case entries',()=>{
+ const a={p_issuer:'ura',p_stage:'notice',p_goal:'appeal',p_reason:'first',agency_status:'first',nric:'S0000000X',case_details:'identifying info'};
+ const brief=getMpsPreparation('fines',a,'en','caregiver');
+ assert.equal(brief.items.find(i=>i.id==='p_reason')?.answer,'It was their first offence or an honest mistake');
+ assert.ok(!JSON.stringify(brief).includes('S0000000X'));
+ assert.ok(!JSON.stringify(brief).includes('identifying info'));
+});
