@@ -264,10 +264,33 @@ const finePaymentRoutes:Record<string,{url:string;en:string[];zh:string[]}>={
   zh:['打开交通警察官方“Check Outstanding Traffic Offences and Pay Traffic Fines”查询及缴费服务。','按官方要求使用自己的账号，查看未缴交通罚款及可使用的付款方式。','如系统尚未显示该违例，请按照官方说明等候通知并重新查询；切勿忽略期限或法庭指示。']
  }
 };
+
+const fineStatusRoutes:Record<string,{url:string;en:string[];zh:string[]}>={
+ fine_ura:{url:'https://parking.ura.gov.sg/car-parks-portal/eAppeal/appeal-status',
+  en:['Open URA’s official Check Outcome of Appeals eService, rather than submitting a duplicate appeal.','The eService allows checks on appeals submitted within the last six months; follow its prompts with your own official reference information.','If you cannot locate the case, use the URA contact channel to ask what happened to the appeal.'],
+  zh:['打开 URA 官方“Check Outcome of Appeals”申诉结果查询服务，不要直接重复提交申诉。','该服务可查询过去六个月提交的申诉；只在官方网站填写所需的参考资料。','如查不到记录，请使用 URA 官方联络方式询问进度。']},
+ fine_tp:{url:'https://www.police.gov.sg/E-Services/Check-Status-of-Appeal-Against-Traffic-Offence',
+  en:['Open the Traffic Police Check Status of Appeal Against Traffic Offence eService.','Use your own Singpass and official appeal reference number as requested; do not share these through NeighbourAssist.','If the appeal was rejected, read the official policy before seeking a further review; a repeat request without fresh evidence is not considered.'],
+  zh:['打开交通警察官方“Check Status of Appeal Against Traffic Offence”查询服务。','按照官方网站要求使用自己的 Singpass 和申诉参考编号；切勿在 NeighbourAssist 输入这些资料。','如之前的申诉不获接纳，应先查看官方规定；没有新证据的重复申诉不会获考虑。']}
+};
+const fineHardshipRoutes:Record<string,{url:string;en:string[];zh:string[]}>={
+ fine_hdb:{url:'https://www.hdb.gov.sg/about-us/contact-us',
+  en:['Open HDB’s official Contact Us page to find the parking-fine enquiries channel.','Explain that you need information about payment obligations or possible official options because paying is difficult.','Check the deadline on the notice and ask HDB for case-specific guidance. Do not assume that a waiver or instalment plan is available.'],
+  zh:['打开建屋局官方联络网页，查找停车罚单查询渠道。','说明目前难以负担罚款，希望了解官方缴费规定及是否有适用的处理方式。','核对罚单上的期限，向建屋局咨询；不要假设一定可以免除罚款或分期付款。']},
+ fine_ura:{url:'https://www.ura.gov.sg/contact/',
+  en:['Open URA’s official Contact Us page for car-park enquiries.','Ask about payment requirements and whether any official option is available in your circumstances.','If the case already involves court, consult the relevant court and prosecuting agency instructions. Do not assume the fine will be waived.'],
+  zh:['从 URA 官方联络网页查找停车罚单咨询渠道。','询问缴费规定，以及是否有适用于自身情况的官方处理方式。','如果案件已经进入法庭程序，请另外遵守法庭及检控机构指示，不要假设罚款获撤销。']},
+ fine_tp:{url:'https://www.police.gov.sg/feedback',
+  en:['Open the official Singapore Police Force feedback page for traffic offence enquiries.','Ask about payment obligations and the correct office for a financial-difficulty enquiry, without expecting an automatic waiver.','If you have a summons or court date, follow the court notice rather than waiting for a feedback reply.'],
+  zh:['打开新加坡警察部队官方反馈网页，查询交通罚单事宜。','询问缴费义务，以及遇到经济困难应联系哪个部门；不能假设罚款会自动获豁免。','如已有传票或出庭日期，请遵守法庭指示，不要只等候反馈回复。']},
+ fine_lta:{url:'https://www.lta.gov.sg/content/ltagov/en/contact_us/contact_form.html',
+  en:['Open LTA’s official enquiry form and check the type of notice you received.','Ask about the specific payment obligations or available official options for that offence, especially if it concerns an active-mobility device.','Keep track of all deadlines and court instructions. This guide does not establish that instalments or waivers are available.'],
+  zh:['打开陆交局官方咨询表格，核实您收到的罚单类别。','询问该违例的缴费规定及是否有正式处理方式，特别是个人代步工具罚单。','留意所有期限和法庭指示；本指南不保证可以分期或豁免付款。']}
+};
 export function getGuide(service:Service,lang:Language,method:HelpMethod,purpose?:string){
  const guide=guides[service.id];
  if(!guide)throw new Error('Missing guidance for '+service.id);
- const payment=purpose==='pay'?finePaymentRoutes[service.id]:undefined;
+ const payment=purpose==='pay'?finePaymentRoutes[service.id]:purpose==='status'?fineStatusRoutes[service.id]:purpose==='hardship'?fineHardshipRoutes[service.id]:undefined;
  const steps=payment
   ? method==='online'?payment[lang]:method==='unsure'?[payment[lang][0],guide[lang].phone[0],guide[lang].inperson[0]]:guide[lang][method]
   : method==='unsure'?[guide[lang].online[0],guide[lang].phone[0],guide[lang].inperson[0]]:guide[lang][method];
