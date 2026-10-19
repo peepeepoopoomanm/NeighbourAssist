@@ -48,7 +48,7 @@ const caregiverZh:WordingMap = {
  c_age:{title:'您正在协助的人是否已满 55 岁？',options:{unsure:'不愿透露／我不清楚'}},
  c_goal:{title:'对方希望了解哪方面的资料？',options:{withdraw:'对方可以提取部分公积金吗？',support:'对方是否可以获得长者补助？',balance:'对方应该如何查看退休储蓄或入息资料？',unsure:'我不确定'}},
  m_type:{title:'对方主要担心哪一类医疗开销？',options:{clinic:'对方的全科或牙科诊所费用',bill:'对方无法负担的医院或其他医疗账单',unsure:'我不确定'}},
- h_tenure:{title:'您正在协助的人在目前的公共租赁组屋住了多久？',hint:'一般需居住至少两年，建屋局才可能考虑转租申请。',options:{under2:'少于两年','2plus':'两年或以上',unsure:'我不确定'}},
+ h_tenure:{title:'您正在协助的人在目前的公共租赁组屋住了多久？',hint:'一般需居住至少两年，建屋局才可能考虑调换租赁组屋的申请。',options:{under2:'少于两年','2plus':'两年或以上',unsure:'我不确定'}},
  h_household:{title:'对方目前的居住安排是怎样的？',hint:'只需概括，不必提供任何人的身份资料。',options:{alone:'对方独居',family:'对方与家人或家庭成员同住',shared:'对方与非家人合住',unsure:'不确定／不愿透露'}},
  agency_status:{title:'您正在协助的人是否已经联系过有关政府机构？',hint:'例如建屋局、公积金局或医院。',options:{first:'对方还没有联系',waiting:'对方已经联系，正在等待回复',rejected:'对方的申请或要求被拒绝',unresolved:'对方的问题仍未解决',unsure:'我不确定'}},
  h_review:{title:'对方希望机构重新考虑哪方面的住房困难？',hint:'请勿提供对方的地址或敏感资料。',options:{family:'对方的家庭或照护情况改变了',mobility:'对方有行动或无障碍方面的困难',affordability:'对方难以负担住房费用',other:'其他／我不确定'}},
