@@ -91,7 +91,7 @@ const serviceZh:Record<string,{name:string;description:string;steps:string[];che
  chas:{name:'了解 CHAS 诊所补贴',description:'CHAS 可协助符合条件者减轻参与计划的全科和牙科诊所门诊费用。',steps:['阅读 CHAS 官方说明。','通过官方服务查询补贴情况或申请方法。','如无法网上办理，请向 CHAS 寻求协助。'],checklist:['CHAS 官方渠道要求的资料'],caution:'补贴级别和资格由政府评估。本网站不能确定您可获得的补贴。',phoneHours:'工作日上午 8:30 至下午 6 时（公共假日除外）'},
  medifund:{name:'向医疗社工询问保健基金（MediFund）',description:'对于通过其他付款方式后仍难以负担医疗账单的合资格病人，保健基金可能提供帮助。',steps:['向相关医疗机构询问如何联络医疗社工。','说明您难以支付医疗费用。','询问保健基金及其他援助。'],checklist:['关于医疗账单的问题','仅通过官方渠道提供医疗社工要求的文件'],caution:'是否符合保健基金资格由有关医疗机构评估。',offline:'在获批准的医疗机构联系医疗社工。'},
  health_general:{name:'查询医疗费用援助',description:'适合的援助取决于诊所、医院或其他医疗开销的类别。',steps:['打开卫生部官方补贴资料。','查找相关医疗费用类别。','如正在医院就医，可要求与医疗社工交谈。'],checklist:['医疗开销的大致类别'],caution:'请勿向本网站上传医疗记录。'},
- oneservice:{name:'通过 OneService 反映邻里问题',description:'OneService 会把公共照明、清洁等市政反馈转交有关机构或市镇理事会。',steps:['打开 OneService 官方网站，选择官方反馈渠道。','在官方平台说明问题和地点。','按官方指示提供照片或联络资料。'],checklist:['问题所在的地点','如官方渠道需要，可提供照片和描述'],caution:'此渠道处理市政问题，不是经济援助或紧急救援服务。'},
+ oneservice:{name:'通过 OneService 反映邻里问题',description:'OneService 会把公共照明、清洁等市政反馈转交有关机构或市镇理事会。',steps:['打开 OneService 官方网站，选择官方反馈渠道。','在官方平台说明问题和地点。','按官方指示提供照片或联络资料。'],checklist:['问题的准确地点及发现时间','使用 OneService 聊天机器人时，准备问题描述及至少一张照片','只在官方反馈渠道提供所需联络资料'],caution:'OneService 处理市政反馈，并非紧急救援渠道。如有人正面临即时危险，请直接联络紧急服务。'},
  lifesg:{name:'通过 LifeSG 寻找政府服务',description:'LifeSG 提供政府服务的官方资料和入口。',steps:['打开 LifeSG 官方网站。','浏览符合您需要的服务。','如有需要，可请值得信任的照顾者帮忙。'],checklist:['简要说明需要哪方面的帮助'],caution:'这是独立学生示范网站，不能代表政府提交申请。'},
 };
 export function hasChineseService(id:string):boolean{return !!serviceZh[id]}
