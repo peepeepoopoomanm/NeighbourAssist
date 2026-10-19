@@ -32,7 +32,7 @@ test('every service has Chinese instructions, cautions and checklists',()=>{for(
 test('both language packs share all interface labels',()=>assert.deepEqual(Object.keys(messages.en).sort(),Object.keys(messages.zh).sort()));
 test('specific expense and housing concerns appear as plain-language prompts',()=>{assert.match(situationText({f_need:'food'},'en'),/food/);assert.match(situationText({h_context:'alone'},'zh'),/独居/)});
 
-import {audienceQuestionText,audienceReasonText,audienceSituationText,caregiverUi,hasCaregiverQuestion} from '../src/audience.ts';
+import {audienceQuestionText,contextualQuestionText,audienceReasonText,audienceSituationText,caregiverUi,hasCaregiverQuestion} from '../src/audience.ts';
 test('self-service retains the original question wording',()=>{
  for(const lang of ['en','zh'])for(const q of Object.values(questions))
   assert.deepEqual(audienceQuestionText(q,lang,'self'),questionText(q,lang));
@@ -434,6 +434,8 @@ test('family broad social difficulties go to FSC with optional existing SSO',()=
 test('family emergency directions avoid misleading MPS and ComCare advice in UI',()=>{
  const app=readFileSync(new URL('../src/App.tsx',import.meta.url),'utf8');
  assert.match(app,/t\.familySafetyBanner/);
+ assert.match(app,/t\.emergencyPoliceAction/);
+ assert.match(app,/t\.emergencyPoliceSms/);
  assert.match(app,/t\.familyDangerPathway/);
  assert.match(app,/t\.familyConcernPathway/);
  assert.match(app,/category==='family'&&\['danger','concern'\]\.includes\(answers\.family_safety\)/);
@@ -466,6 +468,13 @@ test('work and family questions have complete Chinese and caregiver wording',()=
  }
 });
 test('MPS notes preserve only broad work and family selections',()=>{
+ const workStatus=contextualQuestionText(questions.agency_status,'en','caregiver','employment');
+ const familyStatus=contextualQuestionText(questions.agency_status,'zh','self','family');
+ assert.match(workStatus.title,/TADM/);
+ assert.match(workStatus.title,/person you are helping/);
+ assert.match(familyStatus.title,/家庭服务中心/);
+ assert.notEqual(workStatus.title,questions.agency_status.title);
+
  const a=getMpsPreparation('employment',{w_issue:'salary',w_status:'left',agency_status:'rejected',contact:'online',person_name:'private name'},'en','caregiver');
  const b=getMpsPreparation('family',{family_safety:'no',family_issue:'caregiving',agency_status:'first',contact:'phone',private_details:'private details'},'zh','caregiver');
  assert.ok(a.items.some(x=>x.id==='w_status'));
