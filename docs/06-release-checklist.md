@@ -18,7 +18,7 @@ The service directory is in `src/engine.ts` and the detailed bilingual instructi
 | HDB rental payment problems | https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/assistance-for-tenants | Instalments, SSO referrals, smaller flat support listed | Verify branch directions for test location |
 | HDB change of tenancy | https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/change-of-tenancy | Official page and topic confirmed | Validate tenant-versus-occupier distinctions at application stage |
 | HDB rightsizing/Silver Housing Bonus | https://www.hdb.gov.sg/managing-my-home/retirement-planning/monetising-flat-for-retirement/silver-housing-bonus | Official programme page found; no personal eligibility promised | Check criteria and related links in browser |
-| HDB general enquiries | https://www.hdb.gov.sg/about-us/contact-us | Branch Service Line 6225-5432 confirmed | Verify hours and which HDB branch to visit |
+| HDB general enquiries | https://www.hdb.gov.sg/about-us/contact-us | Branch Service Line 6225-5432, weekdays 8 am–5 pm except public holidays, confirmed | Verify the correct HDB branch for the resident and current service-centre arrangements |
 | CPF withdrawal at 55+ | https://www.cpf.gov.sg/member/retirement-income/retirement-withdrawals/withdrawing-for-immediate-retirement-needs | Age 55 withdrawal route and retirement-dashboard instructions confirmed | Test link to dashboard before authentication |
 | CPF general and contact | https://www.cpf.gov.sg/service/ | Retirement hotline 1800-227-1188, Mon–Fri 8:30 am–5:30 pm confirmed | Check CPF service-centre booking flow |
 | CHAS | https://chas.moh.gov.sg/Home/Welcome | Official eService and hotline 1800-275-2427, weekday 8:30 am–6 pm confirmed | Check login/application/renewal route |
@@ -65,6 +65,7 @@ The service directory is in `src/engine.ts` and the detailed bilingual instructi
 - [ ] `npm ci` (uses the committed `package-lock.json`)
 - [ ] `npm test` (includes the release-audit static checks)
 - [ ] `npm run build` (generates `dist/`)
+- [ ] `npm run preview` (check the **production build**, usually at http://localhost:4173/; stop it with Ctrl+C afterward)
 - [ ] `npm audit` (investigate any new issues; an earlier audit showed zero advisories)
 - [ ] Verify that the latest **Validate NeighbourAssist** GitHub Actions run is green after source edits.
 - [ ] Ensure no `.env`, credentials, case documents or personal details are committed.
@@ -78,7 +79,22 @@ The app is a **static React / TypeScript / Vite build**, with no production back
 - **Node.js:** use a supported 22 LTS environment consistent with the CI workflow
 - **SPA paths:** current application has no URL-based client-side router, so no custom deep-link rewrite is required for this version
 
-Before making a Deployxa project publicly accessible, confirm that the service supports hosting a static `dist/` directory and check its **actual** deployment dashboard/documentation. Do not assume any provider-specific settings, prices, custom domains or HTTPS arrangements.
+Deployxa's public pages now explicitly advertise React/Vite deployments, Git-connected static site builds and automatic HTTPS; see https://deployxa.com/docs and https://deployxa.com/. Actual field labels and options must still be checked in the logged-in account. **Do not treat these marketing pages as proof of a successful deployment.**
+
+### Deployxa staging/deployment walkthrough
+
+1. Open https://deployxa.com/ and sign in to your own account.
+2. Create a new deployment/project and choose to connect GitHub (or, if available, a public Git repository URL).
+3. Select repository `peepeepoopoomanm/NeighbourAssist` and branch `main`. **Verify the exact repository name**, and allow only the permissions needed for the project.
+4. Confirm that Deployxa detects **React (Vite)** or offers a suitable **static website** build. Don't choose an Express/API project with a fabricated runtime server.
+5. Where manual configuration is available, set install command `npm ci`, build command `npm run build`, and output/publish directory `dist`. Use the platform's default supported Node version consistent with the Vite toolchain (the repository CI uses Node 22).
+6. Prefer a **preview/staging** deployment first if the account offers it. Do not enable a custom domain or pay for hosting before the site passes the acceptance checks below.
+7. Wait for the provider's build to finish, open the reported URL, confirm HTTPS, and test the app there. A successful local build does **not** prove the hosted page is functional.
+8. Save the deployment URL and commit identifier in the team's submission notes. If you want continuous delivery on `main`, enable it only after confirming the deployed build is correct.
+
+If Deployxa asks for a **start command** or container port instead of an output folder, stop and inspect the provider's React/Vite deployment guide or build logs rather than using `npm run dev` or `vite preview` as a production server. Vite specifically documents that its `preview` command is for local testing, not production hosting. See https://vite.dev/guide/static-deploy.
+
+**Account, costs and privacy:** Check the plan limits, logging/analytics and retention shown in the actual account. The MVP needs no database, AI API key, secrets or resident login. A managed host may still collect ordinary access logs such as IP addresses; review the provider's privacy terms before public launch.
 
 After deployment:
 - [ ] Verify HTTPS, a working root page, no browser-console errors and no unexpected outbound API requests.
