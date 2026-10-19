@@ -73,7 +73,7 @@ export default function App(){
  const situation=audienceSituationText(answers,language,forWhom);
  const pathway=getNextPathway(category,answers);
  const mpsBrief=getMpsPreparation(category,answers,language,forWhom);
- const pathwayCopy=pathway==='urgent'?t.pathwayUrgent:pathway==='followup'?t.pathwayFollowup:pathway==='review'?t.pathwayReview:t.pathwayAgency;
+ const pathwayCopy=category==='fines'&&answers.p_stage==='court'?t.fineCourtPathway:pathway==='urgent'?t.pathwayUrgent:pathway==='followup'?t.pathwayFollowup:pathway==='review'?t.pathwayReview:t.pathwayAgency;
  useEffect(()=>{const resetPrint=()=>setPrintMps(false);window.addEventListener('afterprint',resetPrint);return ()=>window.removeEventListener('afterprint',resetPrint)},[]);
  useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hans':'en';document.title=language==='zh'?'邻里助理 — 寻找援助':'NeighbourAssist — Find support';},[language]);
  // Move focus after wizard transitions so screen readers announce the new content.
