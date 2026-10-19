@@ -16,6 +16,7 @@ const en={
  otherInfo:'ADDITIONAL INFORMATION',learnMore:'Read on the official website',prepareTitle:'Before you contact them',prepareIntro:'These are examples of information that may be helpful. Only share documents if the official agency asks for them.',print:'Print this guidance',privacyReminder:'Never upload personal documents or share Singpass passwords through this prototype.',changeAnswers:'Change my answers',startAgain:'Start again',about:'About & limitations',browse:'Browse assistance topics',lifesg:'LifeSG',footerLine:'Help, made clearer. A student hackathon prototype.',
  aboutLabel:'ABOUT THIS PROJECT',aboutTitle:'Built to make support easier to find.',about1:'NeighbourAssist is an independent student prototype for Neighborhood Hacks 2026. It began with observations at Meet-the-People Sessions: some older residents struggled to find or use digital assistance channels, while others faced long waits in person.',about2:'We do not collect documents, assess eligibility, receive case submissions or access government databases. Follow official links for real applications.',findAssistance:'Browse assistance topics',
  hdbTenureWarning:'HDB generally requires registered public-rental tenants to have occupied their current rental flat for at least two years before requesting a transfer. Since you selected less than two years, check directly with HDB before applying; this guide cannot determine exceptions.',pathwayTitle:'What kind of help makes sense next?',pathwayUrgent:'For urgent food or essential needs, contact ComCare promptly. Do not wait for an MP session.',pathwayAgency:'The relevant agency is a useful starting point. You can also seek help from your MP if you prefer human guidance.',pathwayFollowup:'You are waiting for a reply. Follow up with the agency using any reference number you have. You can also seek MP assistance.',pathwayReview:'You have already approached an agency but the matter remains unresolved or was rejected. Ask about its review process and consider MP assistance.',mpsSectionTitle:'Need help from your MP?',mpsSectionIntro:'Meet-the-People Sessions (MPS) provide a way to explain your circumstances to an elected representative or their volunteers. An MP appeal does not guarantee a different outcome or faster processing.',mpsShow:'Prepare for a Meet-the-People Session',mpsHide:'Hide preparation notes',mpsFind:'Find my MP — Parliament website',mpsSteps:'How to use these notes',mpsStep1:'Find your constituency and MP on the official Parliament website. Check the MP page for current MPS time, location or contact information.',mpsStep2:'Review this summary, correct any inaccurate selections by changing your answers, and print a copy if useful.',mpsStep3:'Contact the relevant MPS team before travelling, where possible. Ask about session arrangements and what documents to bring.',mpsPrint:'Print MPS preparation notes',mpsNotes:'Your preparation notes',mpsSituation:'Selected circumstances',mpsChecklist:'What you may want to prepare',mpsPrivacy:'These notes are created on your device from answers you selected. They are not sent to an MP, a government agency or a server.',mpsAfter:'Your MP or MPS volunteers may be able to explain appeal options, but the government agency remains responsible for its decision.',
+ fineCourtWarning:'You selected a court summons or required court appearance. Follow the court notice immediately; an agency appeal or MP request does not postpone the hearing.',finePaidWarning:'You indicated that the fine has already been paid. Some agencies do not consider appeals after payment. Check the issuing agency’s published policy before taking further action.',fineDeadlineWarning:'Check the payment, appeal or court deadline on the original notice. NeighbourAssist cannot extend deadlines or cancel penalties.',
  urgentNote:'If you cannot afford food or essentials in the next few days, contact ComCare promptly. This guide does not submit requests or provide emergency response.',
 };
 const zh:typeof en={
@@ -31,12 +32,13 @@ const zh:typeof en={
  otherInfo:'其他相关信息',learnMore:'到官方网站了解详情',prepareTitle:'联系前可准备什么',prepareIntro:'以下只是可能有帮助的资料。只有在官方机构要求时才提供文件。',print:'打印此指引',privacyReminder:'切勿通过本示范网站上传个人文件或分享 Singpass 密码。',changeAnswers:'修改答案',startAgain:'重新开始',about:'关于本项目及限制',browse:'浏览援助类别',lifesg:'LifeSG',footerLine:'让求助更清楚。学生黑客松示范项目。',
  aboutLabel:'关于本项目',aboutTitle:'让人们更容易找到援助。',about1:'邻里助理是为 2026 年 Neighborhood Hacks 黑客松制作的独立学生示范网站。项目源于在议员接见选民活动中的观察：一些年长居民不熟悉网上援助渠道，另一些则需要排队很久。',about2:'本网站不收集证明文件、不审核资格、不接收正式申请，也无法访问政府数据库。正式申请请使用官方渠道。',findAssistance:'浏览援助类别',
  hdbTenureWarning:'建屋局一般要求现有公共租赁组屋的登记承租人已居住至少两年，才可申请调换租赁组屋。由于您选择少于两年，请先向建屋局查询；本指南不能决定是否有特殊处理方式。',pathwayTitle:'下一步可以怎样求助？',pathwayUrgent:'如急需食物或生活必需品，请尽快联系 ComCare，不必等待接见选民活动。',pathwayAgency:'可先向负责机构咨询或申请。如希望获得人手指导，也可以向议员寻求帮助。',pathwayFollowup:'您仍在等待回复。可使用参考编号向有关机构查询进展，也可以向议员寻求协助。',pathwayReview:'您已联系有关机构，但申请被拒或问题仍未解决。可询问复核程序，并考虑向议员寻求协助。',mpsSectionTitle:'需要向议员寻求帮助？',mpsSectionIntro:'接见选民活动（MPS）让您向议员或其志愿者解释情况，但不能保证申请获批或处理更快。',mpsShow:'准备参加接见选民活动',mpsHide:'收起准备摘要',mpsFind:'查找我的议员 — 国会官网',mpsSteps:'如何使用这份摘要',mpsStep1:'使用国会官网查找您的选区和议员，并在议员网页确认最新接见选民时间、地点或联络资料。',mpsStep2:'核对以下摘要，如有错误可返回修改答案；如有需要，可打印一份。',mpsStep3:'如可能，先联系接见选民活动团队，询问活动安排及所需文件，再前往。',mpsPrint:'打印接见选民准备摘要',mpsNotes:'接见选民准备摘要',mpsSituation:'您选择的情况',mpsChecklist:'可准备的资料',mpsPrivacy:'这份摘要只根据您在本装置上选择的答案生成，不会发送给议员、政府机构或服务器。',mpsAfter:'议员或志愿者可能协助解释申诉渠道，但有关政府机构仍负责作出决定。',
+ fineCourtWarning:'您选择了法庭传票或须出庭的情况。请立即按传票指示办理；向机构或议员求情不会自动延迟聆讯。',finePaidWarning:'您表示罚款已经缴清。部分机构付款后不再考虑申诉。请先查阅发出机构的官方规定。',fineDeadlineWarning:'请核对罚单上的缴费、申诉或出庭期限。本网站不能延长期限或取消处罚。',
  urgentNote:'如果您未来几天无法负担食物或必需品，请尽快联络 ComCare。本网站不会提交申请，也不是紧急救援服务。',
 };
 export const messages={en,zh};
 
 const categoriesZh:Record<Category,{label:string;summary:string}>={
- financial:{label:'日常生活开销',summary:'食物、账单、收入及经济援助'},housing:{label:'住房与租金',summary:'政府租赁组屋、住房开支及换小房'},cpf:{label:'公积金与退休',summary:'了解公积金提款和长者援助'},health:{label:'医疗费用',summary:'诊所补贴及医药账单'},municipal:{label:'邻里设施问题',summary:'电梯、公共设施维修和清洁'},unsure:{label:'不确定',summary:'帮我找到合适的求助渠道'},
+ financial:{label:'日常生活开销',summary:'食物、账单、收入及经济援助'},housing:{label:'住房与租金',summary:'政府租赁组屋、住房开支及换小房'},cpf:{label:'公积金与退休',summary:'了解公积金提款和长者援助'},health:{label:'医疗费用',summary:'诊所补贴及医药账单'},municipal:{label:'邻里设施问题',summary:'电梯、公共设施维修和清洁'},fines:{label:'罚单与申诉',summary:'停车罚单、交通违例及个人代步工具处罚'},unsure:{label:'不确定',summary:'帮我找到合适的求助渠道'},
 };
 export function categoryText(id:Category,language:Language,english:{label:string;summary:string}) {return language==='zh'?categoriesZh[id]:english;}
 
@@ -65,14 +67,19 @@ const questionZh:Record<string,QuestionZh>={
  m_barrier:{title:'关于医疗费用，您最需要哪方面的帮助？',hint:'这有助于推荐联络渠道，而非决定资格。',options:{bill:'了解账单或付款方式',subsidy:'了解诊所补贴',person:'与职员当面讨论',unsure:'我不确定'}},
  n_issue:{title:'您想反映哪种邻里问题？',options:{lift:'电梯或公共设施',cleanliness:'环境清洁或垃圾',maintenance:'公共走廊维修或照明',unsure:'其他／不确定'}},
  n_report:{title:'您是否已经通过官方渠道反映这个问题？',options:{yes:'是，但问题仍未解决',no:'还没有',unsure:'不确定'}},
- u_need:{title:'以下哪项最接近您需要帮助的方面？',options:{financial:'日常生活开销',housing:'住房与租金',cpf:'公积金与退休',health:'医疗费用',municipal:'邻里设施',unsure:'其他／我不确定'}},
+
+ p_issuer:{title:'哪一个机构发出这张罚单或处罚通知？',hint:'请查看通知上所写的机构名称，不需要在这里输入罚单编号。',options:{hdb:'建屋局 HDB（停车罚单）',ura:'市区重建局 URA（停车罚单）',tp:'交通警察 Traffic Police',lta:'陆路交通管理局 LTA（包括电动滑板车）',other:'其他政府机构',unsure:'我不确定'}},
+ p_stage:{title:'这张罚单目前处于什么阶段？',hint:'请注意罚单的截止日期和是否规定出庭。法庭传票应尽快处理。',options:{notice:'我刚收到违例或罚款通知',court:'我已收到法庭传票或须出庭的通知',paid:'罚款已经缴清',unsure:'我不确定'}},
+ p_goal:{title:'您希望了解哪一方面？',hint:'本指南不能代替您申诉或缴付罚款。',options:{appeal:'如何申请申诉或复核',pay:'如何查询或缴交罚款',status:'如何查询申诉进度',hardship:'我难以负担罚款',unsure:'我不确定应该怎么办'}},
+ p_reason:{title:'您想要求复核罚单的主要原因是什么？',hint:'此问题不会判断申诉是否成立。初犯或无心之失不代表一定可以豁免。',options:{error:'我认为罚单可能开错了',medical:'当时发生医疗紧急情况',breakdown:'当时车辆故障或发生特殊情况',first:'这是第一次违例或无心之失',hardship:'我难以负担罚款',other:'其他原因／我不确定'}},
+ u_need:{title:'以下哪项最接近您需要帮助的方面？',options:{financial:'日常生活开销',housing:'住房与租金',cpf:'公积金与退休',health:'医疗费用',municipal:'邻里设施',fines:'罚单或处罚',unsure:'其他／我不确定'}},
  contact:{title:'您希望用哪种方式寻求帮助？',hint:'我们仍会显示官方网站。',options:{online:'使用官方网站',phone:'通过电话联系',inperson:'亲自前往寻求协助',unsure:'我不确定'}},
 };
 export function questionText(q:Question,language:Language):Question{if(language==='en')return q;const tr=questionZh[q.id];if(!tr)return q;return {...q,title:tr.title,hint:tr.hint,options:q.options.map(o=>({...o,label:tr.options[o.value]??o.label}))};}
 export function hasChineseQuestion(id:string):boolean{return !!questionZh[id]}
 
 const agencyZh:Record<string,string>={
- 'Ministry of Social and Family Development':'社会及家庭发展部','CPF Board':'中央公积金局','Housing & Development Board':'建屋发展局','Ministry of Health':'卫生部','Municipal Services Office':'市政服务事务署','Government of Singapore':'新加坡政府',
+ 'Ministry of Social and Family Development':'社会及家庭发展部','CPF Board':'中央公积金局','Housing & Development Board':'建屋发展局','Ministry of Health':'卫生部','Municipal Services Office':'市政服务事务署','Government of Singapore':'新加坡政府','Singapore Police Force':'新加坡警察部队','Land Transport Authority':'陆路交通管理局','Urban Redevelopment Authority':'市区重建局','Singapore Courts':'新加坡法院',
 };
 const serviceZh:Record<string,{name:string;description:string;steps:string[];checklist:string[];caution:string;offline?:string;phoneHours?:string}>={
  comcare_urgent:{name:'咨询 ComCare 紧急援助',description:'如果您无法负担生活必需品，请尽快联络 ComCare，询问临时援助。',steps:['尽快拨打 ComCare 热线。','说明您急需食物或其他生活必需品方面的援助。','询问有哪些临时援助或附近的支持服务。'],checklist:['简单说明目前缺乏哪些必需品','社会服务办事处要求的相关资料'],caution:'只有有关机构可以审核申请。本网站不会替您提交申请。',offline:'向 ComCare 询问如何前往社会服务办事处。',phoneHours:'每天上午 7 时至午夜'},
@@ -92,6 +99,13 @@ const serviceZh:Record<string,{name:string;description:string;steps:string[];che
  medifund:{name:'向医疗社工询问保健基金（MediFund）',description:'对于通过其他付款方式后仍难以负担医疗账单的合资格病人，保健基金可能提供帮助。',steps:['向相关医疗机构询问如何联络医疗社工。','说明您难以支付医疗费用。','询问保健基金及其他援助。'],checklist:['关于医疗账单的问题','仅通过官方渠道提供医疗社工要求的文件'],caution:'是否符合保健基金资格由有关医疗机构评估。',offline:'在获批准的医疗机构联系医疗社工。'},
  health_general:{name:'查询医疗费用援助',description:'适合的援助取决于诊所、医院或其他医疗开销的类别。',steps:['打开卫生部官方补贴资料。','查找相关医疗费用类别。','如正在医院就医，可要求与医疗社工交谈。'],checklist:['医疗开销的大致类别'],caution:'请勿向本网站上传医疗记录。'},
  oneservice:{name:'通过 OneService 反映邻里问题',description:'OneService 会把公共照明、清洁等市政反馈转交有关机构或市镇理事会。',steps:['打开 OneService 官方网站，选择官方反馈渠道。','在官方平台说明问题和地点。','按官方指示提供照片或联络资料。'],checklist:['问题的准确地点及发现时间','使用 OneService 聊天机器人时，准备问题描述及至少一张照片','只在官方反馈渠道提供所需联络资料'],caution:'OneService 处理市政反馈，并非紧急救援渠道。如有人正面临即时危险，请直接联络紧急服务。'},
+
+ fine_hdb:{name:'查询建屋局停车罚单与申诉',description:'建屋局设有处理所发停车罚单的申诉服务，通常须提供特殊情况及证明。初犯不能保证罚单获撤销。',steps:['确认罚单是由建屋局发出。','先阅读建屋局的申诉条件，再使用官方申诉服务。','如需缴费、查询申诉结果或期限，请查阅罚单及建屋局官方联络指引。'],checklist:['供官方服务查询的罚单编号及期限','如需申诉，准备有关证明文件','之前的申诉确认通知（如有）'],caution:'建屋局通常只考虑有证明的特殊情况，罚款金额不能随意协商减少。请留意期限，不要假设议员可取消罚单。'},
+ fine_ura:{name:'查询 URA 停车罚单与申诉',description:'市区重建局（URA）提供官方申诉、缴费和查询申诉结果渠道，并说明大部分申诉不获接纳。',steps:['确认停车罚单由 URA 发出。','了解 URA 的申诉条件；忘记启动 Parking.sg 通常不获接纳。','按照通知上的期限，从 URA 官方网页选择申诉、缴费或查询结果服务。'],checklist:['URA 罚单编号及截止日期','如需申诉，准备医疗或车辆维修等证明','之前的申诉确认通知（如有）'],caution:'URA 指出多数申诉遭拒，重复申诉也可能不获受理。初犯、无心之失或议员求情信不保证豁免。'},
+ fine_tp:{name:'了解交通警察的违例申诉规定',description:'交通警察只考虑有文件证明的医疗紧急情况申诉；单凭第一次违例并不足够。',steps:['确认通知由交通警察发出，并核对截止日期。','阅读交通警察官方申诉条件，了解医疗紧急情况所需的证据。','如适用，使用官方 Traffic e-Appeals 服务；其他查询及缴费则使用警察部队的官方渠道。'],checklist:['仅在官方渠道使用的罚单或报告参考编号','医疗紧急情况的证明（如需申诉）','使用官方电子服务所需的 Singpass 和电邮'],caution:'如果没有新证据，交通警察不会考虑重复申诉。初犯不代表会获批准，更不能忽略法庭日期。'},
+ fine_lta:{name:'向陆交局查询罚单及个人代步工具违例',description:'陆交局处理车辆及个人代步工具违例；一般车辆申诉服务不一定适用于电动滑板车罚单。',steps:['确认罚单由 LTA 发出，以及属于车辆还是个人代步工具违例。','查阅陆交局官方罚单网页；所列申诉服务是针对车辆相关违例。','电动滑板车等案件请通过陆交局官方联络渠道查询适用程序，不要直接假设使用同一申诉表格。'],checklist:['通知的违例类别及发出机构','缴费、回复或出庭期限','官方机构要求的有关文件'],caution:'个人代步工具违例可能进入法庭程序。不要忽略出庭日期，也不要假设议员能够免除处罚。'},
+ fine_court:{name:'了解法庭传票及下一步',description:'法庭传票必须依照法庭程序处理；向机构或议员求情不会自动取消出庭要求。',steps:['立即查阅传票上的法庭、日期、时间及具体指示。','阅读新加坡法院有关监管违例的官方说明，向检控机构查询正式申述方式。','除非法庭正式另有指示，否则必须按规定出庭；有需要可寻求合资格的法律帮助。'],checklist:['法庭传票及出庭日期','已向机构或法庭提交资料的确认通知','按官方人员要求提供的证明'],caution:'切勿错过出庭日期。本网站不提供法律意见，不会代为认罪、上诉或申请延期。'},
+ fine_unknown:{name:'先确认是哪一个机构发出罚单',description:'不同政府机构及法庭处理不同处罚。请先查看通知上的机构和截止日期。',steps:['从罚单找出发出机构、通知类别、期限及是否须出庭。','通过罚单所列的官方网址，或 LifeSG 查找有关政府服务。','向发出机构确认应使用哪项缴费、复核或申诉渠道；如果有传票，也须另行遵守法庭指示。'],checklist:['机构名称及罚单类别','回复或出庭期限','之前的官方回复（如有）'],caution:'没有适用于所有罚单的统一申诉方式。LifeSG 只是服务目录，不提供法律意见。无心之失或初犯不保证罚款获撤销。'},
  lifesg:{name:'通过 LifeSG 寻找政府服务',description:'LifeSG 提供政府服务的官方资料和入口。',steps:['打开 LifeSG 官方网站。','浏览符合您需要的服务。','如有需要，可请值得信任的照顾者帮忙。'],checklist:['简要说明需要哪方面的帮助'],caution:'这是独立学生示范网站，不能代表政府提交申请。'},
 };
 export function hasChineseService(id:string):boolean{return !!serviceZh[id]}
@@ -122,6 +136,14 @@ const reasonsZh:Record<string,string>={
  'You mentioned difficulty paying a hospital or other medical bill.':'您提到难以支付医院或其他医疗账单。',
  'MOH can guide you toward the right scheme for the care involved.':'卫生部可提供与所需医疗服务相关的援助资料。',
  'This concerns your neighbourhood environment or municipal facilities.':'这与邻里环境或市政设施有关。',
+
+ 'You reported a court summons or required court date. Court instructions take priority.':'您已收到法庭传票或须出庭的通知；必须优先遵守法庭指示。',
+ 'You identified HDB as the issuer of the parking notice.':'您表示停车罚单由建屋局发出，应使用建屋局的官方渠道。',
+ 'You identified URA as the issuer of the parking notice.':'您表示停车罚单由市区重建局发出，应使用 URA 的官方渠道。',
+ 'You identified Traffic Police as the issuer of the offence notice.':'您表示通知由交通警察发出，应查阅交通警察的申诉规定。',
+ 'You identified LTA as the issuer; vehicle and active-mobility procedures may differ.':'您表示通知由陆交局发出；车辆与个人代步工具案件的程序可能不同。',
+ 'Identify the issuing agency before choosing an appeal or payment route.':'请先确认发出罚单的机构，再选择安全、正确的缴费或申诉渠道。',
+
 };
 export function reasonText(reason:string,lang:Language):string{return lang==='en'?reason:reasonsZh[reason]??'根据您的答案，以下官方渠道可能有帮助。'}
 
@@ -136,8 +158,13 @@ const detailLabel:Record<string,{en:string;zh:string}>={
  'h_rent:ongoing':{en:'I have trouble paying rent each month.',zh:'我每个月都难以支付租金。'},
  'h_rent:arrears':{en:'I have unpaid rent and need to know what help is available.',zh:'我有未缴付的租金，想了解有哪些援助。'},
  'h_rent:change':{en:'My rent or household circumstances have recently changed.',zh:'我的租金或家庭情况最近发生改变。'},
+ 'p_reason:error':{en:'I want to check whether the notice was issued in error.',zh:'我想核实这张罚单是否开错了。'},
+ 'p_reason:medical':{en:'I want to ask about a medical emergency at the time of the notice.',zh:'我想说明当时发生的医疗紧急情况。'},
+ 'p_reason:breakdown':{en:'I want to ask about a vehicle breakdown or unusual event.',zh:'我想说明当时的车辆故障或其他特殊情况。'},
+ 'p_reason:first':{en:'This was a first offence or an honest mistake. I want to understand the official policy.',zh:'这是第一次违例或无心之失，我想了解官方规定。'},
+ 'p_reason:hardship':{en:'I am struggling to afford the penalty and want to ask the agency about available options.',zh:'我难以负担这笔罚款，希望向有关机构了解可用的选择。'},
 };
 export function situationText(a:Answers,lang:Language):string|null {
- for(const key of ['f_need','h_context','h_rent']){const val=a[key];if(val&&detailLabel[`${key}:${val}`])return detailLabel[`${key}:${val}`][lang];}
+ for(const key of ['f_need','h_context','h_rent','p_reason']){const val=a[key];if(val&&detailLabel[`${key}:${val}`])return detailLabel[`${key}:${val}`][lang];}
  return null;
 }
