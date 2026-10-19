@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {categories,questions,getQuestionIds,getRecommendations,getNextPathway,type Category,type Answers,type Service} from './engine';
 import {messages,categoryText,serviceText,type Language,type TextSize} from './i18n';
-import {audienceQuestionText,audienceReasonText,audienceSituationText,caregiverUi,type Audience} from './audience';
+import {contextualQuestionText,audienceReasonText,audienceSituationText,caregiverUi,type Audience} from './audience';
 import CategoryIcon from './CategoryIcon';
 import {getGuide,type HelpMethod} from './journeys';
 import {getMpsPreparation,PARLIAMENT_MP_LOOKUP} from './mps';
@@ -72,7 +72,7 @@ export default function App(){
  const t=messages[language];
  const ids=getQuestionIds(category,answers);
  const currentQuestion=questions[ids[Math.min(questionIndex,ids.length-1)]];
- const q=audienceQuestionText(currentQuestion,language,forWhom);
+ const q=contextualQuestionText(currentQuestion,language,forWhom,category);
  const result=getRecommendations(category,answers);
  const primary=serviceText(result.primary,language);
  const secondary=result.secondary.map(s=>serviceText(s,language));
