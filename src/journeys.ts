@@ -84,9 +84,9 @@ export const guides:Record<string,GuideRecord>={
   phone:['Call the HDB Branch Service Line at 6225-5432 to ask about transferring a public rental flat.','Explain that you want to request a smaller rental flat and ask which HDB Branch manages your current tenancy.','Ask about transfer conditions, the correct application route and whether the branch can help you apply in person.'],
   inperson:['Identify the HDB Branch managing your existing public rental flat and check its contact details.','Ask whether you should visit or arrange an appointment to submit a rental-flat transfer request over the counter.','Bring the tenancy and applicant information HDB asks for. Do not end your current tenancy before HDB confirms the appropriate next steps.']
  },{
-  online:['打开建屋局“Transfer to Another Public Rental Flat”（转租另一间公共租赁组屋）网页，先阅读租约及转租条件。','点击申请链接，并按现有租赁组屋的管理分局选择地区；之后会进入 FormSG 申请表。','按提示使用自己的 Singpass 登录并填写官方要求的资料。建屋局会审核，不能保证获批较小组屋。'],
-  phone:['拨打建屋局分局热线 6225-5432，咨询公共租赁组屋转租事宜。','说明希望搬到较小的租赁组屋，并询问现有租约由哪间分局负责。','询问申请条件、正确申请渠道，以及能否到分局当面申请。'],
-  inperson:['找出负责现有租赁组屋的建屋局分局并确认联络方式。','询问是否需要先预约，或可到柜台提交转租申请。','按建屋局要求携带租约及申请人资料。未获确认前不要自行终止现有租约。']
+  online:['打开建屋局“Transfer to Another Public Rental Flat”（申请调换另一间公共租赁组屋）网页，先阅读租约及换屋条件。','点击申请链接，并按现有租赁组屋的管理分局选择地区；之后会进入 FormSG 申请表。','按提示使用自己的 Singpass 登录并填写官方要求的资料。建屋局会审核，不能保证获批较小组屋。'],
+  phone:['拨打建屋局分局热线 6225-5432，咨询公共租赁组屋换屋事宜。','说明希望搬到较小的租赁组屋，并询问现有租约由哪间分局负责。','询问申请条件、正确申请渠道，以及能否到分局当面申请。'],
+  inperson:['找出负责现有租赁组屋的建屋局分局并确认联络方式。','询问是否需要先预约，或可到柜台提交换屋申请。','按建屋局要求携带租约及申请人资料。未获确认前不要自行终止现有租约。']
  },hdbPhone),
  hdb_tenant:g('https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/assistance-for-tenants','https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/assistance-for-tenants',{
   online:['Read HDB’s “Assistance for Tenants of Public Rental Flats” page.','Look at the listed options: possible rent-arrears instalments, SSO referrals, social support, or rightsizing to a smaller rental flat.','Contact the HDB Branch handling your rental flat to ask which measure may apply; the page is guidance, not an automatic approval.'],
@@ -174,9 +174,9 @@ export const guides:Record<string,GuideRecord>={
   phone:['OneService’s listed reporting options are its App and Chatbot; this guide does not have a verified reporting hotline.','Open the OneService official page to choose an available channel, or use the appropriate agency’s contact details if you cannot report online.','For an immediate danger, contact emergency services directly rather than a feedback app.'],
   inperson:['OneService reports are submitted through official digital channels; there is no general walk-in reporting process confirmed here.','Ask a trusted person to help with the official App or Chatbot, with your permission, or contact the responsible agency.','Prepare the issue description, precise location and photo when possible.']
  },{
-  online:['打开 OneService 官方网页，选择应用程序或聊天机器人举报渠道。','如使用应用程序，按“Submit Case”，选择最接近的类别，加入照片、地点及问题详情。','如使用聊天机器人，请按提示提供描述、至少一张照片、地点、发生时间和联络资料。只在 OneService 官方渠道提交。'],
-  phone:['OneService 官方列出的举报渠道是应用程序和聊天机器人；本指南没有已核实的举报热线。','打开官方网页选择合适渠道；如不能网上举报，可查询负责机构的联络方式。','若有即时危险，应直接联系紧急服务，不要依赖反馈应用程序。'],
-  inperson:['OneService 主要通过官方电子渠道接收反馈；本指南未核实统一的柜台举报程序。','可在对方同意下请可信赖的人协助使用官方应用程序或聊天机器人，或联络负责机构。','尽可能准备问题描述、准确地点和照片。']
+  online:['打开 OneService 官方网页，选择应用程序或聊天机器人反馈渠道。','如使用应用程序，按“Submit Case”，选择最接近的类别，加入照片、地点及问题详情。','如使用聊天机器人，请按提示提供描述、至少一张照片、地点、发生时间和联络资料。只在 OneService 官方渠道提交。'],
+  phone:['OneService 官方列出的反馈渠道是应用程序和聊天机器人；本指南没有已核实的举报热线。','打开官方网页选择合适渠道；如不能网上举报，可查询负责机构的联络方式。','若有即时危险，应直接联系紧急服务，不要依赖反馈应用程序。'],
+  inperson:['OneService 主要通过官方电子渠道接收反馈；本指南未核实统一的柜台反馈程序。','可在对方同意下请可信赖的人协助使用官方应用程序或聊天机器人，或联络负责机构。','尽可能准备问题描述、准确地点和照片。']
  }),
  lifesg:g('https://www.life.gov.sg/','https://www.life.gov.sg/',{
   online:['Open LifeSG’s official website and look for “Topics”.','Choose the area closest to the problem, such as “Financial support and benefits”, “Care and support services” or “Housing and property”.','Follow the linked government service. If you remain unsure, contact the responsible agency rather than submitting private details here.'],
