@@ -1,7 +1,7 @@
 /**
  * NeighbourAssist referral engine (student prototype, not an eligibility assessor).
  * No resident personal data, NRIC, CPF balance, documents, or medical detail is requested.
- * Reference data checked against official agency sources on 17 October 2026.
+ * Major referral sources reviewed on 17–19 October 2026; current agency instructions take precedence.
  */
 export type Category = 'financial'|'housing'|'cpf'|'health'|'municipal'|'fines'|'employment'|'family'|'unsure';
 export type Answers = Record<string,string>;
