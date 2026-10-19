@@ -1,7 +1,7 @@
 import type {Service} from './engine';
 import type {Language} from './i18n';
 
-// Source-checked: 18 October 2026. These guides explain confirmed routes and
+// Major sources reviewed through 19 October 2026. These guides describe selected official routes and
 // deliberately avoid unverified button-by-button instructions inside external services.
 export type HelpMethod='online'|'phone'|'inperson'|'unsure';
 export type GuideRecord={
