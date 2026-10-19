@@ -358,7 +358,9 @@ test('work and employment: unpaid salary routes to official TADM guidance',()=>{
  assert.match(services.work_salary.url,/mom\.gov\.sg/);
 });
 test('work and employment: dismissal preserves status and short deadline question',()=>{
- assert.deepEqual(getQuestionIds('employment',{w_issue:'dismissal'}),['w_issue','w_status','w_recency','agency_status','contact']);
+ assert.deepEqual(getQuestionIds('employment',{w_issue:'dismissal'}),['w_issue','w_status','agency_status','contact']);
+ assert.deepEqual(getQuestionIds('employment',{w_issue:'dismissal',w_status:'current'}),['w_issue','w_status','agency_status','contact']);
+ assert.deepEqual(getQuestionIds('employment',{w_issue:'dismissal',w_status:'left'}),['w_issue','w_status','w_recency','agency_status','contact']);
  assert.equal(rec('employment',{w_issue:'dismissal',w_status:'left'}),'work_dismissal');
  assert.match(services.work_dismissal.caution,/deadline/i);
 });
