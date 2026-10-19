@@ -114,3 +114,6 @@
 @media (prefers-reduced-motion: reduce){
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+
+/* With nine topics, give the final “Not sure” choice the full row on wide screens. */
+@media (min-width:851px){.categories>.category-card:last-child:nth-child(odd){grid-column:1 / -1}}
