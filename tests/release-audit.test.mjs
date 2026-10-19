@@ -24,3 +24,29 @@ test('official MP lookup uses HTTPS Parliament website',()=>{
  assert.match(content,/https:\/\/www\.parliament\.gov\.sg\/mps\/find-mps-in-my-constituency/);
  assert.match(content,/return \{/);
 });
+
+test('quiz and results restore focus to the new heading for keyboard users',()=>{
+ const app=read('src/App.tsx');
+ assert.match(app,/ref=\{quizTitleRef\} tabIndex=\{-1\}/);
+ assert.match(app,/ref=\{resultTitleRef\} tabIndex=\{-1\}/);
+ assert.match(app,/quizTitleRef\.current\?\.focus\(\)/);
+ assert.match(app,/resultTitleRef\.current\?\.focus\(\)/);
+});
+
+test('the website respects reduced-motion preferences and wraps narrow-screen text',()=>{
+ const styles=read('src/style.css');
+ assert.match(styles,/prefers-reduced-motion:\s*reduce/);
+ assert.match(styles,/overflow-wrap:anywhere/);
+});
+
+test('Chinese public rental transfer guidance does not say subletting',()=>{
+ for(const path of ['src/i18n.ts','src/audience.ts','src/journeys.ts']){
+  assert.doesNotMatch(read(path),/转租/,path+' should describe applying for a transfer, not subletting');
+ }
+});
+
+test('OneService handoff mentions its photo, location and contact requirements',()=>{
+ const en=read('src/journeys.ts');
+ assert.match(en,/at least one photo, precise location, time observed and contact details/);
+ assert.match(en,/旧版聊天机器人仅支持英文/);
+});
