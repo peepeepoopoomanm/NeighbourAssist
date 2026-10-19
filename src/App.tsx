@@ -50,6 +50,8 @@ export default function App(){
  const [printMps,setPrintMps]=useState(false);
  const [forWhom,setForWhom]=useState<Audience>('self');
  const topicsRef=useRef<HTMLElement|null>(null);
+ const quizTitleRef=useRef<HTMLHeadingElement|null>(null);
+ const resultTitleRef=useRef<HTMLHeadingElement|null>(null);
  const t=messages[language];
  const ids=getQuestionIds(category,answers);
  const currentQuestion=questions[ids[Math.min(questionIndex,ids.length-1)]];
@@ -67,10 +69,12 @@ export default function App(){
  const pathwayCopy=pathway==='urgent'?t.pathwayUrgent:pathway==='followup'?t.pathwayFollowup:pathway==='review'?t.pathwayReview:t.pathwayAgency;
  useEffect(()=>{const resetPrint=()=>setPrintMps(false);window.addEventListener('afterprint',resetPrint);return ()=>window.removeEventListener('afterprint',resetPrint)},[]);
  useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hans':'en';document.title=language==='zh'?'邻里助理 — 寻找援助':'NeighbourAssist — Find support';},[language]);
+ // Move focus after wizard transitions so screen readers announce the new content.
+ useEffect(()=>{if(view==='quiz')quizTitleRef.current?.focus();else if(view==='results')resultTitleRef.current?.focus();},[view,questionIndex]);
  const scrollTop=()=>window.scrollTo({top:0,behavior:'instant'});
  const start=(c:Category)=>{setCategory(c);setMpsOpen(false);setAnswers({});setPrepared([]);setContactOverride(null);setQuestionIndex(0);setView('quiz');scrollTop()};
  const home=()=>{setView('home');setMpsOpen(false);setAnswers({});setPrepared([]);setContactOverride(null);setQuestionIndex(0);scrollTop()};
- const browse=()=>{if(view!=='home')setView('home');setMpsOpen(false);setAnswers({});setPrepared([]);setContactOverride(null);setQuestionIndex(0);window.setTimeout(()=>topicsRef.current?.scrollIntoView({behavior:'smooth',block:'start'}),30)};
+ const browse=()=>{if(view!=='home')setView('home');setMpsOpen(false);setAnswers({});setPrepared([]);setContactOverride(null);setQuestionIndex(0);window.setTimeout(()=>topicsRef.current?.scrollIntoView({behavior:'auto',block:'start'}),30)};
  const selectAnswer=(value:string)=>{
   // Forget answers to later questions if someone changes an earlier branch.
   const retained=Object.fromEntries(ids.slice(0,questionIndex).filter(id=>answers[id]).map(id=>[id,answers[id]]));
@@ -87,7 +91,7 @@ export default function App(){
     <label className="setting"><span>{t.textSize}</span><select aria-label={t.textSize} value={size} onChange={e=>setSize(e.target.value as TextSize)}><option value="normal">{t.normal}</option><option value="large">{t.large}</option></select></label>
    </div>
   </div></header>
-  <main id="main">
+  <main id="main" tabIndex={-1}>
   {view==='home'&&<><section className="hero"><div className="container hero-inner"><div className="hero-copy"><span className="eyebrow">{t.eyebrow}</span><h1>{t.heroTitle}</h1><p>{t.heroDescription}</p><div className="hero-bits"><span>✓ {t.noAccount}</span><span>✓ {t.noSensitive}</span><span>✓ {t.free}</span></div></div>
    <div className="hero-panel" aria-label={t.how}><span className="panel-label">{t.how}</span>{[[t.how1,t.how1Detail],[t.how2,t.how2Detail],[t.how3,t.how3Detail]].map(([name,detail],i)=><div className="hero-step" key={name}><span className="step-bubble">0{i+1}</span><div><strong>{name}</strong><small>{detail}</small></div></div>)}</div></div></section>
    <section ref={topicsRef} id="topics" className="container category-section"><div className="section-head"><div><span className="eyebrow">{t.startHere}</span><h2>{t.chooseTopic}</h2><p>{t.topicHint}</p></div></div>
@@ -98,12 +102,12 @@ export default function App(){
   {view==='quiz'&&<section className="container flow-wrap"><div className="breadcrumb"><button onClick={home}>{t.allTopics}</button><span aria-hidden="true">/</span><span>{topicName(category)}</span></div><div className="flow-layout"><div className="question-card">
    <div className="question-top"><span className="eyebrow">{topicName(category)}</span><strong>{t.question} {questionIndex+1} / {ids.length}</strong></div>
    <div className="progress" role="progressbar" aria-label={t.question} aria-valuenow={questionIndex+1} aria-valuemin={0} aria-valuemax={ids.length}><span style={{width:`${(questionIndex+1)/ids.length*100}%`}}/></div>
-   {forWhom==='caregiver'&&<p className="audience-notice" role="note">{caregiverUi[language].notice}</p>}<h1 className="question-title">{q.title}</h1>{q.hint&&<p className="question-hint">{q.hint}</p>}
+   {forWhom==='caregiver'&&<p className="audience-notice" role="note">{caregiverUi[language].notice}</p>}<h1 ref={quizTitleRef} tabIndex={-1} className="question-title">{q.title}</h1>{q.hint&&<p className="question-hint">{q.hint}</p>}
    <fieldset className="answer-set"><legend className="sr-only">{t.chooseAnswer}</legend>{q.options.map(o=><label key={o.value} className={'answer '+(answers[q.id]===o.value?'answer-selected':'')}><input type="radio" name={q.id} value={o.value} checked={answers[q.id]===o.value} onChange={()=>selectAnswer(o.value)}/><span className="radio-circle" aria-hidden="true"/><span>{o.label}</span></label>)}</fieldset>
    <div className="flow-actions"><button onClick={back} className="btn btn-outline">← {t.back}</button><button disabled={!answers[q.id]} onClick={next} className="btn btn-primary">{questionIndex===ids.length-1?t.seeGuidance:t.continue} →</button></div>
    </div><aside className="support-card"><div className="support-mark">♡</div><h2>{t.privacyTitle}</h2><p>{t.privacyBody}</p><div className="support-rule"/><p>{t.privacyDetail}</p></aside></div></section>}
   {view==='results'&&<section className="container results-wrap"><div className="breadcrumb"><button onClick={home}>{t.allTopics}</button><span aria-hidden="true">/</span><span>{topicName(category)}</span><span aria-hidden="true">/</span><span>{t.guidanceLabel}</span></div>
-   <div className="result-heading"><span className="eyebrow">{t.guidanceLabel}</span><h1>{t.guidanceTitle}</h1><p>{forWhom==='caregiver'?caregiverUi[language].guidanceIntro:t.guidanceIntro}</p></div>
+   <div className="result-heading"><span className="eyebrow">{t.guidanceLabel}</span><h1 ref={resultTitleRef} tabIndex={-1}>{t.guidanceTitle}</h1><p>{forWhom==='caregiver'?caregiverUi[language].guidanceIntro:t.guidanceIntro}</p></div>
    <div className="pathway-notice" role="note"><strong>{t.pathwayTitle}</strong><p>{pathwayCopy}</p></div>
    {category==='housing'&&answers.h_type==='public_rental'&&answers.h_goal==='smaller'&&answers.h_tenure==='under2'&&<p className="caregiver-auth-note" role="note">{t.hdbTenureWarning} <a href="https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/transfer-to-another-public-rental-flat" target="_blank" rel="noopener noreferrer">{t.guideSource} ↗</a></p>}
    <div className="result-layout"><div><article className="recommendation"><div className="recommendation-top"><span className="result-symbol" aria-hidden="true">✓</span><div><span className="eyebrow">{t.startingPoint}</span><h2>{primary.name}</h2><span className="agency-name">{primary.agency}</span></div></div>
