@@ -16,16 +16,16 @@ Caregivers and trusted family members helping a resident navigate official progr
 A free, bilingual, mobile-friendly guide that helps residents understand ordinary government assistance channels, identify appropriate next steps after an unsuccessful or pending agency enquiry, and prepare structured notes for a Meet-the-People Session (MPS) if they choose. It never claims to submit an appeal, obtain preferential treatment, or decide eligibility.
 
 ## MVP scope
-- Landing page with help categories: everyday expenses; housing and rental; CPF and retirement; medical costs; municipal issues; unsure.
+- Landing page with help categories: everyday expenses; housing and rental; CPF and retirement; medical costs; municipal issues; **fines and appeals**; unsure.
 - Conditional, accessible questionnaires that never ask for NRIC, income amounts, medical history, CPF balances, or documents.
-- Deterministic recommendation rules, tied to official sources.
+- Deterministic recommendation rules, tied to official sources. Fines distinguish the issuing agency and court summonses, without making legal or waiver decisions.
 - Official referral links, phone details only where verified, steps and checklist.
 - Larger-text option; bilingual English and Simplified Chinese guidance; mobile layout; print-friendly results.
 - Agency-contact status (first enquiry, awaiting reply, rejected or unresolved), with optional human/MPS guidance and on-device printable fixed-choice summary.
 - No database, account or case uploads.
 
 ## Out of scope
-Official applications, government integration, real caseworker dashboard, AI-driven eligibility, direct benefits claims, Singpass/biometric login, confidential case storage, automatic MP letters, promises of MPS queue reductions or faster processing, personal financial advice, medical advice, automated emergency response.
+Fine waivers, legal advice, court filings, or appeal outcomes; official applications, government integration, real caseworker dashboard, AI-driven eligibility, direct benefits claims, Singpass/biometric login, confidential case storage, automatic MP letters, promises of MPS queue reductions or faster processing, personal financial advice, medical advice, automated emergency response.
 
 ## Success measures to test (not claims)
 1. Correct recommendation across the planned scenario tests.
@@ -42,6 +42,7 @@ Official applications, government integration, real caseworker dashboard, AI-dri
 - **Limited evidence of current demand:** describe observations as historical and validate through interviews/tests; don't invent surveys or results.
 - **Sensitive matters:** no submissions, personal data collection, third-party analytics or government impersonation.
 - **MPS misunderstandings:** never imply a referral or MP letter guarantees higher priority, faster processing, approval, or an agency exception.
+- **Fine and court deadlines:** never suggest an agency appeal or MP contact automatically postpones court attendance. Do not imply first-offence mistakes guarantee a waiver. See `docs/08-fines-appeals-research.md`.
 - **Language handoffs:** Chinese guidance cannot guarantee all external application steps are available in Chinese; give phone or in-person fallbacks.
 
 ## Intended demo story
