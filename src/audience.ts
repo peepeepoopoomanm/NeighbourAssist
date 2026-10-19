@@ -35,6 +35,12 @@ const caregiverEn:WordingMap = {
  p_stage:{title:'What stage is their fine or penalty at?',hint:'Check their notice for payment deadlines and any required court appearance.',options:{notice:'They received a fine or offence notice',court:'They have a court summons or required court date',paid:'Their fine has already been paid',unsure:'I am not sure'}},
  p_goal:{title:'What would you like to help them understand?',hint:'Only the official agency can handle their fine or appeal.',options:{appeal:'Whether they can request an appeal',pay:'How they can check or pay',status:'How to follow up on their appeal',hardship:'They are having difficulty paying',unsure:'I am not sure'}},
  p_reason:{title:'What is the main reason they would like the fine reviewed?',hint:'This cannot establish whether their appeal qualifies.',options:{error:'They think the notice was issued in error',medical:'They experienced a medical emergency',breakdown:'They had a vehicle breakdown or unusual event',first:'It was their first offence or an honest mistake',hardship:'They are struggling to afford the fine',other:'Another reason / I am not sure'}},
+
+ w_issue:{title:'What work problem does the person you are helping face?',hint:'Do not enter their employer, salary or workplace documents.',options:{salary:'They are missing salary or another employment payment',dismissal:'They may have been wrongfully dismissed or forced to resign',fairness:'They face workplace discrimination, harassment or unfair treatment',injury:'They were injured or became ill because of work',other:'Another work concern / I am not sure'}},
+ w_status:{title:'Does the person you are helping still work for the employer?',hint:'Their claim deadline may depend on when they stopped work.',options:{current:'Yes, they still work there',left:'No, they have left the job',self:'They are self-employed or unsure of their status',unsure:'I am not sure / prefer not to say'}},
+ w_recency:{title:'When did the person you are helping leave the job?',hint:'Wrongful dismissal claims can have a short deadline; check with TADM promptly.',options:{month:'They left within about one month',older:'They left more than one month ago',unsure:'I am not sure / prefer not to say'}},
+ family_safety:{title:'Is the person you are helping or anyone in their home in immediate danger, or are you concerned about abuse?',hint:'If someone is in immediate danger, call Police 999 now; never wait for an MP session.',options:{danger:'They or someone else is in immediate danger',concern:'I am concerned about possible abuse, neglect or violence',no:'No, they need another type of family support',unsure:'I am not sure / prefer not to say'}},
+ family_issue:{title:'What family or caregiving support would help the person you are helping?',hint:'Choose a general category; do not share family identities or private details.',options:{relationship:'They need support with family relationships or counselling',divorce:'They need marriage, separation or divorce support',caregiving:'They need help caring for an older person or loved one',childcare:'They need childcare or preschool fee guidance',financial:'Their household faces essential expenses or wider problems',other:'Another family concern / I am not sure'}},
  u_need:{title:'Which area best matches their concern?'},
  contact:{title:'How would you prefer to help them contact a service?',hint:'Please contact services on their behalf only with their permission. We will also show the official website.',options:{online:'Help them use the official website',phone:'Call on their behalf, with their permission',inperson:'Go with them to an office',unsure:'I am not sure'}},
 };
@@ -66,6 +72,12 @@ const caregiverZh:WordingMap = {
  p_stage:{title:'对方的罚单目前处于什么阶段？',hint:'请核实对方罚单上的缴费期限和是否规定出庭。',options:{notice:'对方刚收到违例或罚款通知',court:'对方收到法庭传票或须出庭通知',paid:'对方已经缴清罚款',unsure:'我不确定'}},
  p_goal:{title:'您希望协助对方了解哪方面？',hint:'只有发出罚单的官方机构能处理有关申请。',options:{appeal:'对方是否可以申诉或复核',pay:'对方如何查询或缴费',status:'如何查询对方申诉的进度',hardship:'对方难以负担罚款',unsure:'我不确定'}},
  p_reason:{title:'对方希望复核罚单的主要原因是什么？',hint:'本问卷不能决定对方的申诉是否成立。',options:{error:'对方认为罚单可能开错了',medical:'对方当时遇到医疗紧急情况',breakdown:'对方当时遇到车辆故障或特殊情况',first:'这是对方第一次违例或无心之失',hardship:'对方难以负担罚款',other:'其他原因／我不确定'}},
+
+ w_issue:{title:'您正在协助的人面对哪一种工作问题？',hint:'这里不需要对方雇主名称、薪资金额或工作文件。',options:{salary:'对方被拖欠工资或其他工作报酬',dismissal:'对方可能遭到不合理解雇或被迫辞职',fairness:'对方遇到职场歧视、骚扰或不公平待遇',injury:'对方因工作而受伤或生病',other:'其他工作问题／我不确定'}},
+ w_status:{title:'您正在协助的人目前是否仍在该雇主处工作？',hint:'有关索偿期限可能视乎对方是否已经离职。',options:{current:'是，对方仍在那里工作',left:'否，对方已经离职',self:'对方是自雇人士／不清楚雇佣身份',unsure:'我不确定／不愿透露'}},
+ w_recency:{title:'您正在协助的人是什么时候离职的？',hint:'不合理解雇索偿可能有很短的期限，应尽快向 TADM 查询。',options:{month:'对方大约一个月内离职',older:'对方已离职超过一个月',unsure:'我不确定／不愿透露'}},
+ family_safety:{title:'您正在协助的人或其家人是否正面临危险，或可能受到虐待？',hint:'有人面临即时危险，请立即拨打警方 999；不要等候议员接见活动。',options:{danger:'对方或家人正面临即时危险',concern:'我担心对方或家人可能遭受虐待、忽视或暴力',no:'没有，对方需要其他家庭支持',unsure:'我不确定／不愿透露'}},
+ family_issue:{title:'您正在协助的人需要哪一类家庭或照护支持？',hint:'只需选择一般类别，不必提供任何家人的姓名或私人详情。',options:{relationship:'对方需要家庭关系或辅导支持',divorce:'对方需要婚姻、分居或离婚支持',caregiving:'对方需要协助照顾长者或家人',childcare:'对方需要托儿、学前教育或费用指引',financial:'对方的家庭面对基本生活开销或其他困难',other:'其他家庭问题／我不确定'}},
  u_need:{title:'哪方面最接近对方需要的帮助？'},
  contact:{title:'您希望如何协助对方联系有关机构？',hint:'请先征得对方同意，再代为联系。我们也会显示官方网站。',options:{online:'协助对方使用官方网站',phone:'获得对方同意后，代为致电',inperson:'陪同对方亲自前往',unsure:'我不确定'}},
 };
@@ -132,6 +144,19 @@ const caregiverReasons:Record<string,{en:string;zh:string}>={
  'MOH can guide you toward the right scheme for the care involved.':{en:'MOH provides information on schemes relevant to their healthcare needs.',zh:'卫生部可提供与对方医疗需要相关的补助资料。'},
  'This concerns your neighbourhood environment or municipal facilities.':{en:'This concerns a neighbourhood or municipal facility.',zh:'这与邻里环境或市政设施有关。'},
 
+
+ 'You asked about unpaid wages or employment payment, for which TADM provides dispute advice.':{en:'They may need advice about unpaid wages or another employment payment from TADM.',zh:'对方可能需要向 TADM 咨询欠薪或工作报酬纠纷。'},
+ 'You reported a possible wrongful dismissal; some claims have a short filing deadline.':{en:'They may have been wrongfully dismissed, and a short filing deadline may apply.',zh:'对方可能遭到不合理解雇，部分申诉有严格期限。'},
+ 'You mentioned workplace discrimination, harassment or unfair treatment; MOM directs these enquiries to TAFEP.':{en:'Their workplace fairness concern may be directed to TAFEP for advice.',zh:'对方的职场不公平待遇问题可向 TAFEP 咨询。'},
+ 'You asked about an injury or illness related to work; MOM provides work-injury claim guidance.':{en:'They experienced a possible work injury; MOM provides relevant claim guidance.',zh:'对方可能发生工伤，人力部提供相关索偿指引。'},
+ 'MOM can help identify the correct channel for your employment issue.':{en:'MOM can help find the appropriate employment advice for the person you are helping.',zh:'人力部可协助对方找到合适的雇佣咨询渠道。'},
+ 'You reported immediate danger; emergency police assistance must come before general family counselling.':{en:'The person you are helping or someone in their home is in immediate danger. Contact Police 999.',zh:'您正在协助的人或其家人正面临危险，应立即联系警方 999。'},
+ 'You reported concern about possible abuse, neglect or violence; NAVH provides specialist support.':{en:'You are concerned that someone may be experiencing abuse, neglect or domestic violence; NAVH can advise.',zh:'您担心对方可能遭遇虐待、忽视或家庭暴力，可向 NAVH 咨询。'},
+ 'You asked about relationship, marriage or separation support; MSF offers FAM services.':{en:'The person you are helping may benefit from FAM family or relationship support.',zh:'对方可能需要 FAM 家庭或婚姻关系支持。'},
+ 'You asked for caregiving or eldercare guidance; AIC Link is a relevant starting point.':{en:'They may need caregiving or eldercare support, which AIC Link can explain.',zh:'对方可能需要照护或乐龄服务，可向 AIC Link 了解。'},
+ 'You asked about preschool, childcare or related subsidies; LifeSG and ECDA provide official guidance.':{en:'The person you are helping needs childcare or preschool information from LifeSG or ECDA.',zh:'对方需要学前教育或托儿补贴资料，可从 LifeSG 和 ECDA 查询。'},
+ 'You mentioned broader family difficulties; an FSC can discuss social needs and referrals.':{en:'Their family may need broader social or financial guidance from an FSC.',zh:'对方的家庭可能需要家庭服务中心提供更全面的社会支持。'},
+ 'A Family Service Centre can help identify suitable family and community support.':{en:'An FSC can explain suitable support for the person you are helping.',zh:'家庭服务中心可协助对方了解适当的家庭与社区支持。'},
  'You reported a court summons or required court date. Court instructions take priority.':{en:'The person you are helping may need to attend court. Their official summons takes priority.',zh:'您正在协助的人可能须出庭，应优先遵守对方传票的指示。'},
  'You identified HDB as the issuer of the parking notice.':{en:'They have an HDB parking notice, so HDB is the responsible agency.',zh:'对方收到建屋局停车罚单，应使用建屋局官方渠道。'},
  'You identified URA as the issuer of the parking notice.':{en:'They have a URA parking notice, so URA is the responsible agency.',zh:'对方收到 URA 停车罚单，应使用 URA 官方渠道。'},
