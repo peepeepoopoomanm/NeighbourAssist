@@ -54,6 +54,21 @@ export default function CategoryIcon({category}:{category:Category}){
      <circle cx="15" cy="15" r="2.5"/>
      <path d="M15 13.7v1.8M15 16.5h.01" strokeWidth={1.8}/>
     </svg>;
+
+  case 'employment':
+    return <svg {...shared}>
+     <rect x="3.5" y="7" width="17" height="13" rx="2"/>
+     <path d="M9 7V5.5c0-1.3 1.1-2.3 2.4-2.3h1.2c1.3 0 2.4 1 2.4 2.3V7M3.5 12.4c5.2 3.1 11.8 3.1 17 0"/>
+     <path d="M10.7 13.7h2.6v2.2h-2.6z"/>
+    </svg>;
+  case 'family':
+    return <svg {...shared}>
+     <circle cx="8" cy="7.6" r="2.4"/>
+     <circle cx="16" cy="7.6" r="2.4"/>
+     <path d="M3.4 18.5v-3c0-2.3 1.5-3.9 3.7-3.9h2c1.5 0 2.6.7 3.1 1.8"/>
+     <path d="M20.6 18.5v-3c0-2.3-1.5-3.9-3.7-3.9h-2c-1.5 0-2.6.7-3.1 1.8"/>
+     <path d="M9.3 17.5 12 20l2.7-2.5"/>
+    </svg>;
   case 'unsure':
    return <svg {...shared}>
     <circle cx="12" cy="12" r="8.5"/>
