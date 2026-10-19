@@ -282,6 +282,62 @@ export const guides:Record<string,GuideRecord>={
   inperson:['通过人力部官方咨询目录确认相关机构是否提供预约或顾问服务。','出门前向该机构核实开放时间及预约要求。','只有获授权机构正式要求时才携带雇佣记录。']
  }),
 
+
+ family_danger:g('https://www.msf.gov.sg/what-we-do/break-the-silence/get-help/i-want-to-report-domestic-violence','https://www.msf.gov.sg/what-we-do/break-the-silence/get-help/i-want-to-report-domestic-violence',{
+  online:['If someone is in immediate danger, do not wait for a web form. Call Police 999 immediately, or SMS 70999 if unable to speak safely.','The official MSF page explains reporting and getting help, but it is not an emergency response channel.','Follow Police directions and seek a safer location only if doing so does not increase danger.'],
+  phone:['Call Police 999 immediately if anyone is in imminent danger. If you cannot speak safely, SMS 70999.','Tell emergency responders what is necessary so they can respond. You do not need to complete NeighbourAssist.','For concerns that are not immediate emergencies, MSF also lists the 24-hour NAVH helpline at 1800-777-0000.'],
+  inperson:['If it is safe to move, seek help from the nearest Police post or centre or another safe location.','Call Police 999 first in immediate danger; do not wait to book an appointment or attend an MP session.','Follow Police or authorised professional instructions, and do not give personal case details to NeighbourAssist.']
+ },{
+  online:['如有人正面临即时危险，请不要等网上表格，立即拨打警方 999；如无法安全通话，可发短信至 70999。','MSF 官方网页有通报及求助说明，但不能代替紧急报警。','按照警方的指示办理；只有在不会增加危险时才尝试转移到安全地点。'],
+  phone:['如有人面临即时危险，立即拨打警方 999；无法安全说话可发短信至 70999。','向紧急服务人员说明必要情况，不需要继续填写 NeighbourAssist。','非即时紧急的相关疑虑，也可拨打 MSF 的全天候 NAVH 热线 1800-777-0000。'],
+  inperson:['如可安全离开，请向附近警务岗亭、警局或其他安全地点求助。','有人面临即时危险时应先拨打 999，不要等预约或议员接见活动。','遵守警方或获授权专业人员的指示；勿向 NeighbourAssist 提供个人事件详情。']
+ },'999','24 hours'),
+ family_protection:g('https://www.msf.gov.sg/what-we-do/break-the-silence/get-help/i-am-experiencing-abuse','https://www.msf.gov.sg/what-we-do/break-the-silence/get-help/i-am-experiencing-abuse',{
+  online:['Read the official MSF abuse and domestic-violence support page. For concerns that are not an immediate emergency, the NAVH reporting form is available through MSF.','If it is safe, use the authorised online reporting link or call the NAVH helpline at 1800-777-0000 for guidance.','Only share case details on an official secure channel. If immediate danger develops, contact Police 999 or SMS 70999.'],
+  phone:['Call the 24-hour National Anti-Violence and Sexual Harassment Helpline at 1800-777-0000.','Explain the concern to the trained responder and ask about available protection or specialist services.','If danger is immediate, call Police 999 instead; SMS 70999 if unable to speak safely.'],
+  inperson:['If it is safe to travel, consult MSF’s official information about a Family Service Centre or specialist protection service.','Ask NAVH about appropriate arrangements before travelling if there are safety concerns.','If someone is in immediate danger, call Police 999 rather than waiting for an appointment.']
+ },{
+  online:['阅读 MSF 关于虐待与家庭暴力的官方求助网页。非即时紧急情况可使用 MSF 所列的 NAVH 正式通报表格。','在安全情况下通过官方渠道通报，或拨打 NAVH 热线 1800-777-0000 咨询。','个人案情只应向安全的官方渠道提供；如危险变得即时紧急，请拨打警方 999 或发短信至 70999。'],
+  phone:['拨打 24 小时全国反暴力与性骚扰热线 NAVH 1800-777-0000。','向受过培训的接线员说明问题，并询问保护与专业支援服务。','如有人正面临即时危险，应拨打警方 999；无法安全说话可发短信至 70999。'],
+  inperson:['如可安全前往，可从 MSF 官方网页查询家庭服务中心或专门保护服务。','如有安全疑虑，出门前可向 NAVH 询问合适的安排。','有人正面临即时危险时，先报警 999，不要等候预约。']
+ },'1800-777-0000','24 hours'),
+ family_fam:g('https://www.msf.gov.sg/what-we-do/fam','https://www.msf.gov.sg/what-we-do/fam',{
+  online:['Visit the official MSF Strengthening Families Programme (FAM) page and identify counselling, marriage or divorce support.','Use MSF’s list of FAM centres or the official Family Assist portal for the relevant service and appointment information.','Only supply relationship details on the authorised counselling service, and confirm the steps for online or in-person sessions.'],
+  phone:['Call the MSF consolidated hotline 1800-111-2222 and ask for “Family Counselling” or “Divorce Support”.','Tell the officer what general service you are looking for and whether you need assisted booking.','Ask about the current FAM centre contact details, appointments and other support options.'],
+  inperson:['Find an appropriate FAM centre from MSF’s official location and service-provider list.','Contact the centre first to check availability and how to arrange a counselling visit.','Discuss sensitive family circumstances only with the authorised professional, not in this student website.']
+ },{
+  online:['打开社会及家庭发展部 FAM 家庭支持计划网页，选择家庭辅导、婚姻或离婚支持主题。','使用 MSF 官方 FAM 中心目录或 Family Assist 门户查询服务与预约方式。','只有在获授权的辅导服务中才提供家庭详情，并事先核实网上或当面辅导手续。'],
+  phone:['拨打 MSF 综合热线 1800-111-2222，要求咨询“Family Counselling”或“Divorce Support”。','简要说明需要的服务类别及是否要协助预约。','查询最新 FAM 中心联络方式、预约安排及其他支援资源。'],
+  inperson:['从 MSF 官方服务机构目录寻找适合的 FAM 中心。','事先联系中心，确认是否有名额及如何预约辅导。','敏感家庭情况只向获授权专业人员说明，不要在本网站输入。']
+ },'1800-111-2222','Mon–Fri, 8:30 am–6 pm; Sat, 8:30 am–1 pm; excludes public holidays'),
+ family_fsc:g('https://www.msf.gov.sg/our-services/directories','https://www.msf.gov.sg/our-services/directories',{
+  online:['Open MSF’s official directories and select Family Service Centres (FSCs).','Use the locator on the MSF website to check the centres serving your area. Do not share home addresses through NeighbourAssist.','Contact the centre you find and ask what assistance or referral might be appropriate.'],
+  phone:['Open MSF’s Family Service Centre directory to find the current contact details of the centre serving your area.','Call the centre or ask the official MSF helpline for help finding the relevant service.','Explain the general type of family support needed and ask how to arrange an appointment.'],
+  inperson:['Find the centre serving your area through the official MSF directories.','Check its contact number and opening hours and ask whether an appointment is required before going.','Meet with a social worker or adviser, sharing personal documents only when requested by the authorised centre.']
+ },{
+  online:['打开 MSF 官方服务目录，并选择“Family Service Centres”家庭服务中心。','从 MSF 官网查询负责您地区的服务中心，勿在 NeighbourAssist 输入住址。','联系查找到的中心，询问适合的家庭援助或转介服务。'],
+  phone:['打开 MSF 家庭服务中心官方目录，查找负责当地个案的中心联络方式。','致电有关中心，或向 MSF 官方热线询问合适的服务。','概述所需家庭支持类别，询问预约方式。'],
+  inperson:['从 MSF 官方目录找到负责您地区的家庭服务中心。','出门前核实电话、开放时间以及是否须预约。','与正式社工或顾问讨论问题，只按官方要求提供个人文件。']
+ }),
+ family_caregiving:g('https://www.aic.sg/contact-us','https://www.aic.sg/contact-us',{
+  online:['Open the official Agency for Integrated Care (AIC) contact page and review AIC Link, care services or caregiver support.','Use AIC’s official resources to ask about eldercare, training, respite services and possible financial support for caregivers.','For applications or personal medical information, follow only the authorised care provider’s own process.'],
+  phone:['Call AIC Link at 1800-650-6060 for advice about caring for an older or dependent family member.','The official hotline is available Monday–Friday 8:30 am–8:30 pm and Saturday 8:30 am–4 pm, except public holidays.','Ask which care service or AIC Link location fits the need. AIC may request identification on its own hotline; never share it with NeighbourAssist.'],
+  inperson:['Find an official AIC Link location using the AIC contact page.','Ask the location about hours and whether an appointment is needed before travelling.','Discuss care details and eligibility directly with authorised AIC or care-service staff.']
+ },{
+  online:['打开护联中心 AIC 官方联络网页，查阅 AIC Link、社区护理与照顾者支持服务。','从 AIC 正式资料了解长者照护、培训、暂托及相关经济支援计划。','如正式申请需要医疗或个人资料，只应按照获授权服务提供者的程序办理。'],
+  phone:['拨打 AIC Link 热线 1800-650-6060，咨询长者或依赖照护者的家庭服务。','官网公布热线为周一至周五上午 8:30 至晚上 8:30，周六上午 8:30 至下午 4 时，公共假日除外。','询问合适的服务或 AIC Link 地点。AIC 可能在官方热线要求身份核实；切勿向本网站提供相关资料。'],
+  inperson:['从 AIC 官方联络网页寻找 AIC Link 服务地点。','出门前确认开放时间，以及是否需要预约。','照护详情及资格应直接向获授权 AIC 或护理服务人员咨询。']
+ },'1800-650-6060','Mon–Fri 8:30 am–8:30 pm; Sat 8:30 am–4 pm; excludes public holidays'),
+ family_childcare:g('https://www.life.gov.sg/family-parenting/preschool-childcare','https://www.life.gov.sg/services-tools/form-1-preschool',{
+  online:['Open LifeSG’s official preschool and childcare information page to understand subsidies and enrolment.','If a child is enrolled, the official Form 1 process may be initiated from an invitation issued by the preschool; the preschool confirms the correct process and deadline.','Only enter family income, identity and childcare records in the official LifeSG/ECDA forms. NeighbourAssist does not handle applications or estimate eligibility.'],
+  phone:['Call the MSF consolidated hotline at 1800-111-2222 for preschool and childcare enquiry guidance.','Ask how the subsidy application is started and where to obtain the official preschool Form 1 invitation.','If needed, contact your child’s preschool for the current enrolment and subsidy instructions.'],
+  inperson:['Ask the preschool about an appointment or in-person assistance with enrolment and subsidy paperwork.','Confirm the required official documents and whether forms should be submitted through LifeSG or the preschool.','Provide your child’s personal data only to the official preschool or ECDA/LifeSG service.']
+ },{
+  online:['打开 LifeSG 官方学前教育与托儿资料，了解报名及补贴。','如孩子已报名，官方 Form 1 可能通过幼儿园或托儿中心发出的邀请启动；向中心确认办理方式及截止日期。','家庭收入、身份和托儿记录只应通过正式 LifeSG／ECDA 表格提交，本网站不办理申请或估算资格。'],
+  phone:['拨打 MSF 综合热线 1800-111-2222，咨询学前教育及托儿补贴。','询问补贴申请如何开始，以及如何取得官方幼儿园 Form 1 邀请。','如有需要，请向孩子的托儿中心确认最新报名及补贴手续。'],
+  inperson:['向幼儿园或托儿中心询问能否预约当面办理报名或补贴事宜。','先核实需要哪些正式文件，以及应通过 LifeSG 还是中心提交。','孩子的个人资料只应提供给获授权的托儿中心或 ECDA／LifeSG 服务。']
+ },'1800-111-2222','Mon–Fri, 8:30 am–6 pm; Sat, 8:30 am–1 pm; excludes public holidays'),
+
  lifesg:g('https://www.life.gov.sg/','https://www.life.gov.sg/',{
   online:['Open LifeSG’s official website and look for “Topics”.','Choose the area closest to the problem, such as “Financial support and benefits”, “Care and support services” or “Housing and property”.','Follow the linked government service. If you remain unsure, contact the responsible agency rather than submitting private details here.'],
   phone:['LifeSG is a general directory rather than a dedicated caseworker hotline.','Use LifeSG to identify the responsible agency, then find that agency’s official phone contact.','Describe the issue briefly and ask which service or form is relevant.'],
