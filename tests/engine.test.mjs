@@ -1,4 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import{getQuestionIds,getRecommendations,services,categories}from '../src/engine.ts';
 const rec=(cat,answers)=>getRecommendations(cat,answers).primary.id;
 test('urgent financial assistance bypasses remaining financial questions',()=>{assert.deepEqual(getQuestionIds('financial',{f_urgent:'yes'}),['f_urgent','contact']);assert.equal(rec('financial',{f_urgent:'yes'}),'comcare_urgent')});
