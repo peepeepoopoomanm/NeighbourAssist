@@ -326,6 +326,7 @@ test('fines results expose deadline safeguards and chosen payment goal to the UI
  const source=readFileSync(new URL('../src/App.tsx',import.meta.url),'utf8');
  assert.match(source,/category==='fines'\?answers\.p_goal/);
  assert.match(source,/t\.fineCourtWarning/);
+ assert.match(source,/t\.fineCourtPathway/);
  assert.match(source,/t\.finePaidWarning/);
  assert.match(source,/t\.fineDeadlineWarning/);
 });
