@@ -156,9 +156,9 @@ export const guides:Record<string,GuideRecord>={
   phone:['Call the hospital or approved healthcare institution where treatment took place.','Ask to speak with a Medical Social Worker about paying the remaining bill and possible MediFund support.','Confirm how to arrange an assessment and which documents to prepare.'],
   inperson:['At the hospital or approved healthcare institution, ask the registration or billing counter for a Medical Social Worker.','Explain that paying the medical bill is difficult and ask about MediFund or other financing options.','Follow the institution’s assessment process; NeighbourAssist cannot submit a MediFund application.']
  },{
-  online:['阅读卫生部 MediFund（医疗基金）网页，了解剩余医药账单的援助条件。','这里没有供所有人自行申请的网上表格；应联系接受治疗的获批准医疗机构内的医疗社工。','只有有关机构可以评估个案，并通过获授权渠道要求文件。'],
-  phone:['拨打接受治疗的医院或获批准医疗机构的官方电话号码。','要求联系医疗社工，咨询剩余账单及可能的医疗基金援助。','询问如何安排评估及需要准备哪些文件。'],
-  inperson:['到有关医院或获批准医疗机构的登记处／收费处，询问如何联系医疗社工。','说明医药账单难以负担，询问医疗基金或其他付款援助。','按照机构的评估程序办理；NeighbourAssist 不能代为提交申请。']
+  online:['阅读卫生部 MediFund（保健基金）网页，了解剩余医药账单的援助条件。','这里没有供所有人自行申请的网上表格；应联系接受治疗的获批准医疗机构内的医疗社工。','只有有关机构可以评估个案，并通过获授权渠道要求文件。'],
+  phone:['拨打接受治疗的医院或获批准医疗机构的官方电话号码。','要求联系医疗社工，咨询剩余账单及可能的保健基金援助。','询问如何安排评估及需要准备哪些文件。'],
+  inperson:['到有关医院或获批准医疗机构的登记处／收费处，询问如何联系医疗社工。','说明医药账单难以负担，询问保健基金或其他付款援助。','按照机构的评估程序办理；NeighbourAssist 不能代为提交申请。']
  }),
  health_general:g('https://www.moh.gov.sg/managing-expenses/schemes-and-subsidies/','https://www.moh.gov.sg/managing-expenses/schemes-and-subsidies/',{
   online:['Open MOH’s list of healthcare subsidies and schemes.','Choose the relevant category—for example, outpatient clinic support or assistance with outstanding medical bills.','If already treated at a hospital, ask a Medical Social Worker for advice about suitable financing options.'],
