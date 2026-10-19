@@ -108,3 +108,9 @@
  .site.print-mps .mps-facts>div{break-inside:avoid}
  .site.print-mps .mps-note-header{margin-bottom:15px}
 }
+
+/* Allow long official links and translated words to wrap on narrow screens. */
+.question-card,.recommendation,.checklist,.mps-section,.mps-notes,.contact-guidance{min-width:0;overflow-wrap:anywhere}
+@media (prefers-reduced-motion: reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
