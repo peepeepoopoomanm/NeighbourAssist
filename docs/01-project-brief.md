@@ -16,16 +16,16 @@ Caregivers and trusted family members helping a resident navigate official progr
 A free, bilingual, mobile-friendly guide that helps residents understand ordinary government assistance channels, identify appropriate next steps after an unsuccessful or pending agency enquiry, and prepare structured notes for a Meet-the-People Session (MPS) if they choose. It never claims to submit an appeal, obtain preferential treatment, or decide eligibility.
 
 ## MVP scope
-- Landing page with help categories: everyday expenses; housing and rental; CPF and retirement; medical costs; municipal issues; **fines and appeals**; unsure.
+- Landing page with **nine** help categories: everyday expenses; housing and rental; CPF and retirement; medical costs; municipal issues; fines and appeals; **work and employment**; **family and social support**; unsure.
 - Conditional, accessible questionnaires that never ask for NRIC, income amounts, medical history, CPF balances, or documents.
-- Deterministic recommendation rules, tied to official sources. Fines distinguish the issuing agency and court summonses, without making legal or waiver decisions.
+- Deterministic recommendation rules tied to official sources. Fines distinguish issuers and court summonses; employment distinguishes TADM claims, TAFEP advice and MOM work injuries; family support distinguishes urgent safety from counselling, AIC caregiving and ECDA childcare. No eligibility, legal or safety determination is made.
 - Official referral links, phone details only where verified, steps and checklist.
 - Larger-text option; bilingual English and Simplified Chinese guidance; mobile layout; print-friendly results.
 - Agency-contact status (first enquiry, awaiting reply, rejected or unresolved), with optional human/MPS guidance and on-device printable fixed-choice summary.
 - No database, account or case uploads.
 
 ## Out of scope
-Fine waivers, legal advice, court filings, or appeal outcomes; official applications, government integration, real caseworker dashboard, AI-driven eligibility, direct benefits claims, Singpass/biometric login, confidential case storage, automatic MP letters, promises of MPS queue reductions or faster processing, personal financial advice, medical advice, automated emergency response.
+Fine waivers, legal advice, court filings, employment dispute submissions, police reports, protection assessments or appeal outcomes; official applications, government integration, real caseworker dashboard, AI-driven eligibility, direct benefits claims, Singpass/biometric login, confidential case storage, automatic MP letters, promises of MPS queue reductions or faster processing, personal financial advice, medical advice, automated emergency response.
 
 ## Success measures to test (not claims)
 1. Correct recommendation across the planned scenario tests.
@@ -43,6 +43,8 @@ Fine waivers, legal advice, court filings, or appeal outcomes; official applicat
 - **Sensitive matters:** no submissions, personal data collection, third-party analytics or government impersonation.
 - **MPS misunderstandings:** never imply a referral or MP letter guarantees higher priority, faster processing, approval, or an agency exception.
 - **Fine and court deadlines:** never suggest an agency appeal or MP contact automatically postpones court attendance. Do not imply first-offence mistakes guarantee a waiver. See `docs/08-fines-appeals-research.md`.
+- **Employment dispute deadlines:** MOM/TADM salary and dismissal claim deadlines vary; warn users not to wait for an MP meeting. Some work arrangements have separate rules. See `docs/09-employment-family-research.md`.
+- **Family safety:** ask about imminent danger first; show Police 999 (or SMS 70999) and NAVH as appropriate, without treating MPS as emergency response. Never collect personal family or abuse narratives.
 - **Language handoffs:** Chinese guidance cannot guarantee all external application steps are available in Chinese; give phone or in-person fallbacks.
 
 ## Intended demo story
