@@ -27,6 +27,12 @@ function ContactGuidance({service,method,lang,audience}:{service:Service;method:
  const helping=audience==='caregiver';const g=caregiverUi[lang];
  const t=messages[lang];
  const isUrgent=service.id==='comcare_urgent';
+ if(service.id==='family_danger')return <div className="contact-guidance" role="alert">
+  <h3>{t.emergencyPoliceTitle}</h3>
+  <a className="btn btn-primary full" href="tel:999">{t.emergencyPoliceAction}</a>
+  <p className="urgent-note">{t.emergencyPoliceSms}</p>
+  <p><a href={service.url} target="_blank" rel="noopener noreferrer">{t.guideSource} ↗</a></p>
+ </div>;
  if(method==='phone')return <div className="contact-guidance" aria-live="polite">
   <h3>{t.phoneTitle}</h3><p>{helping?g.phoneDetail:t.phoneDetail}</p>
   {service.phone?<><a className="btn btn-primary full" href={safePhone(service.phone)}>{t.callNow}: {service.phone}</a>{service.phoneHours&&<p className="contact-detail">{t.hours}: {service.phoneHours}</p>}{!['family_danger','family_protection'].includes(service.id)&&<p className="spoken-script">{helping?(isUrgent?g.phoneScriptUrgent:g.phoneScriptOther):(isUrgent?t.phoneScriptUrgent:t.phoneScriptOther)}</p>}</>:<><p>{t.phoneFallback}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.noPhone} ↗</a></>}
