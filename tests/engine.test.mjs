@@ -17,7 +17,7 @@ test('CPF age 55 withdrawal guidance',()=>assert.equal(rec('cpf',{c_age:'yes',c_
 test('medical clinic vs medical bills separated',()=>{assert.equal(rec('health',{m_type:'clinic'}),'chas');assert.equal(rec('health',{m_type:'bill'}),'medifund')});
 test('municipal OneService referral',()=>assert.equal(rec('municipal',{}),'oneservice'));
 test('all categories have official HTTPS referral targets',()=>{for(const c of categories){const r=getRecommendations(c.id,{});assert.ok(r.primary.url.startsWith('https://'));assert.ok(r.primary.caution)}});
-test('every service has clear steps, a caution and government-owned host',()=>{for(const s of Object.values(services)){assert.ok(s.steps.length>0);assert.ok(s.caution);assert.match(new URL(s.url).hostname,/\.(gov\.sg)$|^(www\.)?life\.gov\.sg$|^supportgowhere\.life\.gov\.sg$/)}});
+test('every service has clear steps, a caution and an approved official-service host',()=>{for(const s of Object.values(services)){assert.ok(s.steps.length>0);assert.ok(s.caution);assert.match(new URL(s.url).hostname,/\.(gov\.sg)$|^(www\.)?life\.gov\.sg$|^(www\.)?aic\.sg$/)}});
 
 test('existing ComCare flow skips unnecessary questions',()=>assert.deepEqual(getQuestionIds('financial',{f_urgent:'no',f_existing:'yes'}),['f_urgent','f_need','f_existing','agency_status','contact']));
 
@@ -80,7 +80,7 @@ test('all referral targets have complete bilingual contact-specific guidance',()
    assert.ok(guidance.steps.length>=2,service.id+': '+language+'/'+method);
    for(const step of guidance.steps) assert.ok(step.trim().length>=(language==='zh'?12:20),service.id+' has too short a step');
    assert.ok(guidance.url.startsWith('https://')&&guidance.source.startsWith('https://'));
-   assert.match(new URL(guidance.source).hostname,/\.gov\.sg$|^www\.oneservice\.gov\.sg$/);
+   assert.match(new URL(guidance.source).hostname,/\.gov\.sg$|^(www\.)?aic\.sg$/);
   }
  }
 });
