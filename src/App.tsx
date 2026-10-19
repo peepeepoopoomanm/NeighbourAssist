@@ -17,6 +17,10 @@ const phoneHoursZh:Record<string,string>={
  '6225-5432':'周一至周五，上午 8 时至下午 5 时（公共假日除外）',
  '1800-227-1188':'周一至周五，上午 8:30 至下午 5:30（公共假日除外）',
  '1800-275-2427':'周一至周五，上午 8:30 至下午 6 时（公共假日除外）',
+ '1800-111-2222':'周一至周五，上午 8:30 至下午 6 时；周六上午 8:30 至下午 1 时（公共假日除外）',
+ '1800-650-6060':'周一至周五，上午 8:30 至晚上 8:30；周六上午 8:30 至下午 4 时（公共假日除外）',
+ '999':'24 小时',
+ '1800-777-0000':'24 小时',
 };
 
 function ContactGuidance({service,method,lang,audience}:{service:Service;method:Contact;lang:Language;audience:Audience}){
@@ -25,7 +29,7 @@ function ContactGuidance({service,method,lang,audience}:{service:Service;method:
  const isUrgent=service.id==='comcare_urgent';
  if(method==='phone')return <div className="contact-guidance" aria-live="polite">
   <h3>{t.phoneTitle}</h3><p>{helping?g.phoneDetail:t.phoneDetail}</p>
-  {service.phone?<><a className="btn btn-primary full" href={safePhone(service.phone)}>{t.callNow}: {service.phone}</a>{service.phoneHours&&<p className="contact-detail">{t.hours}: {service.phoneHours}</p>}<p className="spoken-script">{helping?(isUrgent?g.phoneScriptUrgent:g.phoneScriptOther):(isUrgent?t.phoneScriptUrgent:t.phoneScriptOther)}</p></>:<><p>{t.phoneFallback}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.noPhone} ↗</a></>}
+  {service.phone?<><a className="btn btn-primary full" href={safePhone(service.phone)}>{t.callNow}: {service.phone}</a>{service.phoneHours&&<p className="contact-detail">{t.hours}: {service.phoneHours}</p>}{!['family_danger','family_protection'].includes(service.id)&&<p className="spoken-script">{helping?(isUrgent?g.phoneScriptUrgent:g.phoneScriptOther):(isUrgent?t.phoneScriptUrgent:t.phoneScriptOther)}</p>}</>:<><p>{t.phoneFallback}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.noPhone} ↗</a></>}
  </div>;
  if(method==='inperson')return <div className="contact-guidance" aria-live="polite">
   <h3>{t.inpersonTitle}</h3><p>{helping?g.inpersonDetail:t.inpersonDetail}</p><p>{service.offline??t.inpersonDetail}</p>
@@ -73,7 +77,7 @@ export default function App(){
  const situation=audienceSituationText(answers,language,forWhom);
  const pathway=getNextPathway(category,answers);
  const mpsBrief=getMpsPreparation(category,answers,language,forWhom);
- const pathwayCopy=category==='fines'&&answers.p_stage==='court'?t.fineCourtPathway:pathway==='urgent'?t.pathwayUrgent:pathway==='followup'?t.pathwayFollowup:pathway==='review'?t.pathwayReview:t.pathwayAgency;
+ const pathwayCopy=category==='family'&&answers.family_safety==='danger'?t.familyDangerPathway:category==='family'&&answers.family_safety==='concern'?t.familyConcernPathway:category==='fines'&&answers.p_stage==='court'?t.fineCourtPathway:pathway==='urgent'?t.pathwayUrgent:pathway==='followup'?t.pathwayFollowup:pathway==='review'?t.pathwayReview:t.pathwayAgency;
  useEffect(()=>{const resetPrint=()=>setPrintMps(false);window.addEventListener('afterprint',resetPrint);return ()=>window.removeEventListener('afterprint',resetPrint)},[]);
  useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hans':'en';document.title=language==='zh'?'邻里助理 — 寻找援助':'NeighbourAssist — Find support';},[language]);
  // Move focus after wizard transitions so screen readers announce the new content.
@@ -109,6 +113,7 @@ export default function App(){
   {view==='quiz'&&<section className="container flow-wrap"><div className="breadcrumb"><button onClick={home}>{t.allTopics}</button><span aria-hidden="true">/</span><span>{topicName(category)}</span></div><div className="flow-layout"><div className="question-card">
    <div className="question-top"><span className="eyebrow">{topicName(category)}</span><strong>{t.question} {questionIndex+1} / {ids.length}</strong></div>
    <div className="progress" role="progressbar" aria-label={t.question} aria-valuenow={questionIndex+1} aria-valuemin={0} aria-valuemax={ids.length}><span style={{width:`${(questionIndex+1)/ids.length*100}%`}}/></div>
+   {category==='family'&&<p className="caregiver-auth-note" role="note">{t.familySafetyBanner} <a href="tel:999">999</a></p>}
    {forWhom==='caregiver'&&<p className="audience-notice" role="note">{caregiverUi[language].notice}</p>}<h1 ref={quizTitleRef} tabIndex={-1} className="question-title">{q.title}</h1>{q.hint&&<p className="question-hint">{q.hint}</p>}
    <fieldset className="answer-set"><legend className="sr-only">{t.chooseAnswer}</legend>{q.options.map(o=><label key={o.value} className={'answer '+(answers[q.id]===o.value?'answer-selected':'')}><input type="radio" name={q.id} value={o.value} checked={answers[q.id]===o.value} onChange={()=>selectAnswer(o.value)}/><span className="radio-circle" aria-hidden="true"/><span>{o.label}</span></label>)}</fieldset>
    <div className="flow-actions"><button onClick={back} className="btn btn-outline">← {t.back}</button><button disabled={!answers[q.id]} onClick={next} className="btn btn-primary">{questionIndex===ids.length-1?t.seeGuidance:t.continue} →</button></div>
@@ -116,6 +121,8 @@ export default function App(){
   {view==='results'&&<section className="container results-wrap"><div className="breadcrumb"><button onClick={home}>{t.allTopics}</button><span aria-hidden="true">/</span><span>{topicName(category)}</span><span aria-hidden="true">/</span><span>{t.guidanceLabel}</span></div>
    <div className="result-heading"><span className="eyebrow">{t.guidanceLabel}</span><h1 ref={resultTitleRef} tabIndex={-1}>{t.guidanceTitle}</h1><p>{forWhom==='caregiver'?caregiverUi[language].guidanceIntro:t.guidanceIntro}</p></div>
    <div className="pathway-notice" role="note"><strong>{t.pathwayTitle}</strong><p>{pathwayCopy}</p></div>
+    {category==='family'&&['danger','concern'].includes(answers.family_safety)&&<p className="caregiver-auth-note" role="alert">{answers.family_safety==='danger'?t.familyDangerPathway:t.familyConcernPathway} <a href={answers.family_safety==='danger'?'tel:999':'tel:18007770000'}>{answers.family_safety==='danger'?'999':'1800-777-0000'}</a></p>}
+    {category==='employment'&&['salary','dismissal'].includes(answers.w_issue)&&<p className="caregiver-auth-note" role="note">{t.workDeadlineWarning}</p>}
     {category==='fines'&&<p className="caregiver-auth-note" role="note">{answers.p_stage==='court'?t.fineCourtWarning:answers.p_stage==='paid'?t.finePaidWarning:t.fineDeadlineWarning}</p>}
    {category==='housing'&&answers.h_type==='public_rental'&&answers.h_goal==='smaller'&&answers.h_tenure==='under2'&&<p className="caregiver-auth-note" role="note">{t.hdbTenureWarning} <a href="https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/transfer-to-another-public-rental-flat" target="_blank" rel="noopener noreferrer">{t.guideSource} ↗</a></p>}
    <div className="result-layout"><div><article className="recommendation"><div className="recommendation-top"><span className="result-symbol" aria-hidden="true">✓</span><div><span className="eyebrow">{t.startingPoint}</span><h2>{primary.name}</h2><span className="agency-name">{primary.agency}</span></div></div>
@@ -131,9 +138,9 @@ export default function App(){
    </article>{secondary.map(s=><article className="secondary-recommendation" key={s.id}><span className="eyebrow">{t.otherInfo}</span><h3>{s.name}</h3><p>{s.description}</p><a href={s.url} target="_blank" rel="noopener noreferrer">{t.learnMore} ↗</a><small>{s.caution}</small></article>)}</div>
    <aside className="checklist"><h2>{t.prepareTitle}</h2><p>{t.prepareIntro}</p>{primary.checklist.map(item=><label className="check-item" key={item}><input type="checkbox" checked={prepared.includes(item)} onChange={e=>setPrepared(p=>e.target.checked?[...p,item]:p.filter(x=>x!==item))}/><span>{item}</span></label>)}<div className="check-actions"><button onClick={()=>window.print()} className="btn btn-outline full">{t.print}</button></div><p className="check-note">{t.privacyReminder}</p></aside>
    </div>
-   <section className="mps-section" aria-labelledby="mps-heading"><div className="mps-intro"><span className="eyebrow">MPS</span><h2 id="mps-heading">{t.mpsSectionTitle}</h2><p>{t.mpsSectionIntro}</p><button type="button" className="btn btn-outline" aria-expanded={mpsOpen} aria-controls="mps-preparation" onClick={()=>setMpsOpen(v=>!v)}>{mpsOpen?t.mpsHide:t.mpsShow} {mpsOpen?'−':'+'}</button></div>
+   {!(category==='family'&&['danger','concern'].includes(answers.family_safety))&&<section className="mps-section" aria-labelledby="mps-heading"><div className="mps-intro"><span className="eyebrow">MPS</span><h2 id="mps-heading">{t.mpsSectionTitle}</h2><p>{t.mpsSectionIntro}</p><button type="button" className="btn btn-outline" aria-expanded={mpsOpen} aria-controls="mps-preparation" onClick={()=>setMpsOpen(v=>!v)}>{mpsOpen?t.mpsHide:t.mpsShow} {mpsOpen?'−':'+'}</button></div>
     {mpsOpen&&<div id="mps-preparation" className="mps-preparation"><div className="mps-visit-guide"><h3>{t.mpsSteps}</h3><ol className="instruction-list">{[t.mpsStep1,t.mpsStep2,t.mpsStep3].map((step,i)=><li key={i}>{step}</li>)}</ol><a className="btn btn-primary" href={PARLIAMENT_MP_LOOKUP} target="_blank" rel="noopener noreferrer">{t.mpsFind} ↗</a></div><article className="mps-notes"><div className="mps-note-header"><span className="eyebrow">NeighbourAssist</span><h2>{t.mpsNotes}</h2><p>{mpsBrief.audience} · {mpsBrief.topic}</p></div><p className="mps-pathway">{mpsBrief.pathway}</p><h3>{t.mpsSituation}</h3><dl className="mps-facts">{mpsBrief.items.map(item=><div key={item.id}><dt>{item.label}</dt><dd>{item.answer}</dd></div>)}</dl><h3>{t.mpsChecklist}</h3><ul>{mpsBrief.preparation.map(item=><li key={item}>{item}</li>)}</ul><p className="mps-caution">{mpsBrief.caution}</p></article><p className="mps-privacy">{t.mpsPrivacy}</p><p className="mps-privacy">{t.mpsAfter}</p><div className="mps-actions"><button className="btn btn-outline" onClick={()=>{setPrintMps(true);window.setTimeout(()=>window.print(),100)}}>{t.mpsPrint}</button></div></div>}
-   </section>
+   </section>}
    <div className="result-footer"><button onClick={back} className="btn btn-outline">← {t.changeAnswers}</button><button onClick={home} className="btn btn-outline">{t.startAgain}</button></div>
   </section>}
   {view==='about'&&<section className="container about-section"><span className="eyebrow">{t.aboutLabel}</span><h1>{t.aboutTitle}</h1><p>{t.about1}</p><p>{t.about2}</p><button className="btn btn-primary" onClick={browse}>{t.findAssistance} →</button></section>}
