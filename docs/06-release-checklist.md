@@ -49,6 +49,37 @@ The original release checklist pre-dates the fines module. Before deploying this
 - [ ] Re-run the **new 73-test suite** and TypeScript/Vite build locally; verify GitHub Actions and that Deployxa serves the same commit. **The earlier 54-test passing run does not validate these new changes.**
 - [ ] Have a fluent Singapore Mandarin speaker and a non-developer run at least one fines scenario before public demonstration.
 
+## Work & Family expansion — new release gates (19 October 2026)
+
+The former 73-test build predates the new Work & Employment and Family & Social Support categories. The nine-category update introduces 11 new referral services and 5 additional adaptive questions. The new source/audience audit reports **33 questions, 35 services and 93 tests**, but **a fresh passing test run and production build have not been independently confirmed**. Consult [the research log](09-employment-family-research.md).
+
+**Employment acceptance checks**
+
+- [ ] Unpaid salary while still employed → TADM guidance and generally **one-year** claim deadline. After leaving → generally **six-month** deadline. Verify the linked MOM/TADM entry point.
+- [ ] Possible wrongful dismissal → TADM guidance, the **one-month** general filing period and proper handling of exceptions; check both “within a month” and “older than a month”. The site must not decide eligibility.
+- [ ] Workplace harassment/discrimination → TAFEP, with verified 6838 0969 contact and no unsupported claim that newer legislation is already in force.
+- [ ] Work injury → MOM/WICA information, never treated as an ordinary salary claim.
+- [ ] Other employment issue or unclear self-employment → MOM employment advisory directory.
+- [ ] Check English, Simplified Chinese and third-person caregiver wording. No employer names, salary figures, termination letters or medical records may be entered here.
+
+**Family and protection acceptance checks**
+
+- [ ] Selecting **immediate danger** routes directly to **Police 999**; SMS 70999 guidance; no extra questionnaire, ordinary MPS section, or incorrect ComCare message.
+- [ ] Selecting **possible abuse, neglect or family violence** routes to 24-hour **NAVH 1800-777-0000**, shows the Police emergency fallback and does not suggest MPS as a replacement.
+- [ ] Family relationships and divorce → MSF **FAM**; wider social concerns → official **FSC** directory.
+- [ ] Elderly caregiving → official **AIC Link** website and 1800-650-6060; confirm weekday/Saturday service hours and note AIC uses `aic.sg`.
+- [ ] Preschool/childcare fees → LifeSG/ECDA and appropriate preschool Form 1 instructions; no subsidy eligibility promises.
+- [ ] Complete the new paths in both languages, self and caregiver modes, narrow mobile layout, large text, keyboard focus and print for **non-safety** cases.
+- [ ] Confirm the personal-data boundary: no free-text, storage or outbound case submissions; sensitive names, abuse reports, credentials and documents belong only in official channels.
+
+**Release verification**
+
+- [ ] Pull the current branch and obtain **93/93 passing tests** (or fix a regression before proceeding).
+- [ ] Run `npm run build` successfully and test the production preview.
+- [ ] Verify the latest **Validate NeighbourAssist** GitHub Actions job if available.
+- [ ] Redeploy from the commit with passing tests, confirm the Deployxa URL serves **nine categories**, and repeat urgent-safety and ordinary referral tests at the live URL.
+- [ ] Ask a non-developer to test at least one new work and one ordinary family scenario with fictional details; sensitive or emergency cases should not be simulated with real people or emergencies.
+
 ## 2. Chinese and caregiver checks
 
 - [ ] Switch to Simplified Chinese and complete **all six** help categories.
