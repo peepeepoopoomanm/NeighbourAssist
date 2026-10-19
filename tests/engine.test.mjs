@@ -250,7 +250,7 @@ test('fine follow-up and rejected appeals reuse safe agency history pathways',()
 });
 test('HDB, URA and Traffic Police official guidance does not promise first-time waivers',()=>{
  for(const id of ['fine_hdb','fine_ura','fine_tp']){
-  assert.match(services[id].description+/ +services[id].caution,/first.time|first offence|first-time/i);
+  assert.match(services[id].description+' '+services[id].caution,/first.time|first offence|first-time/i);
   assert.match(services[id].caution,/not|do not|does not/i);
  }
 });
