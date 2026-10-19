@@ -329,3 +329,18 @@ test('fines results expose deadline safeguards and chosen payment goal to the UI
  assert.match(source,/t\.finePaidWarning/);
  assert.match(source,/t\.fineDeadlineWarning/);
 });
+
+test('URA and Traffic Police appeal status enquiries open official status services',()=>{
+ const u=getGuide(services.fine_ura,'en','online','status');
+ const p=getGuide(services.fine_tp,'en','online','status');
+ assert.match(u.url,/parking\.ura\.gov\.sg\/car-parks-portal\/eAppeal\/appeal-status/);
+ assert.match(p.url,/police\.gov\.sg\/E-Services\/Check-Status-of-Appeal-Against-Traffic-Offence/);
+ assert.match(getGuide(services.fine_tp,'zh','online','status').steps.join(' '),/参考编号/);
+});
+test('payment hardship enquiries direct users to official contacts, not an appeal form',()=>{
+ for(const id of ['fine_hdb','fine_ura','fine_tp','fine_lta']){
+  const hardship=getGuide(services[id],'en','online','hardship');
+  assert.notEqual(hardship.url,getGuide(services[id],'en','online','appeal').url);
+  assert.match(hardship.steps.join(' '),/payment|paying|fine|deadline/i);
+ }
+});
