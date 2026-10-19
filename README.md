@@ -32,11 +32,11 @@ The `demo/` directory is **legacy developer reference material**, not the curren
 Use `npm run dev` for development and `npm run build` for the authoritative React application. The generated `dist/` folder is the only intended production output.
 
 ## Source structure
-- `src/engine.ts` — category questions, verified referral records, deterministic rules.
+- `src/engine.ts` — category questions, official-source referral records, deterministic rules (including fines and court-safe routing).
 - `src/App.tsx` — React UI (landing, adaptive question flow, results, optional MPS preparation and printing).
 - `src/style.css` — responsive, large-target accessible styles.
 - `src/mps.ts` — on-device bilingual MPS preparation summary; no personal identifiers collected.
-- `src/journeys.ts` — official agency contact routes in English and Simplified Chinese.
+- `src/journeys.ts` — official agency contact routes in English and Simplified Chinese, with separate fine appeal, payment, status and hardship handoffs.
 - `demo/index.html`, `demo/preview.js` — browser preview sharing the compiled engine.
 - `tests/engine.test.mjs` — unit tests for referrals.
 - `docs/` — brief, official referral source log, decision tree, screen wireframes and handoff.
@@ -63,7 +63,7 @@ Deployxa's public documentation confirms React/Vite and static sites are support
 7. Monitor hosting plan limits and credit usage before selecting any paid tier. Never use the Vite development or preview server as the production start command.
 
 ## Documentation
-Read `docs/01-project-brief.md` first, then `docs/03-decision-tree.md` and `docs/06-release-checklist.md`. The latter records official-source checks, bilingual and accessibility tests, and the static hosting handoff. The application does not claim actual savings in travel or queue times until user testing supports those outcomes.
+Read `docs/01-project-brief.md` first, then `docs/03-decision-tree.md`, `docs/06-release-checklist.md` and `docs/08-fines-appeals-research.md`. The latter records official-source checks, bilingual and accessibility tests, and the static hosting handoff. The application does not claim actual savings in travel or queue times until user testing supports those outcomes.
 
 ## AI attribution
 Initial planning and implementation were produced with assistance from ChatGPT (GPT-6). Team members should inspect, understand, and test all source code before submission. Disclose AI assistance in the Devpost writeup if required by the event rules.
@@ -92,3 +92,11 @@ NeighbourAssist now asks **why a resident needs help and whether they have conta
 - The static `demo/` folder is an older reference, not the authoritative version. Use the React application in `src/` for testing or demonstration.
 
 Read [MPS preparation design and testing](docs/04-mps-preparation.md) before deployment. Run `npm test` and `npm run build` after pulling the latest changes, then manually test bilingual and mobile journeys.
+
+## October 19: Fines & Appeals expansion
+
+A new bilingual category helps residents identify **which government authority issued a penalty**, whether it is a **court summons**, and whether they need an **appeal, payment, appeal-status enquiry or financial-difficulty enquiry**. HDB, URA and Traffic Police use their own verified online payment/appeal routes; LTA active-mobility notices direct the user to confirm the correct process with LTA. A court summons shortens the questionnaire and prioritises court attendance instructions.
+
+The prototype does **not** waive fines, decide an appeal's success, submit legal representations, recommend court pleas, store notice numbers or promise that an MP can override penalties. Full official sources, supported/unsupported cases and manual acceptance tests are in [Fines & Appeals research](docs/08-fines-appeals-research.md).
+
+After pulling the latest changes, run `npm test` and `npm run build`, then manually validate the bilingual fine, court and payment routes before considering another public release. Deployxa may need an explicit redeployment unless Git-based automatic deployment is enabled and confirmed.
