@@ -31,6 +31,10 @@ const caregiverEn:WordingMap = {
  m_barrier:{title:'What would help them most with medical costs?',options:{bill:'Understanding their bill or payment options',subsidy:'Finding clinic subsidies',person:'Speaking with a staff member',unsure:'I am not sure'}},
  n_issue:{title:'What neighbourhood issue do they want to report?'},
  n_report:{title:'Have they already reported the issue through an official channel?',options:{yes:'Yes, but it remains unresolved',no:'Not yet',unsure:'I am not sure'}},
+ p_issuer:{title:'Which agency issued the fine to the person you are helping?',hint:'Check the authority on their actual notice. Do not enter any notice numbers here.',options:{hdb:'They received an HDB parking notice',ura:'They received a URA parking notice',tp:'They received a Traffic Police notice',lta:'They received an LTA or active-mobility notice',other:'Another agency issued it',unsure:'I am not sure'}},
+ p_stage:{title:'What stage is their fine or penalty at?',hint:'Check their notice for payment deadlines and any required court appearance.',options:{notice:'They received a fine or offence notice',court:'They have a court summons or required court date',paid:'Their fine has already been paid',unsure:'I am not sure'}},
+ p_goal:{title:'What would you like to help them understand?',hint:'Only the official agency can handle their fine or appeal.',options:{appeal:'Whether they can request an appeal',pay:'How they can check or pay',status:'How to follow up on their appeal',hardship:'They are having difficulty paying',unsure:'I am not sure'}},
+ p_reason:{title:'What is the main reason they would like the fine reviewed?',hint:'This cannot establish whether their appeal qualifies.',options:{error:'They think the notice was issued in error',medical:'They experienced a medical emergency',breakdown:'They had a vehicle breakdown or unusual event',first:'It was their first offence or an honest mistake',hardship:'They are struggling to afford the fine',other:'Another reason / I am not sure'}},
  u_need:{title:'Which area best matches their concern?'},
  contact:{title:'How would you prefer to help them contact a service?',hint:'Please contact services on their behalf only with their permission. We will also show the official website.',options:{online:'Help them use the official website',phone:'Call on their behalf, with their permission',inperson:'Go with them to an office',unsure:'I am not sure'}},
 };
@@ -58,6 +62,10 @@ const caregiverZh:WordingMap = {
  m_barrier:{title:'对方最需要哪种医疗费用协助？',options:{bill:'了解对方的账单或付款方式',subsidy:'了解诊所补贴',person:'与职员交谈',unsure:'不确定'}},
  n_issue:{title:'对方想反映哪一种邻里设施问题？'},
  n_report:{title:'对方是否已通过官方渠道反映问题？',options:{yes:'是，但问题仍未解决',no:'还没有',unsure:'我不确定'}},
+ p_issuer:{title:'哪一个机构向您正在协助的人发出罚单？',hint:'请查看对方的通知，不要在本网站填写罚单编号。',options:{hdb:'对方收到建屋局停车罚单',ura:'对方收到 URA 停车罚单',tp:'对方收到交通警察罚单',lta:'对方收到 LTA 或个人代步工具违例通知',other:'其他机构发出的罚单',unsure:'我不确定'}},
+ p_stage:{title:'对方的罚单目前处于什么阶段？',hint:'请核实对方罚单上的缴费期限和是否规定出庭。',options:{notice:'对方刚收到违例或罚款通知',court:'对方收到法庭传票或须出庭通知',paid:'对方已经缴清罚款',unsure:'我不确定'}},
+ p_goal:{title:'您希望协助对方了解哪方面？',hint:'只有发出罚单的官方机构能处理有关申请。',options:{appeal:'对方是否可以申诉或复核',pay:'对方如何查询或缴费',status:'如何查询对方申诉的进度',hardship:'对方难以负担罚款',unsure:'我不确定'}},
+ p_reason:{title:'对方希望复核罚单的主要原因是什么？',hint:'本问卷不能决定对方的申诉是否成立。',options:{error:'对方认为罚单可能开错了',medical:'对方当时遇到医疗紧急情况',breakdown:'对方当时遇到车辆故障或特殊情况',first:'这是对方第一次违例或无心之失',hardship:'对方难以负担罚款',other:'其他原因／我不确定'}},
  u_need:{title:'哪方面最接近对方需要的帮助？'},
  contact:{title:'您希望如何协助对方联系有关机构？',hint:'请先征得对方同意，再代为联系。我们也会显示官方网站。',options:{online:'协助对方使用官方网站',phone:'获得对方同意后，代为致电',inperson:'陪同对方亲自前往',unsure:'我不确定'}},
 };
@@ -123,6 +131,14 @@ const caregiverReasons:Record<string,{en:string;zh:string}>={
  'You mentioned difficulty paying a hospital or other medical bill.':{en:'You mentioned their difficulty paying hospital or other medical bills.',zh:'您提到对方难以支付医院或其他医疗账单。'},
  'MOH can guide you toward the right scheme for the care involved.':{en:'MOH provides information on schemes relevant to their healthcare needs.',zh:'卫生部可提供与对方医疗需要相关的补助资料。'},
  'This concerns your neighbourhood environment or municipal facilities.':{en:'This concerns a neighbourhood or municipal facility.',zh:'这与邻里环境或市政设施有关。'},
+
+ 'You reported a court summons or required court date. Court instructions take priority.':{en:'The person you are helping may need to attend court. Their official summons takes priority.',zh:'您正在协助的人可能须出庭，应优先遵守对方传票的指示。'},
+ 'You identified HDB as the issuer of the parking notice.':{en:'They have an HDB parking notice, so HDB is the responsible agency.',zh:'对方收到建屋局停车罚单，应使用建屋局官方渠道。'},
+ 'You identified URA as the issuer of the parking notice.':{en:'They have a URA parking notice, so URA is the responsible agency.',zh:'对方收到 URA 停车罚单，应使用 URA 官方渠道。'},
+ 'You identified Traffic Police as the issuer of the offence notice.':{en:'They received a Traffic Police offence notice.',zh:'对方收到交通警察的违例通知。'},
+ 'You identified LTA as the issuer; vehicle and active-mobility procedures may differ.':{en:'Their notice is from LTA; active-mobility and vehicle procedures may differ.',zh:'对方收到陆交局的通知，车辆和个人代步工具程序可能不同。'},
+ 'Identify the issuing agency before choosing an appeal or payment route.':{en:'Identify the agency on their notice before helping them choose a formal channel.',zh:'请先确认对方罚单上的机构，再协助对方选择正式渠道。'},
+
  'Private tenancy questions are different from HDB public-rental transfers. This is a general official directory, not a tenancy decision.':{en:'Private tenancy matters differ from public-rental transfers. This is a directory, not a housing decision.',zh:'私人租赁与建屋局公共租赁组屋不同。这里仅提供官方服务入口，并不决定租约事宜。'},
 };
 export function audienceReasonText(reason:string,lang:Language,audience:Audience):string{
@@ -141,10 +157,15 @@ const caregiverSituations:Record<string,{en:string;zh:string}>={
  'h_rent:ongoing':{en:'I am helping someone who struggles to pay rent each month.',zh:'我正在帮助一位每月难以支付租金的人。'},
  'h_rent:arrears':{en:'I am helping someone who has unpaid rent and needs to understand available support.',zh:'我正在帮助一位有未缴租金、需要了解援助的人。'},
  'h_rent:change':{en:'I am helping someone whose rent or household circumstances recently changed.',zh:'我正在帮助一位租金或家庭情况最近发生改变的人。'},
+ 'p_reason:error':{en:'I am helping someone who thinks a penalty notice was issued in error.',zh:'我正在协助一位认为罚单可能开错了的人。'},
+ 'p_reason:medical':{en:'I am helping someone who experienced a medical emergency.',zh:'我正在协助一位当时遇到医疗紧急情况的人。'},
+ 'p_reason:breakdown':{en:'I am helping someone who experienced a vehicle breakdown or unusual event.',zh:'我正在协助一位当时遇到车辆故障或特殊情况的人。'},
+ 'p_reason:first':{en:'I am helping someone who says this was their first offence or an honest mistake.',zh:'我正在协助一位首次违例或无心犯错的人。'},
+ 'p_reason:hardship':{en:'I am helping someone who is struggling to afford a fine.',zh:'我正在协助一位难以负担罚款的人。'},
 };
 export function audienceSituationText(a:Answers,lang:Language,audience:Audience):string|null {
  if(audience==='self')return situationText(a,lang);
- for(const key of ['f_need','h_context','h_rent']) {
+ for(const key of ['f_need','h_context','h_rent','p_reason']) {
   const value=a[key];if(value&&caregiverSituations[key+':'+value])return caregiverSituations[key+':'+value][lang];
  }
  return null;
