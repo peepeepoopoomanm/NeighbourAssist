@@ -3,7 +3,7 @@
  * No resident personal data, NRIC, CPF balance, documents, or medical detail is requested.
  * Reference data checked against official agency sources on 17 October 2026.
  */
-export type Category = 'financial'|'housing'|'cpf'|'health'|'municipal'|'unsure';
+export type Category = 'financial'|'housing'|'cpf'|'health'|'municipal'|'fines'|'unsure';
 export type Answers = Record<string,string>;
 export type Question = {id:string; title:string; hint?:string; options:{value:string;label:string}[]};
 export type Service = {id:string;name:string;agency:string;description:string;url:string;phone?:string;phoneHours?:string;offline?:string;steps:string[];checklist:string[];caution:string;};
@@ -15,6 +15,7 @@ export const categories:{id:Category;label:string;summary:string;symbol:string}[
 {id:'cpf',label:'CPF & retirement',summary:'Understand CPF withdrawal or senior support options',symbol:'◎'},
 {id:'health',label:'Medical costs',summary:'Subsidies, clinic visits and hospital bills',symbol:'+'},
 {id:'municipal',label:'Neighbourhood issues',summary:'Lifts, public-area repairs, cleanliness',symbol:'▦'},
+{id:'fines',label:'Fines & appeals',summary:'Parking, traffic and active-mobility penalties',symbol:'!'},
 {id:'unsure',label:'Not sure',summary:'Help me find where to start',symbol:'?'},
 ];
 
@@ -42,7 +43,12 @@ export const questions:Record<string,Question>={
  m_barrier:{id:'m_barrier',title:'What would help you most with medical costs?',hint:'This helps us suggest an appropriate contact route, not assess eligibility.',options:opt(['bill','Understanding a bill or payment options'],['subsidy','Finding out about clinic subsidies'],['person','Speaking to a staff member for guidance'],['unsure','I am not sure'])},
  n_issue:{id:'n_issue',title:'What kind of neighbourhood issue do you want to report?',options:opt(['lift','Lift or public facility problem'],['cleanliness','Cleanliness or waste'],['maintenance','Common-area maintenance or lighting'],['unsure','Something else / not sure'])},
  n_report:{id:'n_report',title:'Have you already reported this issue through an official channel?',options:opt(['yes','Yes, but the issue is still unresolved'],['no','Not yet'],['unsure','I am not sure'])},
- u_need:{id:'u_need',title:'Which area seems closest to your concern?',options:opt(['financial','Money for essentials'],['housing','Housing or rental'],['cpf','CPF or retirement'],['health','Healthcare costs'],['municipal','Neighbourhood facilities'],['unsure','Something else / not sure'])},
+
+ p_issuer:{id:'p_issuer',title:'Which agency issued the fine or penalty?',hint:'Check the name printed on the notice. Do not enter the notice number here.',options:opt(['hdb','HDB (parking)'],['ura','URA (parking)'],['tp','Traffic Police'],['lta','LTA (including e-scooter or active mobility)'],['other','Another government agency'],['unsure','I am not sure'])},
+ p_stage:{id:'p_stage',title:'What stage is the fine or notice at?',hint:'Check for deadlines and any required court appearance. A court summons needs prompt attention.',options:opt(['notice','I received a fine or offence notice'],['court','I have a court summons or required court date'],['paid','The fine has already been paid'],['unsure','I am not sure'])},
+ p_goal:{id:'p_goal',title:'What do you need help understanding?',hint:'This guide cannot cancel or pay a fine for you.',options:opt(['appeal','Can I ask for a review or appeal?'],['pay','How can I check or pay?'],['status','How can I follow up on an appeal?'],['hardship','I have difficulty paying'],['unsure','I am not sure'])},
+ p_reason:{id:'p_reason',title:'Why would you like the fine reviewed?',hint:'This does not determine whether an appeal has grounds. An honest mistake or first offence is not a guaranteed reason for a waiver.',options:opt(['error','I think the notice was issued in error'],['medical','A medical emergency occurred'],['breakdown','A vehicle breakdown or unusual event occurred'],['first','It was my first time or an honest mistake'],['hardship','I cannot easily afford the fine'],['other','Another reason / I am not sure'])},
+ u_need:{id:'u_need',title:'Which area seems closest to your concern?',options:opt(['financial','Money for essentials'],['housing','Housing or rental'],['cpf','CPF or retirement'],['health','Healthcare costs'],['municipal','Neighbourhood facilities'],['fines','Fine or penalty'],['unsure','Something else / not sure'])},
  contact:{id:'contact',title:'How would you prefer to receive assistance?',hint:'We will always show the official website as well.',options:opt(['online','Use an official website'],['phone','Speak to someone by phone'],['inperson','Ask someone in person'],['unsure','I am not sure'])},
 };
 
@@ -80,6 +86,7 @@ export function getQuestionIds(category:Category,answers:Answers):string[]{
   case 'cpf':return ['c_age','c_goal',...(answers.c_goal==='support'&&answers.c_age!=='no'?['c_65']:[]),'c_concern','agency_status','contact'];
   case 'health':return ['m_type',...(answers.m_type==='bill'?['m_support']:[]),'m_barrier','agency_status','contact'];
   case 'municipal':return ['n_issue','n_report','contact'];
+  case 'fines':return answers.p_stage==='court'?['p_issuer','p_stage','contact']:['p_issuer','p_stage','p_goal',...(answers.p_goal==='appeal'?['p_reason']:[]),...(answers.p_goal==='appeal'||answers.p_goal==='status'?['agency_status']:[]),'contact'];
   default:return ['u_need','agency_status','contact'];
  }
 }
@@ -87,6 +94,7 @@ export function getQuestionIds(category:Category,answers:Answers):string[]{
 export type Pathway='urgent'|'agency'|'followup'|'review';
 export function getNextPathway(category:Category,answers:Answers):Pathway{
  if(category==='financial'&&answers.f_urgent==='yes')return 'urgent';
+ if(category==='fines'&&answers.p_stage==='court')return 'agency';
  if(answers.agency_status==='waiting')return 'followup';
  if(answers.agency_status==='rejected'||answers.agency_status==='unresolved'||(category==='municipal'&&answers.n_report==='yes'))return 'review';
  return 'agency';
@@ -117,12 +125,20 @@ export function getRecommendations(category:Category,a:Answers):{primary:Service
   if(a.m_type==='clinic'){id='chas';reason='You mentioned GP or dental clinic costs.';}
   else if(a.m_type==='bill'){id='medifund';reason='You mentioned difficulty paying a hospital or other medical bill.';}
   else {id='health_general';reason='MOH can guide you toward the right scheme for the care involved.';}
+ } else if(category==='fines'){
+   if(a.p_stage==='court'){id='fine_court';reason='You reported a court summons or required court date. Court instructions take priority.';}
+   else if(a.p_issuer==='hdb'){id='fine_hdb';reason='You identified HDB as the issuer of the parking notice.';}
+   else if(a.p_issuer==='ura'){id='fine_ura';reason='You identified URA as the issuer of the parking notice.';}
+   else if(a.p_issuer==='tp'){id='fine_tp';reason='You identified Traffic Police as the issuer of the offence notice.';}
+   else if(a.p_issuer==='lta'){id='fine_lta';reason='You identified LTA as the issuer; vehicle and active-mobility procedures may differ.';}
+   else {id='fine_unknown';reason='Identify the issuing agency before choosing an appeal or payment route.';}
  } else if(category==='municipal') {id='oneservice';reason='This concerns your neighbourhood environment or municipal facilities.';} else if(category==='unsure'&&a.u_need){
   if(a.u_need==='financial'){id='sso';reason='An SSO can help identify financial assistance routes.';}
   else if(a.u_need==='housing'){id='hdb_general';reason='HDB can explain housing services and next steps.';}
   else if(a.u_need==='cpf'){id='cpf_general';reason='CPF Board is the right place to clarify CPF and retirement questions.';}
   else if(a.u_need==='health'){id='health_general';reason='MOH provides guidance on healthcare support channels.';}
   else if(a.u_need==='municipal'){id='oneservice';reason='OneService is the official municipal feedback channel.';}
+  else if(a.u_need==='fines'){id='fine_unknown';reason='Identify the issuing agency before choosing an appeal or payment route.';}
  }
  return {primary:services[id],secondary:extra.map(x=>services[x]).filter(s=>s.id!==id),reason};
 }
