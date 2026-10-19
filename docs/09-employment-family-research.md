@@ -18,7 +18,7 @@ Different employment problems belong to different statutory or advisory pathways
 
 - **w_issue**: pay / possible dismissal / harassment or discrimination / work injury / other.
 - **w_status** (salary and dismissal only): currently working, left the job, self-employed/uncertain, or unsure.
-- **w_recency** (dismissal only): left within approximately one month, longer, or unsure. This **does not** establish eligibility; it emphasises reviewing the deadline urgently.
+- **w_recency** (dismissal only, after indicating employment has ended): left within approximately one month, longer, or unsure. People still employed are not asked for a nonexistent last day. This **does not** establish eligibility; it emphasises reviewing the deadline urgently.
 - **agency_status**: first enquiry, awaiting reply, rejected, unresolved, unsure.
 - **contact**: web / phone / in-person / unsure.
 
