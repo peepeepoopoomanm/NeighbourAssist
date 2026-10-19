@@ -170,11 +170,11 @@ export const guides:Record<string,GuideRecord>={
   inperson:['与有关医疗机构的收费或病人服务职员交谈。','如账单难以负担，要求转介医疗社工。','只有医疗机构或有关机构可以确认补贴或援助安排。']
  }),
  oneservice:g('https://www.oneservice.gov.sg/oneservice/oneservice-app-and-chatbot/',ONESERVICE,{
-  online:['Open the OneService page and choose its official App or Chatbot reporting channel.','For the App, choose “Submit Case”, select the closest category, add a photo and enter the location and details.','For the chatbot, follow the prompts for a description, at least one photo, location, time and contact details. Submit only through OneService.'],
+  online:['Open the OneService page and choose its official App or Chatbot reporting channel.','For the App, choose “Submit Case”, select the closest category, add a photo and enter the location and details.','For the chatbot, provide a description, at least one photo, precise location, time observed and contact details. If you cannot photograph the issue itself, OneService says a photo of the surroundings may be used. Submit only through official OneService.'],
   phone:['OneService’s listed reporting options are its App and Chatbot; this guide does not have a verified reporting hotline.','Open the OneService official page to choose an available channel, or use the appropriate agency’s contact details if you cannot report online.','For an immediate danger, contact emergency services directly rather than a feedback app.'],
   inperson:['OneService reports are submitted through official digital channels; there is no general walk-in reporting process confirmed here.','Ask a trusted person to help with the official App or Chatbot, with your permission, or contact the responsible agency.','Prepare the issue description, precise location and photo when possible.']
  },{
-  online:['打开 OneService 官方网页，选择应用程序或聊天机器人反馈渠道。','如使用应用程序，按“Submit Case”，选择最接近的类别，加入照片、地点及问题详情。','如使用聊天机器人，请按提示提供描述、至少一张照片、地点、发生时间和联络资料。只在 OneService 官方渠道提交。'],
+  online:['打开 OneService 官方网页，选择应用程序或支持中文的“Tell Us @ OneService”测试版聊天机器人。旧版聊天机器人仅支持英文。','如使用应用程序，按“Submit Case”，选择最接近的类别，加入照片、地点及问题详情。','聊天机器人需要问题描述、至少一张照片、准确地点、发现时间及联络资料。如无法拍摄问题本身，可按官方指引提供周围环境的照片。只在 OneService 官方渠道提交。'],
   phone:['OneService 官方列出的反馈渠道是应用程序和聊天机器人；本指南没有已核实的举报热线。','打开官方网页选择合适渠道；如不能网上举报，可查询负责机构的联络方式。','若有即时危险，应直接联系紧急服务，不要依赖反馈应用程序。'],
   inperson:['OneService 主要通过官方电子渠道接收反馈；本指南未核实统一的柜台反馈程序。','可在对方同意下请可信赖的人协助使用官方应用程序或聊天机器人，或联络负责机构。','尽可能准备问题描述、准确地点和照片。']
  }),
