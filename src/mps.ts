@@ -22,6 +22,8 @@ export function getMpsPreparation(category:Category,answers:Answers,language:Lan
   zh?'简要说明最需要解决的问题，以及为什么需要帮助':'A short explanation of what you are asking for and why',
   zh?'有关机构或接见选民活动工作人员建议携带的证明文件':'Relevant documents requested by the agency or MPS volunteers',
  ];
+ if(category==='family'&&answers.family_safety==='danger')preparation.unshift(zh?'有即时危险，请先拨打警方 999；如无法安全通话，可发短信至 70999。':'If anyone is in immediate danger, call Police 999 now (or SMS 70999 if unable to speak safely).');
+ if(category==='family'&&answers.family_safety==='concern')preparation.unshift(zh?'担心虐待或家庭暴力时，请先联系 NAVH 1800-777-0000；即时危险请拨打 999。':'For abuse or violence concerns, contact NAVH 1800-777-0000; call 999 if danger is immediate.');
  if(category==='fines'&&answers.p_stage==='court')preparation.unshift(zh?'法庭传票和出庭日期：即使另向议员求助也须遵守法庭指示':'Court summons and hearing date: you must follow court instructions even if you also seek MP help');
  const pathwayText:Record<ReturnType<typeof getNextPathway>,{en:string;zh:string}>={
   urgent:{en:'This may involve immediate essential needs. Contact ComCare promptly. An MPS is not an emergency response service.',zh:'这可能涉及急需生活必需品。请尽快联系 ComCare；接见选民活动不是紧急援助服务。'},
@@ -34,7 +36,7 @@ export function getMpsPreparation(category:Category,answers:Answers,language:Lan
   audience:audience==='caregiver'?(zh?'为他人准备（请先征得同意）':'Prepared for another person (with their permission)'):(zh?'本人准备':'Prepared for myself'),
   items,
   preparation,
-  pathway:category==='fines'&&answers.p_stage==='court'?(zh?'这涉及法庭传票。请按传票出庭或遵守法庭正式指示；接见选民活动不能代替法庭程序。':'This involves a court summons. Follow required attendance and court directions; an MPS is not a substitute for court proceedings.'):pathwayText[pathway][language],
+  pathway:category==='family'&&answers.family_safety==='danger'?(zh?'有人正面临即时危险，请立即联系警方 999。议员接见活动不能代替紧急服务。':'Someone is in immediate danger. Call Police 999 now; an MPS is not an emergency service.'):category==='family'&&answers.family_safety==='concern'?(zh?'如担心可能发生虐待或家庭暴力，请先咨询 NAVH；如有即时危险，立即拨打 999。':'For possible abuse or domestic violence, contact NAVH for specialist guidance; call 999 if danger is immediate.'):category==='fines'&&answers.p_stage==='court'?(zh?'这涉及法庭传票。请按传票出庭或遵守法庭正式指示；接见选民活动不能代替法庭程序。':'This involves a court summons. Follow required attendance and court directions; an MPS is not a substitute for court proceedings.'):pathwayText[pathway][language],
   caution:zh?'这是为接见选民活动准备的个人摘要，并非正式议员求助信或政府申请。是否协助提出申诉及如何处理，由有关人员及机构决定。不能保证更快处理或获得批准。':'These are personal preparation notes, not an official MP appeal letter or government application. MPS personnel and agencies decide what action is appropriate; no faster processing or approval is guaranteed.',
  };
 }
