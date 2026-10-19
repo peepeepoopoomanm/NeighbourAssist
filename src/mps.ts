@@ -1,6 +1,6 @@
 import {categories,questions,getNextPathway,getQuestionIds,type Answers,type Category} from './engine.ts';
-import {categoryText,questionText,type Language} from './i18n.ts';
-import {audienceQuestionText,type Audience} from './audience.ts';
+import {categoryText,type Language} from './i18n.ts';
+import {contextualQuestionText,type Audience} from './audience.ts';
 
 // Only predetermined multiple-choice responses. No identity, addresses, free text,
 // personal documents or details are entered or transmitted by this feature.
@@ -12,7 +12,7 @@ export function getMpsPreparation(category:Category,answers:Answers,language:Lan
  const title=categoryText(category,language,categories.find(c=>c.id===category)??{label:'Assistance',summary:''}).label;
  const prompts=getQuestionIds(category,answers).filter(id=>id!=='contact'&&answers[id]&&questions[id]);
  const items=prompts.map(id=>{
-  const translated=audience==='caregiver'?audienceQuestionText(questions[id],language,audience):questionText(questions[id],language);
+  const translated=contextualQuestionText(questions[id],language,audience,category);
   const selected=translated.options.find(option=>option.value===answers[id]);
   if(!selected)return null;
   return {id,label:translated.title,answer:selected.label};
