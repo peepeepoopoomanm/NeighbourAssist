@@ -179,6 +179,62 @@ export const guides:Record<string,GuideRecord>={
   phone:['OneService 官方列出的反馈渠道是应用程序和聊天机器人；本指南没有已核实的举报热线。','打开官方网页选择合适渠道；如不能网上举报，可查询负责机构的联络方式。','若有即时危险，应直接联系紧急服务，不要依赖反馈应用程序。'],
   inperson:['OneService 主要通过官方电子渠道接收反馈；本指南未核实统一的柜台反馈程序。','可在对方同意下请可信赖的人协助使用官方应用程序或聊天机器人，或联络负责机构。','尽可能准备问题描述、准确地点和照片。']
  }),
+
+ fine_hdb:g('https://www.hdb.gov.sg/submit-appeal-against-parking-offence/get-help','https://www.hdb.gov.sg/submit-appeal-against-parking-offence/get-help',{
+  online:['Open HDB’s “Submit Appeal Against Parking Offence” information page and confirm your notice was issued by HDB.','Read the appeal criteria first: HDB expects exceptional circumstances such as a medical emergency or breakdown, supported by documents.','If you have relevant evidence, follow HDB’s official appeal link and submit the notice number and documents only on that service. If you want to pay or check a fine instead, use HDB’s linked parking services.'],
+  phone:['Use the HDB official Contact Us page for the current parking-enquiry channel; do not assume every HDB branch handles parking appeals.','Explain whether you have a new notice, a submitted appeal or questions about payment; ask for the appropriate HDB parking service.','Read the payment deadline on your notice and ask HDB how its appeal process affects your particular case.'],
+  inperson:['Check HDB’s official contact page for assistance locations and whether appointments are required.','Ask HDB whether staff at that location can assist with a parking appeal or payment enquiry before travelling.','Bring the actual notice and only the supporting evidence HDB requests; submit personal details exclusively to the official service.']
+ },{
+  online:['打开建屋局“Submit Appeal Against Parking Offence”（停车罚单申诉）的官方说明网页，确认罚单由建屋局发出。','先阅读申诉规定。建屋局通常要求医疗紧急情况或车辆故障等特殊情况，并有证明文件。','如有相关证据，请从官方网页进入申诉服务；只在官方平台填写罚单编号并提交文件。如要缴费或查询罚单，请使用建屋局列出的服务。'],
+  phone:['从建屋局官方“Contact Us”网页查找最新停车罚单咨询渠道；不要假设所有分行都受理申诉。','说明您想查询罚单、已提交的申诉或缴费方法，询问该联系哪个部门。','查看罚单上的缴费期限，并向建屋局确认申诉对您的个案有何影响。'],
+  inperson:['查阅建屋局官方联络网页，确认相关服务地点及是否须预约。','出门前询问该地点是否能协助处理停车罚单申诉或缴费问题。','按要求带上罚单及证明文件；个人身份资料只交给官方机构。']
+ }),
+ fine_ura:g('https://www.ura.gov.sg/car-parks/parking-offences/appeals/','https://www.ura.gov.sg/car-parks/parking-offences/appeals/',{
+  online:['Confirm URA is named on the parking notice, then open URA’s official Appeals page.','Read the requirements and examples of documentary evidence. URA says forgetting to activate a Parking.sg session is not normally accepted.','Choose the official URA appeal, payment or appeal-outcome service based on your need, and follow the deadline on the notice.'],
+  phone:['For car-park related enquiries, the URA Contact Us page lists 6329 3434.','Ask which official service handles the notice, whether a review is possible and how you can check a submitted appeal.','Do not provide card numbers or passwords in response to unsolicited calls; confirm the agency contact independently.'],
+  inperson:['Read the URA Contact Us page to confirm the URA Centre address and current visiting hours.','Ask whether a parking notice enquiry can be handled in person before travelling; online appeal remains the published service.','Bring the notice or reference number for official staff, and any documentary proof requested by URA.']
+ },{
+  online:['确认罚单由市区重建局（URA）发出，再打开 URA 官方停车罚单申诉网页。','了解申诉条件及证明文件要求。URA 说明，忘记启动 Parking.sg 停车时段通常不获接纳。','根据需要选择 URA 官方申诉、缴费或查询结果服务，并留意罚单上的截止日期。'],
+  phone:['URA 官方联络网页列出停车场事项查询电话 6329 3434。','询问哪项官方服务负责该罚单、能否要求复核，以及如何查询已提交的申诉。','不要因陌生来电而提供银行卡号码或密码；请自行核对官方联络方式。'],
+  inperson:['先从 URA 官方联络网页确认 URA Centre 的地址及到访时间。','出门前确认能否当面咨询停车罚单；官方公布的申诉渠道主要是网上服务。','按官方要求带上罚单或参考编号，以及有关证明文件。']
+ },'6329 3434'),
+ fine_tp:g('https://www.police.gov.sg/E-Services/Submit-Appeal-Against-Traffic-Offence','https://www.police.gov.sg/E-Services/Submit-Appeal-Against-Traffic-Offence',{
+  online:['Open the Singapore Police Force Traffic Offence Appeals page and confirm Traffic Police issued the notice.','The published appeal criteria are medical emergencies supported by documents; repeated appeals without fresh evidence are not considered.','If this fits your circumstances, use the official Traffic e-Appeals service with your own Singpass, reference number and supporting evidence. For payments follow the linked official traffic eServices.'],
+  phone:['Use the contact or SPF Feedback link from the official Traffic Police appeal page; this guide does not give an unverified dedicated appeal hotline.','Ask whether your matter is a Traffic Police notice or court summons and which official appeal or enquiry channel applies.','Check your notice for response or court deadlines; do not wait for an MP session to address urgent court instructions.'],
+  inperson:['First check official SPF enquiry details and ask whether an appointment or in-person assistance is available.','If you have a court summons, follow the court directions; a station visit is not a substitute for a required hearing.','Bring the notice and supporting documents only when official staff ask you to do so.']
+ },{
+  online:['打开新加坡警察部队的交通违例申诉网页，确认罚单由交通警察发出。','官方规定只考虑有文件证明的医疗紧急情况；如无新的证据，重复申诉不会获考虑。','如符合所述情况，请使用官方 Traffic e-Appeals 服务，以自己的 Singpass、参考编号及证明文件办理。缴费应使用官方交通服务。'],
+  phone:['从交通警察官方申诉网页寻找联络或 SPF Feedback 渠道；本指南不提供未经核实的专用申诉热线。','询问手上的通知属于交通警察罚单还是法庭传票，以及适合的正式申诉方式。','查看罚单或传票的期限，不要因为打算找议员求助而延误法庭程序。'],
+  inperson:['先从警察部队官方网站核实咨询地点，以及是否需要预约。','如果是法庭传票，应按法庭规定办理；到警局询问不能代替出庭。','只有在官方职员要求时，才携带罚单及有关证明文件。']
+ }),
+ fine_lta:g('https://onemotoring.lta.gov.sg/content/onemotoring/home/driving/lta_offences_and_fines.html','https://onemotoring.lta.gov.sg/content/onemotoring/home/driving/lta_offences_and_fines.html',{
+  online:['Read the issuing agency and notice type. Open OneMotoring’s official LTA Offences & Fines page.','Its listed “Submit Appeal” service is for vehicle-related offences. Do not assume an e-scooter or other active-mobility notice uses the same form.','For active-mobility cases or unclear instructions, use the official LTA contact form to ask which specific enquiry, payment or representation route applies.'],
+  phone:['Use the official LTA Contact Us page to find a current enquiry channel rather than relying on an unverified hotline.','State the type of LTA notice without disclosing personal details on NeighbourAssist, and ask how to contact the responsible enforcement team.','Ask how to deal with any deadline or court directions printed on your notice.'],
+  inperson:['Use LTA’s official contact page to check whether an appropriate assisted service or appointment is offered.','Confirm the correct office before travelling; the active-mobility process may be different from general vehicle-fine enquiries.','Bring the original notice and requested evidence only to authorised officers. If a court date is printed, follow court instructions.']
+ },{
+  online:['先查看罚单上的发出机构和违例类别，再打开 LTA 官方 OneMotoring 罚单网页。','网页列出的“Submit Appeal”服务针对车辆相关违例；不要假设电动滑板车等个人代步工具罚单也可用同一表格。','如属个人代步工具违例或指示不清楚，请从陆交局官方联络表格询问专属的查询、缴费或申述渠道。'],
+  phone:['从陆交局官方“Contact Us”网页查找最新联络方式；本指南不提供未经核实的热线号码。','简要说明是哪一种 LTA 罚单，询问负责执法的部门；切勿在本网站输入个人资料。','询问罚单上的截止日期或法庭指示应该如何处理。'],
+  inperson:['从陆交局官方联络网页查询是否提供相应的当面服务或预约。','出门前确认正确地点；电动滑板车违例程序可能与一般车辆罚单不同。','按职员要求向官方机构出示通知和文件。如有法庭日期，请遵照传票。']
+ }),
+ fine_court:g('https://www.judiciary.gov.sg/criminal/charged-with-traffic-regulatory-offence','https://www.judiciary.gov.sg/criminal/charged-with-traffic-regulatory-offence',{
+  online:['Read the court summons immediately for the required date, time and any available official court service.','Visit the Singapore Courts page on traffic and regulatory offences. An appeal to an issuing agency is not the same as a court appeal or adjournment.','Contact the prosecuting agency for its process if you wish to make representations, and attend court unless officially excused or rescheduled by the court.'],
+  phone:['Use the contact details on the summons or Singapore Courts official website, not an unverified hotline.','Ask which office can clarify your required attendance and procedural questions. The court does not provide individual legal advice.','Seek independent legal help if you need advice on charges, pleas, sentencing or appeals.'],
+  inperson:['Check the summons for the precise court and hearing time, and check the Singapore Courts page before travelling.','Attend as directed unless the court itself confirms another arrangement; an MP appeal does not cancel a court hearing.','Bring the summons and any official acknowledgements or documents as instructed by the court.']
+ },{
+  online:['立即查阅法庭传票，确认须出庭的日期、时间和官方程序。','阅读新加坡法院有关交通及监管违例的说明；向执法机构求情与向法院上诉或申请延期不同。','如想向检控机构提出申述，应先查询其正式程序；除非法庭正式通知更改，否则应按规定出庭。'],
+  phone:['使用传票或新加坡法院官方网站上的联络方式，不要依赖未经核实的热线。','询问负责部门如何说明出庭要求及程序问题；法庭不会提供个人法律意见。','如涉及控罪、认罪或判刑问题，请考虑寻求独立法律意见。'],
+  inperson:['确认传票上列出的法庭、出庭日期和时间，并先查阅新加坡法院的官方说明。','按规定出庭；向议员求助不会自动取消法庭聆讯。','按照法庭要求携带传票、官方回复及有关文件。']
+ }),
+ fine_unknown:g('https://www.life.gov.sg/','https://www.life.gov.sg/',{
+  online:['Find the exact agency and notice category on the document, including its deadline and whether it requires court attendance.','Use that agency’s official website, or LifeSG to locate a government service. There is no universal fine-appeal form.','Ask the issuer which review, payment or complaint channel applies. Never send personal documents through NeighbourAssist.'],
+  phone:['Read the notice to identify the issuing authority and its verified contact details.','Call the official published agency number, not a number supplied by an unsolicited message, and ask which unit handles the notice.','Check the deadline and whether there are court instructions that must be followed separately.'],
+  inperson:['Use the official agency directory or the notice to find the correct service office.','Check opening hours and appointment rules first and ask if staff can assist with the notice.','Take the official notice and only the records requested by that agency; do not expect every community centre to handle fines.']
+ },{
+  online:['先从通知找出发出机构、罚单类别及截止日期，并确认是否规定出庭。','使用该机构的官方网站，或从 LifeSG 查找政府服务；政府并没有适用于所有罚单的统一申诉表格。','向发出机构查询复核、缴费或申诉渠道；切勿通过本网站提交个人文件。'],
+  phone:['从罚单找出发出机构及经过核实的官方联络方式。','拨打官方公布的电话，而不是陌生短信提供的号码，询问负责处理罚单的部门。','核实相关截止日期，并确认是否有必须另行遵守的法庭指示。'],
+  inperson:['从官方机构目录或罚单查找正确的办事地点。','先确认开放时间、预约安排，以及能否当面询问罚单事宜。','按官方要求带上罚单及有关文件；不要假设每间民众俱乐部都能处理罚单。']
+ }),
+
  lifesg:g('https://www.life.gov.sg/','https://www.life.gov.sg/',{
   online:['Open LifeSG’s official website and look for “Topics”.','Choose the area closest to the problem, such as “Financial support and benefits”, “Care and support services” or “Housing and property”.','Follow the linked government service. If you remain unsure, contact the responsible agency rather than submitting private details here.'],
   phone:['LifeSG is a general directory rather than a dedicated caseworker hotline.','Use LifeSG to identify the responsible agency, then find that agency’s official phone contact.','Describe the issue briefly and ask which service or form is relevant.'],
