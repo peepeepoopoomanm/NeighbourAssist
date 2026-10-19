@@ -26,12 +26,22 @@
 6. Added a minimal privacy and legacy-asset regression test.
 7. Documented remaining validation and deployment gates below.
 
+## Follow-up government, language and accessibility review (October 2026)
+
+- Checked the official ComCare, HDB transfer/tenancy/tenant assistance, CPF withdrawal, Silver Support, CHAS, MediFund, OneService and Parliament MP lookup sources, plus general agency directories. See `docs/06-release-checklist.md` for **18 specific referral checks** and which live-service steps remain untested.
+- Corrected Chinese HDB transfer language to use `调换租赁组屋` / `换屋` rather than `转租` (subletting).
+- Standardised MediFund as `保健基金` in Chinese instructions, and clarified that the OneService original chatbot is English-only while its Tell Us beta supports Mandarin. OneService chatbot reporting requirements are now explicit.
+- Reworded the historical “verified 18 October” badge to explain that the content was checked against **selected** official sources, not continuously verified.
+- Added keyboard-focus restoration when questionnaire pages or results appear, narrow-screen wrapping and reduced-motion CSS.
+- Added four source-regression tests for these improvements. The latest audit edits are **not yet confirmed by a fresh test/build run**; the earlier 49-test run applied to the previous commit.
+- Prepared static site release configuration and a detailed human QA checklist. **No public deployment was performed.**
+
 ## Launch blockers to resolve
 
 - **Dependency reproducibility — RESOLVED (19 October 2026):** A genuine npm-generated `package-lock.json` (lockfile v3) was committed in `36b6479`. Local `npm ci`, 49 tests and production build passed according to the development terminal. GitHub Actions now uses `npm ci` and npm caching as of `5caf95a`. Confirm the latest GitHub Actions run is green before deployment.
 - **Run latest tests/build:** `npm test` and `npm run build` after pulling all audit commits. Check CI is green.
-- **Live official links:** Click each outgoing service link and check whether its landing page, labels, phone numbers and requirements still match our instructions; include online/phone/in-person modes.
-- **Chinese language handoff:** A proficient Singapore Chinese reader should test every category and the official site transition, noting places where an English-only external form needs assisted alternatives.
+- **Live official links:** Main official agency pages and several details were reviewed. Check the remaining signed-in, JavaScript-dependent and local branch workflows in a browser; see `docs/06-release-checklist.md`.
+- **Chinese language handoff:** Terminology refined, but a proficient Singapore Chinese reader must still test every category and the official-site transition, noting where English-only forms need assisted alternatives.
 - **Accessibility usability:** Check at least one narrow phone screen, mobile zoom, keyboard-only navigation, and screen-reader reading order. In particular check conditional question progress, MPS note expansion and print controls.
 - **Human test:** Use fictional cases with at least one caregiver and, if available, an older adult; record whether the user knows what to do next.
 - **Hosting/privacy:** Deploy only `dist/` over HTTPS, avoid analytics and trackers, verify hosting logs/data policies, set sensible security headers if the provider supports them, and check there are no unexpected calls or sensitive URLs in the browser Network tab.
