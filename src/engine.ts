@@ -113,7 +113,7 @@ export function getQuestionIds(category:Category,answers:Answers):string[]{
   case 'cpf':return ['c_age','c_goal',...(answers.c_goal==='support'&&answers.c_age!=='no'?['c_65']:[]),'c_concern','agency_status','contact'];
   case 'health':return ['m_type',...(answers.m_type==='bill'?['m_support']:[]),'m_barrier','agency_status','contact'];
   case 'municipal':return ['n_issue','n_report','contact'];
-  case 'employment':return ['w_issue',...(['salary','dismissal'].includes(answers.w_issue)?['w_status']:[]),...(answers.w_issue==='dismissal'?['w_recency']:[]),'agency_status','contact'];
+  case 'employment':return ['w_issue',...(['salary','dismissal'].includes(answers.w_issue)?['w_status']:[]),...(answers.w_issue==='dismissal'&&answers.w_status==='left'?['w_recency']:[]),'agency_status','contact'];
   case 'family':return ['family_safety',...(['danger','concern'].includes(answers.family_safety)?[]:['family_issue','agency_status','contact'])];
   case 'fines':return answers.p_stage==='court'?['p_issuer','p_stage','contact']:['p_issuer','p_stage','p_goal',...(answers.p_goal==='appeal'?['p_reason']:[]),...(answers.p_goal==='appeal'||answers.p_goal==='status'?['agency_status']:[]),'contact'];
   default:return ['u_need','agency_status','contact'];
