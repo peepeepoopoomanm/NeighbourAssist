@@ -67,7 +67,7 @@ export default function App(){
  const primary=serviceText(result.primary,language);
  const secondary=result.secondary.map(s=>serviceText(s,language));
  const chosenMethod=(contactOverride??answers.contact??'unsure') as Contact;
- const guide=getGuide(result.primary,language,chosenMethod);
+ const guide=getGuide(result.primary,language,chosenMethod,category==='fines'?answers.p_goal:undefined);
  const guidedService={...primary,url:guide.url,phone:guide.phone,phoneHours:language==='zh'?(primary.phoneHours??(guide.phoneHours&&guide.phone?phoneHoursZh[guide.phone]:undefined)):guide.phoneHours};
  const topicName=(id:Category)=>categoryText(id,language,categories.find(c=>c.id===id)??{label:'Assistance',summary:''}).label;
  const situation=audienceSituationText(answers,language,forWhom);
