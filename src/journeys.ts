@@ -235,6 +235,53 @@ export const guides:Record<string,GuideRecord>={
   inperson:['从官方机构目录或罚单查找正确的办事地点。','先确认开放时间、预约安排，以及能否当面询问罚单事宜。','按官方要求带上罚单及有关文件；不要假设每间民众俱乐部都能处理罚单。']
  }),
 
+
+ work_salary:g('https://www.mom.gov.sg/employment-practices/managing-employment-disputes','https://www.mom.gov.sg/employment-practices/managing-employment-disputes',{
+  online:['Open MOM’s official “Managing employment disputes” page and locate the Ask TADM advice or TADM eServices link.','If still employed, salary-related claims generally have a one-year period after the dispute; after leaving, they generally have six months from the last day of employment. Ask TADM about the correct deadline.','Submit contracts, payslips and personal details only in the authorised TADM system, not NeighbourAssist.'],
+  phone:['Use the official MOM employment-disputes page to find the latest Ask TADM service or contact options.','Explain in general that wages or other employment payments are missing and ask how TADM can advise you.','Confirm the applicable filing deadline; do not wait for an MP appointment before asking TADM.'],
+  inperson:['Use Ask TADM or official TADM information to ask whether an appointment with an advisory officer is available.','Confirm the appointment location, any required identification and documents before travelling.','Bring records only for the authorised TADM officer, not this student website.']
+ },{
+  online:['打开人力部官方“Managing employment disputes”网页，查找 Ask TADM 咨询或 TADM 电子服务。','一般在职期间的工资索偿期限为纠纷发生后一年内；离职后通常为最后工作日起六个月内。请向 TADM 确认适用期限。','合同、工资单和个人资料只应在获授权的 TADM 官方服务中提交，不要在 NeighbourAssist 提供。'],
+  phone:['从人力部官方雇佣纠纷网页查找最新 Ask TADM 咨询或联络方式。','概述欠薪或工作报酬问题，询问 TADM 可提供哪些正式建议。','核实索偿时限，不要为了等待议员接见而延误咨询。'],
+  inperson:['从 Ask TADM 或 TADM 官方资料询问能否预约顾问。','出门前确认预约地点、身份核实与所需文件。','只向获授权的 TADM 职员出示工作记录，不要交给本网站。']
+ }),
+ work_dismissal:g('https://www.mom.gov.sg/employment-practices/termination-of-employment/wrongful-dismissal','https://www.mom.gov.sg/employment-practices/termination-of-employment/wrongful-dismissal',{
+  online:['Read the MOM wrongful-dismissal page, including eligibility and special exceptions.','Most wrongful-dismissal claims must be filed with TADM within one month from the last day of employment. Pregnancy-related and age/re-employment matters can involve other deadlines or channels.','Use official TADM advice and claims links without waiting for an MP letter; do not upload employment records here.'],
+  phone:['Use the official wrongful-dismissal page to find TADM advisory options and verify the relevant filing deadline urgently.','Explain the general issue and the date employment ended, but share personal documents only through authorised channels.','Ask if your specific situation has a separate MOM route, for example certain age-related dismissals.'],
+  inperson:['Ask TADM using its official advisory channel whether an appointment is available.','Confirm what proof of your employment and termination will be needed at the official appointment.','Do not assume in-person visits extend the one-month general claim deadline.']
+ },{
+  online:['阅读人力部官方不合理解雇网页，留意资格及特殊情况。','一般不合理解雇索偿须在最后工作日后一个月内向 TADM 提出；怀孕相关或年龄、再雇用问题可能有其他期限。','通过正式 TADM 渠道咨询或索偿，不要等议员求情信，也不要在本网站上传工作文件。'],
+  phone:['通过人力部官方不合理解雇网页查找 TADM 咨询方式，尽快核实申诉期限。','简述有关问题及离职日期，但个人文件只交给获授权的官方渠道。','询问是否属于其他人力部程序，例如某些与年龄有关的解雇个案。'],
+  inperson:['从 TADM 官方顾问渠道询问是否能够预约当面服务。','先确认正式预约需要哪些雇佣或解雇证明。','不要假设亲自前往会延长一般一个月的申诉期限。']
+ }),
+ work_fairness:g('https://www.mom.gov.sg/faq/workplace-harassment/what-can-a-victim-of-workplace-harassment-do','https://www.mom.gov.sg/faq/workplace-harassment/what-can-a-victim-of-workplace-harassment-do',{
+  online:['Read MOM’s workplace harassment FAQ. It points employees to TAFEP for advice and workplace discrimination or harassment reports.','Follow the official TAFEP reporting link only after checking you are on its genuine website.','Keep records privately for authorised advisers. If immediate danger is involved, contact the Police or emergency help rather than waiting online.'],
+  phone:['Call the TAFEP advisory number 6838 0969 listed by MOM to ask about unfair employment practices or workplace harassment.','Explain the kind of problem and what assistance you are seeking without naming co-workers on NeighbourAssist.','Ask whether your issue should be raised internally, reported to TAFEP or directed elsewhere.'],
+  inperson:['Use official TAFEP contact information to ask whether a consultation or appointment is available.','If an appointment is possible, confirm the venue and requirements before travelling.','Keep personal workplace records for the appropriate official adviser. Seek immediate safety help if threatened.']
+ },{
+  online:['阅读人力部关于职场骚扰的官方问答，了解 TAFEP 如何提供咨询与投诉渠道。','只有确认进入真正的 TAFEP 官方网站后，才提交职场歧视或骚扰的反馈。','有关记录只应在必要时交给正式顾问；如有人正面临危险，请先向警方或紧急服务求助。'],
+  phone:['拨打人力部列出的 TAFEP 咨询电话 6838 0969，了解不公平雇佣或职场骚扰问题。','说明问题类别及需要什么协助，不要在 NeighbourAssist 填写同事身份。','询问应使用内部投诉、TAFEP 反馈或其他适当渠道。'],
+  inperson:['从 TAFEP 正式联络资料了解是否提供预约或当面咨询。','如可预约，请先核实地点及办理要求。','工作记录仅向合适的正式顾问提供；如遭威胁，应先寻求即时安全协助。']
+ },'6838 0969'),
+ work_injury:g('https://www.mom.gov.sg/workplace-safety-and-health/work-injury-compensation/employees-how-to-claim','https://www.mom.gov.sg/workplace-safety-and-health/work-injury-compensation/employees-how-to-claim',{
+  online:['Read MOM’s official “For employees: how to claim work injury compensation” guidance.','Inform your employer or supervisor about the work-related accident and obtain appropriate medical care. The required reporting process depends on the injury and employment situation.','If your employer does not report or pay required bills, follow the official MOM work-injury contact and dispute instructions; do not upload medical details here.'],
+  phone:['Use the contact or enquiry information on the official MOM work-injury compensation page.','Ask how to notify MOM if your employer is not handling an accident report, medical leave wages or medical expenses properly.','Keep accident and medical records for the authorised officer or insurer, not NeighbourAssist.'],
+  inperson:['Contact MOM using the official work-injury guidance to ask whether an assisted appointment is necessary.','Confirm where to go, which case documents to bring and whether prior arrangements are required.','Seek medical care promptly if needed; an administrative enquiry is not an emergency medical service.']
+ },{
+  online:['阅读人力部官方“员工如何申请工伤赔偿”指引。','尽快通知雇主或主管发生工伤，并取得必要医疗服务；适用报告程序视乎情况而定。','若雇主没有按规定申报或支付有关账单，请使用人力部官方工伤投诉或咨询渠道；不要在此上传病历。'],
+  phone:['从人力部官方工伤赔偿网页查找联络与咨询方式。','询问雇主未处理事故申报、病假工资或医药费时应如何通知人力部。','事故及医疗文件只向获授权人员或保险机构提供。'],
+  inperson:['通过人力部工伤指引询问是否需要预约相关服务。','确认前往地点、应携带的个案文件及预约规定。','如需医疗救治应及时就医，行政咨询不能代替紧急医疗服务。']
+ }),
+ work_general:g('https://www.mom.gov.sg/employment-practices/employment-act/advisory-services','https://www.mom.gov.sg/employment-practices/employment-act/advisory-services',{
+  online:['Open MOM’s Employment Act advisory services directory and choose the issue that best fits your circumstances.','Read whether TADM, TAFEP, a union or another authority is the appropriate first point of contact.','Ask about eligibility and time limits through the official service before submitting any personal documents.'],
+  phone:['Use the official MOM advisory directory to find the current contact details for the relevant agency.','Explain which work or contract problem you have and ask which service can help.','Ask whether the matter has an urgent claim deadline and what forms may be needed.'],
+  inperson:['Use MOM’s official advisory directory to identify which organisation offers an appointment or advice service.','Confirm opening hours and appointment requirements with that organisation before travelling.','Take personal employment documents only to the authorised service that requests them.']
+ },{
+  online:['打开人力部《雇佣法令》咨询服务目录，选择最符合情况的工作问题。','查看 TADM、TAFEP、工会或其他机构哪一个适合优先联系。','先从官方机构核实资格和期限，再按要求提交个人文件。'],
+  phone:['从人力部官方咨询服务目录查找相应部门的最新联络方式。','概述工作或合同问题，询问应该由哪个机构协助。','确认是否有紧急索偿期限及需要准备什么正式表格。'],
+  inperson:['通过人力部官方咨询目录确认相关机构是否提供预约或顾问服务。','出门前向该机构核实开放时间及预约要求。','只有获授权机构正式要求时才携带雇佣记录。']
+ }),
+
  lifesg:g('https://www.life.gov.sg/','https://www.life.gov.sg/',{
   online:['Open LifeSG’s official website and look for “Topics”.','Choose the area closest to the problem, such as “Financial support and benefits”, “Care and support services” or “Housing and property”.','Follow the linked government service. If you remain unsure, contact the responsible agency rather than submitting private details here.'],
   phone:['LifeSG is a general directory rather than a dedicated caseworker hotline.','Use LifeSG to identify the responsible agency, then find that agency’s official phone contact.','Describe the issue briefly and ask which service or form is relevant.'],
