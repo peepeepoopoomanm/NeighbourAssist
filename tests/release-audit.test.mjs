@@ -50,3 +50,13 @@ test('OneService handoff mentions its photo, location and contact requirements',
  assert.match(en,/at least one photo, precise location, time observed and contact details/);
  assert.match(en,/旧版聊天机器人仅支持英文/);
 });
+
+test('HDB Branch Service Line hours are explicit and Chinese times are agency-specific',()=>{
+ const guides=read('src/journeys.ts');
+ const app=read('src/App.tsx');
+ assert.match(guides,/const hdbHours='Mon–Fri, 8am–5pm \(except public holidays\)'/);
+ assert.match(guides,/\},hdbPhone,hdbHours\),/);
+ assert.match(app,/phoneHoursZh\[guide\.phone\]/);
+ assert.match(app,/'6225-5432':'周一至周五，上午 8 时至下午 5 时（公共假日除外）'/);
+ assert.doesNotMatch(app,/guide\.phoneHours\?'周一至周五，上午 8:30 至下午 5:30'/);
+});
