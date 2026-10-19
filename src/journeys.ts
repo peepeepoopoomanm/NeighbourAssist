@@ -245,16 +245,36 @@ export const guides:Record<string,GuideRecord>={
   inperson:['使用 LifeSG 找出负责有关问题的政府机构。','查看该机构的官方办公地点，并确认是否需要预约再前往。','如难以使用网页，可请可信赖的照顾者协助。']
  })
 };
-export function getGuide(service:Service,lang:Language,method:HelpMethod){
+
+/** Purpose-specific links prevent people asking to pay from being sent to appeal forms. */
+const finePaymentRoutes:Record<string,{url:string;en:string[];zh:string[]}>={
+ fine_hdb:{
+  url:'https://www.hdb.gov.sg/parking/parking-offences/pay-parking-fines',
+  en:['Open HDB’s official Pay Parking Fines information page, not its appeal application.','Use the linked HDB payment eService or published payment options to check an outstanding HDB notice.','Enter notice or payment details only on the official HDB or authorised payment service, and check your notice deadline.'],
+  zh:['打开建屋局官方“Pay Parking Fines”（缴交停车罚款）网页，而不是停车罚单申诉表格。','使用所列建屋局电子缴费服务或官方付款方式，查询及缴交建屋局罚单。','只在建屋局或获授权付款平台填写罚单和付款资料，并核实截止日期。']
+ },
+ fine_ura:{
+  url:'https://www.ura.gov.sg/car-parks/parking-offences/payment-of-fines/',
+  en:['Open URA’s official Payment of Fines page, not its appeal form.','Use the linked URA service to check and pay a URA parking notice; follow the payment options listed there.','Check the due date on your specific notice. Late payment can lead to increased penalties or court action.'],
+  zh:['打开 URA 官方“Payment of Fines”（缴交罚款）网页，而不是申诉表格。','从官方网页查询 URA 停车罚单，并按所列方式缴费。','核实该罚单的截止日期；逾期可能导致罚款增加或进入法庭程序。']
+ },
+ fine_tp:{
+  url:'https://www.police.gov.sg/E-Services/Check-Outstanding-Traffic-Offences-and-Pay-Traffic-Fines',
+  en:['Open the Traffic Police official Check Outstanding Traffic Offences and Pay Traffic Fines service.','Use your own authorised login, where required, to check the outstanding summons and available payment methods.','If a notice is not yet shown, read the official guidance and check again when it is issued; do not ignore any stated due date or court instructions.'],
+  zh:['打开交通警察官方“Check Outstanding Traffic Offences and Pay Traffic Fines”查询及缴费服务。','按官方要求使用自己的账号，查看未缴交通罚款及可使用的付款方式。','如系统尚未显示该违例，请按照官方说明等候通知并重新查询；切勿忽略期限或法庭指示。']
+ }
+};
+export function getGuide(service:Service,lang:Language,method:HelpMethod,purpose?:string){
  const guide=guides[service.id];
  if(!guide)throw new Error('Missing guidance for '+service.id);
- const steps=method==='unsure'
-  ? [guide[lang].online[0],guide[lang].phone[0],guide[lang].inperson[0]]
-  : guide[lang][method];
+ const payment=purpose==='pay'?finePaymentRoutes[service.id]:undefined;
+ const steps=payment
+  ? method==='online'?payment[lang]:method==='unsure'?[payment[lang][0],guide[lang].phone[0],guide[lang].inperson[0]]:guide[lang][method]
+  : method==='unsure'?[guide[lang].online[0],guide[lang].phone[0],guide[lang].inperson[0]]:guide[lang][method];
  return {
   steps,
-  url:guide.url,
-  source:guide.source,
+  url:payment?.url??guide.url,
+  source:payment?.url??guide.source,
   phone:guide.phone??service.phone,
   phoneHours:guide.phoneHours??service.phoneHours,
  };
