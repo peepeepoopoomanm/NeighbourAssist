@@ -110,7 +110,7 @@ The homepage now includes **nine** choices, adding two source-researched journey
 
 These are guidance routes, not advice from a lawyer, employer adviser, social worker or emergency responder. They do not submit claims, applications, protection reports or custody matters; no identifying family, workplace or medical details are collected. Read the official-source notes at [Work & Family research](docs/09-employment-family-research.md).
 
-**Validation status:** On 19 October the main PC confirmed **93/93 tests passing** and a successful production build for the nine-category release; the user subsequently redeployed that version. The 20 October Not sure expansion includes **107 test definitions**, but they have **not yet been run** on the laptop. Run `git pull`, `npm.cmd test`, `npm.cmd run build` and browser checks before any further Deployxa release.
+**Validation status:** On 19 October the main PC confirmed **93/93 tests passing** and a successful production build for the nine-category release; the user subsequently redeployed that version. On 20 October the user confirmed **107/107 passing tests** and a successful build for the original six-option Not sure version. The 21 October five-option simplification is committed but has **not yet been retested**. Run `git pull`, `npm.cmd test`, `npm.cmd run build` and browser checks before any further Deployxa release.
 
 ## October 20: Not sure and accessibility audit
 
