@@ -111,11 +111,16 @@ const agencyStatusContext={
   en:{self:'Have you contacted an FSC, FAM, AIC, ECDA or another family-support service?',caregiver:'Has the person you are helping contacted an FSC, FAM, AIC, ECDA or another family-support service?'},
   zh:{self:'您是否已联系家庭服务中心、FAM、AIC、ECDA 或其他家庭支援机构？',caregiver:'您正在协助的人是否已联系家庭服务中心、FAM、AIC、ECDA 或其他家庭支援机构？'},
   hint:{en:'Choose the current enquiry status. Do not share private family circumstances here.',zh:'请选择目前的咨询进展，无需说明敏感家庭情况。'}
+ },
+ unsure:{
+  en:{self:'Have you already contacted the agency responsible for this letter or enquiry?',caregiver:'Has the person you are helping contacted the agency responsible for their letter or enquiry?'},
+  zh:{self:'您是否已联系负责这封信件或这项查询的政府机构？',caregiver:'您正在协助的人是否已联系负责该信件或查询的政府机构？'},
+  hint:{en:'If a document names the agency, check its current status or review process. Do not enter reference numbers here.',zh:'如文件有机构名称，可向该机构了解进度或复核程序；无需在这里提供参考编号。'}
  }
 };
 export function contextualQuestionText(q:Question,lang:Language,audience:Audience,category:Category):Question{
  const base=audienceQuestionText(q,lang,audience);
- if(q.id!=='agency_status'||(category!=='employment'&&category!=='family'))return base;
+ if(q.id!=='agency_status'||(category!=='employment'&&category!=='family'&&category!=='unsure'))return base;
  const ctx=agencyStatusContext[category];
  return {...base,title:ctx[lang][audience],hint:ctx.hint[lang]};
 }
