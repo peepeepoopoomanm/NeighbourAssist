@@ -21,12 +21,20 @@ const phoneHoursZh:Record<string,string>={
  '1800-650-6060':'周一至周五，上午 8:30 至晚上 8:30；周六上午 8:30 至下午 4 时（公共假日除外）',
  '999':'24 小时',
  '1800-777-0000':'24 小时',
+ '1799':'24 小时',
 };
 
 function ContactGuidance({service,method,lang,audience}:{service:Service;method:Contact;lang:Language;audience:Audience}){
  const helping=audience==='caregiver';const g=caregiverUi[lang];
  const t=messages[lang];
  const isUrgent=service.id==='comcare_urgent';
+ const issue=service.id.startsWith('fine_')?'fine or penalty notice':service.id.startsWith('gov_')?'government notice or enquiry':service.id.startsWith('work_')?'employment question':service.id.startsWith('family_')?'family-support enquiry':service.id==='scamshield_check'?'suspicious message':null;
+ const phoneScript=issue?(lang==='zh'?(helping?'我正在协助他人，希望咨询有关政府服务或通知的正式办理方式及期限。':'我想了解有关事项的正式办理方式、所需资料及期限。'):(helping?'I am helping someone with a '+issue+'. Which official process and deadlines apply?':'I have a '+issue+'. Which official process and deadlines apply?')):(helping?(isUrgent?g.phoneScriptUrgent:g.phoneScriptOther):(isUrgent?t.phoneScriptUrgent:t.phoneScriptOther));
+ if(service.id==='scamshield_loss')return <div className="contact-guidance" role="alert">
+  <h3>{t.unsureScamUrgent}</h3>
+  <p>{t.unsureScamAction}</p>
+  <a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.visitWebsite} ↗</a>
+ </div>;
  if(service.id==='family_danger')return <div className="contact-guidance" role="alert">
   <h3>{t.emergencyPoliceTitle}</h3>
   <a className="btn btn-primary full" href="tel:999">{t.emergencyPoliceAction}</a>
@@ -35,7 +43,7 @@ function ContactGuidance({service,method,lang,audience}:{service:Service;method:
  </div>;
  if(method==='phone')return <div className="contact-guidance" aria-live="polite">
   <h3>{t.phoneTitle}</h3><p>{helping?g.phoneDetail:t.phoneDetail}</p>
-  {service.phone?<><a className="btn btn-primary full" href={safePhone(service.phone)}>{t.callNow}: {service.phone}</a>{service.phoneHours&&<p className="contact-detail">{t.hours}: {service.phoneHours}</p>}{!['family_danger','family_protection'].includes(service.id)&&<p className="spoken-script">{helping?(isUrgent?g.phoneScriptUrgent:g.phoneScriptOther):(isUrgent?t.phoneScriptUrgent:t.phoneScriptOther)}</p>}</>:<><p>{t.phoneFallback}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.noPhone} ↗</a></>}
+  {service.phone?<><a className="btn btn-primary full" href={safePhone(service.phone)}>{t.callNow}: {service.phone}</a>{service.phoneHours&&<p className="contact-detail">{t.hours}: {service.phoneHours}</p>}{!['family_danger','family_protection'].includes(service.id)&&<p className="spoken-script" >{phoneScript}</p>}</>:<><p>{t.phoneFallback}</p><a className="btn btn-primary full" href={service.url} target="_blank" rel="noopener noreferrer">{t.noPhone} ↗</a></>}
  </div>;
  if(method==='inperson')return <div className="contact-guidance" aria-live="polite">
   <h3>{t.inpersonTitle}</h3><p>{helping?g.inpersonDetail:t.inpersonDetail}</p><p>{service.offline??t.inpersonDetail}</p>
@@ -83,7 +91,7 @@ export default function App(){
  const situation=audienceSituationText(answers,language,forWhom);
  const pathway=getNextPathway(category,answers);
  const mpsBrief=getMpsPreparation(category,answers,language,forWhom);
- const pathwayCopy=category==='family'&&answers.family_safety==='danger'?t.familyDangerPathway:category==='family'&&answers.family_safety==='concern'?t.familyConcernPathway:category==='fines'&&answers.p_stage==='court'?t.fineCourtPathway:pathway==='urgent'?t.pathwayUrgent:pathway==='followup'?t.pathwayFollowup:pathway==='review'?t.pathwayReview:t.pathwayAgency;
+ const pathwayCopy=category==='unsure'&&answers.u_start==='suspicious'&&answers.u_scam_loss==='yes'?t.unsureScamUrgent:category==='family'&&answers.family_safety==='danger'?t.familyDangerPathway:category==='family'&&answers.family_safety==='concern'?t.familyConcernPathway:category==='fines'&&answers.p_stage==='court'?t.fineCourtPathway:pathway==='urgent'?t.pathwayUrgent:pathway==='followup'?t.pathwayFollowup:pathway==='review'?t.pathwayReview:t.pathwayAgency;
  useEffect(()=>{const resetPrint=()=>setPrintMps(false);window.addEventListener('afterprint',resetPrint);return ()=>window.removeEventListener('afterprint',resetPrint)},[]);
  useEffect(()=>{document.documentElement.lang=language==='zh'?'zh-Hans':'en';document.title=language==='zh'?'邻里助理 — 寻找援助':'NeighbourAssist — Find support';},[language]);
  // Move focus after wizard transitions so screen readers announce the new content.
@@ -129,10 +137,15 @@ export default function App(){
    <div className="pathway-notice" role="note"><strong>{t.pathwayTitle}</strong><p>{pathwayCopy}</p></div>
     {category==='family'&&['danger','concern'].includes(answers.family_safety)&&<p className="caregiver-auth-note" role="alert">{answers.family_safety==='danger'?t.familyDangerPathway:t.familyConcernPathway} <a href={answers.family_safety==='danger'?'tel:999':'tel:18007770000'}>{answers.family_safety==='danger'?'999':'1800-777-0000'}</a></p>}
     {category==='employment'&&['salary','dismissal'].includes(answers.w_issue)&&<p className="caregiver-auth-note" role="note">{t.workDeadlineWarning}</p>}
+    {category==='unsure'&&answers.u_deadline==='yes'&&<p className="caregiver-auth-note" role="alert">{t.unsureDeadlineAlert}</p>}
+    {category==='unsure'&&answers.u_deadline==='unsure'&&<p className="caregiver-auth-note" role="note">{t.unsureDeadlineCheck}</p>}
+    {category==='unsure'&&['letter','application','followup'].includes(answers.u_start)&&<p className="caregiver-auth-note" role="note">{answers.u_agency_known==='yes'?t.unsureAgencyKnown:t.unsureAgencyUnknown}</p>}
+    {category==='unsure'&&answers.u_start==='suspicious'&&answers.u_scam_loss==='yes'&&<p className="caregiver-auth-note" role="alert">{t.unsureScamUrgent}</p>}
     {category==='fines'&&<p className="caregiver-auth-note" role="note">{answers.p_stage==='court'?t.fineCourtWarning:answers.p_stage==='paid'?t.finePaidWarning:t.fineDeadlineWarning}</p>}
    {category==='housing'&&answers.h_type==='public_rental'&&answers.h_goal==='smaller'&&answers.h_tenure==='under2'&&<p className="caregiver-auth-note" role="note">{t.hdbTenureWarning} <a href="https://www.hdb.gov.sg/renting-a-flat/public-rental-scheme/tenancy-matters/transfer-to-another-public-rental-flat" target="_blank" rel="noopener noreferrer">{t.guideSource} ↗</a></p>}
    <div className="result-layout"><div><article className="recommendation"><div className="recommendation-top"><span className="result-symbol" aria-hidden="true">✓</span><div><span className="eyebrow">{t.startingPoint}</span><h2>{primary.name}</h2><span className="agency-name">{primary.agency}</span></div></div>
-    <p className="result-desc">{primary.description}</p><div className="reason"><strong>{forWhom==='caregiver'?caregiverUi[language].why:t.why}</strong> {audienceReasonText(result.reason,language,forWhom)}</div>
+    <p className="result-desc">{primary.description}</p>
+    {category==='unsure'&&answers.u_start==='topic'&&categories.some(c=>c.id===answers.u_need&&c.id!=='unsure')&&<button className="btn btn-outline" type="button" onClick={()=>start(answers.u_need as Category)}>{t.unsureExploreTopic}: {topicName(answers.u_need as Category)} →</button>}<div className="reason"><strong>{forWhom==='caregiver'?caregiverUi[language].why:t.why}</strong> {audienceReasonText(result.reason,language,forWhom)}</div>
     {situation&&<div className="situation-note"><strong>{forWhom==='caregiver'?caregiverUi[language].situation:t.situationTitle}</strong><p>{forWhom==='caregiver'?caregiverUi[language].suggestedMessage:t.suggestedMessage} “{situation}”</p></div>}
     <div className="contact-heading eyebrow">{t.contactPath}</div>
     <div className="contact-options" role="group" aria-label={t.contactPath}>{(['online','phone','inperson','unsure'] as Contact[]).map(method=><button key={method} type="button" aria-pressed={chosenMethod===method} className={'contact-option '+(chosenMethod===method?'active':'')} onClick={()=>setContactOverride(method)}>{method==='online'?t.onlineTitle:method==='phone'?t.phoneTitle:method==='inperson'?t.inpersonTitle:t.unsureTitle}</button>)}</div>
@@ -144,7 +157,7 @@ export default function App(){
    </article>{secondary.map(s=><article className="secondary-recommendation" key={s.id}><span className="eyebrow">{t.otherInfo}</span><h3>{s.name}</h3><p>{s.description}</p><a href={s.url} target="_blank" rel="noopener noreferrer">{t.learnMore} ↗</a><small>{s.caution}</small></article>)}</div>
    <aside className="checklist"><h2>{t.prepareTitle}</h2><p>{t.prepareIntro}</p>{primary.checklist.map(item=><label className="check-item" key={item}><input type="checkbox" checked={prepared.includes(item)} onChange={e=>setPrepared(p=>e.target.checked?[...p,item]:p.filter(x=>x!==item))}/><span>{item}</span></label>)}<div className="check-actions"><button onClick={()=>window.print()} className="btn btn-outline full">{t.print}</button></div><p className="check-note">{t.privacyReminder}</p></aside>
    </div>
-   {!(category==='family'&&['danger','concern'].includes(answers.family_safety))&&<section className="mps-section" aria-labelledby="mps-heading"><div className="mps-intro"><span className="eyebrow">MPS</span><h2 id="mps-heading">{t.mpsSectionTitle}</h2><p>{t.mpsSectionIntro}</p><button type="button" className="btn btn-outline" aria-expanded={mpsOpen} aria-controls="mps-preparation" onClick={()=>setMpsOpen(v=>!v)}>{mpsOpen?t.mpsHide:t.mpsShow} {mpsOpen?'−':'+'}</button></div>
+   {!(category==='family'&&['danger','concern'].includes(answers.family_safety))&&!(category==='unsure'&&answers.u_start==='suspicious')&&<section className="mps-section" aria-labelledby="mps-heading"><div className="mps-intro"><span className="eyebrow">MPS</span><h2 id="mps-heading">{t.mpsSectionTitle}</h2><p>{t.mpsSectionIntro}</p><button type="button" className="btn btn-outline" aria-expanded={mpsOpen} aria-controls="mps-preparation" onClick={()=>setMpsOpen(v=>!v)}>{mpsOpen?t.mpsHide:t.mpsShow} {mpsOpen?'−':'+'}</button></div>
     {mpsOpen&&<div id="mps-preparation" className="mps-preparation"><div className="mps-visit-guide"><h3>{t.mpsSteps}</h3><ol className="instruction-list">{[t.mpsStep1,t.mpsStep2,t.mpsStep3].map((step,i)=><li key={i}>{step}</li>)}</ol><a className="btn btn-primary" href={PARLIAMENT_MP_LOOKUP} target="_blank" rel="noopener noreferrer">{t.mpsFind} ↗</a></div><article className="mps-notes"><div className="mps-note-header"><span className="eyebrow">NeighbourAssist</span><h2>{t.mpsNotes}</h2><p>{mpsBrief.audience} · {mpsBrief.topic}</p></div><p className="mps-pathway">{mpsBrief.pathway}</p><h3>{t.mpsSituation}</h3><dl className="mps-facts">{mpsBrief.items.map(item=><div key={item.id}><dt>{item.label}</dt><dd>{item.answer}</dd></div>)}</dl><h3>{t.mpsChecklist}</h3><ul>{mpsBrief.preparation.map(item=><li key={item}>{item}</li>)}</ul><p className="mps-caution">{mpsBrief.caution}</p></article><p className="mps-privacy">{t.mpsPrivacy}</p><p className="mps-privacy">{t.mpsAfter}</p><div className="mps-actions"><button className="btn btn-outline" onClick={()=>{setPrintMps(true);window.setTimeout(()=>window.print(),100)}}>{t.mpsPrint}</button></div></div>}
    </section>}
    <div className="result-footer"><button onClick={back} className="btn btn-outline">← {t.changeAnswers}</button><button onClick={home} className="btn btn-outline">{t.startAgain}</button></div>
