@@ -147,12 +147,12 @@ test('CPF medical municipal and unsure flows ask meaningful follow-up questions'
  assert.deepEqual(getQuestionIds('municipal',{}),['n_issue','n_report','contact']);
  assert.deepEqual(getQuestionIds('unsure',{}),['u_start']);
 });
-test('unsure users are sent toward the responsible agency without false assessment',()=>{
- assert.equal(rec('unsure',{u_need:'housing'}),'hdb_general');
- assert.equal(rec('unsure',{u_need:'financial'}),'sso');
- assert.equal(rec('unsure',{u_need:'cpf'}),'cpf_general');
- assert.equal(rec('unsure',{u_need:'health'}),'health_general');
- assert.equal(rec('unsure',{u_need:'municipal'}),'oneservice');
+test('Not sure directs uncategorised concerns to safe official starting points',()=>{
+ assert.equal(rec('unsure',{}),'gov_directory');
+ assert.equal(rec('unsure',{u_start:'other'}),'gov_directory');
+ assert.equal(rec('unsure',{u_start:'letter'}),'gov_letter');
+ assert.equal(rec('unsure',{u_start:'application'}),'gov_application');
+ assert.equal(rec('unsure',{u_start:'followup'}),'gov_followup');
 });
 test('MPS notes preserve only structured selections and can be produced in both languages',()=>{
  const a={h_type:'public_rental',h_goal:'smaller',h_tenure:'under2',agency_status:'rejected',h_review:'mobility',contact:'online'};
@@ -204,7 +204,6 @@ test('MPS notes discard invalid option values rather than echoing unknown data',
 test('fines and appeals category is available with an official safe default',()=>{
  assert.ok(categories.some(c=>c.id==='fines'));
  assert.equal(rec('fines',{}),'fine_unknown');
- assert.equal(rec('unsure',{u_need:'fines'}),'fine_unknown');
 });
 test('HDB parking notices use HDB appeal guidance, not URA',()=>{
  assert.equal(rec('fines',{p_issuer:'hdb',p_stage:'notice',p_goal:'appeal'}),'fine_hdb');
@@ -374,7 +373,6 @@ test('work and employment: salary, discrimination and injury have different chan
 test('work and employment: unknown issue uses MOM advisory directory',()=>{
  assert.equal(rec('employment',{w_issue:'other'}),'work_general');
  assert.equal(rec('employment',{}),'work_general');
- assert.equal(rec('unsure',{u_need:'employment'}),'work_general');
 });
 test('workplace harassment uses verified TAFEP advisory phone',()=>{
  assert.equal(getGuide(services.work_fairness,'en','phone').phone,'6838 0969');
@@ -431,7 +429,6 @@ test('family broad social difficulties go to FSC with optional existing SSO',()=
  assert.equal(x.primary.id,'family_fsc');
  assert.deepEqual(x.secondary.map(s=>s.id),['sso']);
  assert.equal(rec('family',{family_safety:'no',family_issue:'other'}),'family_fsc');
- assert.equal(rec('unsure',{u_need:'family'}),'family_fsc');
 });
 test('family emergency directions avoid misleading MPS and ComCare advice in UI',()=>{
  const app=readFileSync(new URL('../src/App.tsx',import.meta.url),'utf8');
@@ -493,14 +490,17 @@ test('family emergency MPS notes do not hide safety priority',()=>{
 
 test('unknown-issue entry first asks about the situation, not a guessed agency',()=>{
  assert.deepEqual(getQuestionIds('unsure',{}),['u_start']);
- assert.equal(questions.u_start.options.length,6);
+ assert.equal(questions.u_start.options.length,5);
+ assert.equal(questions.u_start.options[0].value,'letter');
  assert.ok(questions.u_start.options.some(x=>x.value==='other'));
 });
-test('unknown-issue known topic provides normal category choice without unrelated notice questions',()=>{
- assert.deepEqual(getQuestionIds('unsure',{u_start:'topic'}),['u_start','u_need','agency_status','contact']);
- assert.equal(rec('unsure',{u_start:'topic',u_need:'financial'}),'sso');
- assert.equal(rec('unsure',{u_start:'topic',u_need:'housing'}),'hdb_general');
- assert.equal(rec('unsure',{u_start:'topic',u_need:'unsure'}),'gov_directory');
+test('obsolete topic choice cannot reopen removed topic-selection path',()=>{
+ assert.equal(questions.u_start.options.length,5);
+ assert.equal(questions.u_start.options[0].value,'letter');
+ assert.ok(!questions.u_start.options.some(o=>o.value==='topic'));
+ assert.ok(!Object.hasOwn(questions,'u_need'));
+ assert.deepEqual(getQuestionIds('unsure',{u_start:'topic',u_need:'housing'}),['u_start']);
+ assert.equal(rec('unsure',{u_start:'topic',u_need:'housing'}),'gov_directory');
 });
 test('unknown-issue government letter leads to sender and deadline verification',()=>{
  const a={u_start:'letter',u_agency_known:'unsure',u_deadline:'yes'};
@@ -545,13 +545,14 @@ test('urgent scam result cannot encourage waiting for an MP or calling ComCare',
  assert.match(app,/category==='unsure'&&answers\.u_start==='suspicious'/);
  assert.match(services.scamshield_loss.steps[0],/Contact your bank immediately/);
 });
-test('notice deadline warnings, agency context and topic handoff are rendered',()=>{
+test('notice deadline warnings, agency context and All topics navigation are rendered',()=>{
  const app=readFileSync(new URL('../src/App.tsx',import.meta.url),'utf8');
  assert.match(app,/t\.unsureDeadlineAlert/);
  assert.match(app,/t\.unsureDeadlineCheck/);
  assert.match(app,/t\.unsureAgencyKnown/);
  assert.match(app,/t\.unsureAgencyUnknown/);
- assert.match(app,/t\.unsureExploreTopic/);
+ assert.match(app,/<button onClick=\{home\}>\{t\.allTopics\}<\/button>/);
+ assert.doesNotMatch(app,/unsureExploreTopic|answers\.u_need/);
 });
 test('new unknown-issue questions are fully bilingual with caregiver alternatives',()=>{
  for(const id of ['u_start','u_agency_known','u_deadline','u_scam_loss']){
