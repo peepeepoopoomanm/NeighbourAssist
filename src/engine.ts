@@ -128,7 +128,13 @@ export function getQuestionIds(category:Category,answers:Answers):string[]{
   case 'employment':return ['w_issue',...(['salary','dismissal'].includes(answers.w_issue)?['w_status']:[]),...(answers.w_issue==='dismissal'&&answers.w_status==='left'?['w_recency']:[]),'agency_status','contact'];
   case 'family':return ['family_safety',...(['danger','concern'].includes(answers.family_safety)?[]:['family_issue','agency_status','contact'])];
   case 'fines':return answers.p_stage==='court'?['p_issuer','p_stage','contact']:['p_issuer','p_stage','p_goal',...(answers.p_goal==='appeal'?['p_reason']:[]),...(answers.p_goal==='appeal'||answers.p_goal==='status'?['agency_status']:[]),'contact'];
-  default:return ['u_need','agency_status','contact'];
+  case 'unsure':
+   if(answers.u_start==='suspicious')return answers.u_scam_loss==='yes'?['u_start','u_scam_loss']:['u_start','u_scam_loss','contact'];
+   if(answers.u_start==='topic')return ['u_start','u_need','agency_status','contact'];
+   if(['letter','application','followup'].includes(answers.u_start))return ['u_start','u_agency_known','u_deadline','agency_status','contact'];
+   if(answers.u_start==='other')return ['u_start','contact'];
+   return ['u_start'];
+  default:return ['u_start'];
  }
 }
 
@@ -136,6 +142,7 @@ export type Pathway='urgent'|'agency'|'followup'|'review';
 export function getNextPathway(category:Category,answers:Answers):Pathway{
  if(category==='financial'&&answers.f_urgent==='yes')return 'urgent';
  if(category==='family'&&answers.family_safety==='danger')return 'urgent';
+ if(category==='unsure'&&answers.u_start==='suspicious'&&answers.u_scam_loss==='yes')return 'urgent';
  if(category==='family'&&answers.family_safety==='concern')return 'agency';
  if(category==='fines'&&answers.p_stage==='court')return 'agency';
  if(answers.agency_status==='waiting')return 'followup';
@@ -189,15 +196,23 @@ export function getRecommendations(category:Category,a:Answers):{primary:Service
    else if(a.p_issuer==='tp'){id='fine_tp';reason='You identified Traffic Police as the issuer of the offence notice.';}
    else if(a.p_issuer==='lta'){id='fine_lta';reason='You identified LTA as the issuer; vehicle and active-mobility procedures may differ.';}
    else {id='fine_unknown';reason='Identify the issuing agency before choosing an appeal or payment route.';}
- } else if(category==='municipal') {id='oneservice';reason='This concerns your neighbourhood environment or municipal facilities.';} else if(category==='unsure'&&a.u_need){
-  if(a.u_need==='financial'){id='sso';reason='An SSO can help identify financial assistance routes.';}
-  else if(a.u_need==='housing'){id='hdb_general';reason='HDB can explain housing services and next steps.';}
-  else if(a.u_need==='cpf'){id='cpf_general';reason='CPF Board is the right place to clarify CPF and retirement questions.';}
-  else if(a.u_need==='health'){id='health_general';reason='MOH provides guidance on healthcare support channels.';}
-  else if(a.u_need==='municipal'){id='oneservice';reason='OneService is the official municipal feedback channel.';}
-  else if(a.u_need==='employment'){id='work_general';reason='MOM can help identify the correct channel for your employment issue.';}
-  else if(a.u_need==='family'){id='family_fsc';reason='A Family Service Centre can help identify suitable family and community support.';}
-  else if(a.u_need==='fines'){id='fine_unknown';reason='Identify the issuing agency before choosing an appeal or payment route.';}
+ } else if(category==='municipal') {id='oneservice';reason='This concerns your neighbourhood environment or municipal facilities.';} else if(category==='unsure'){
+  if(a.u_start==='letter'){id='gov_letter';reason='You have a letter or notice to understand; verify its sender and deadline before acting.';}
+  else if(a.u_start==='application'){id='gov_application';reason='You have an application or decision to follow up; the issuing agency can explain formal options.';}
+  else if(a.u_start==='followup'){id='gov_followup';reason='You already contacted an agency; use its official status or review channels.';}
+  else if(a.u_start==='suspicious'){id=a.u_scam_loss==='yes'?'scamshield_loss':'scamshield_check';reason=a.u_scam_loss==='yes'?'Your account or money might be at risk; contacting your bank takes priority.':'You want to check a suspicious message or call with an official service.';}
+  else if(a.u_start==='other'){id='gov_directory';reason='The government directory can help identify the agency without guessing.';}
+  else if(a.u_start==='topic'||a.u_need){
+   if(a.u_need==='financial'){id='sso';reason='An SSO can help identify financial assistance routes.';}
+   else if(a.u_need==='housing'){id='hdb_general';reason='HDB can explain housing services and next steps.';}
+   else if(a.u_need==='cpf'){id='cpf_general';reason='CPF Board is the right place to clarify CPF and retirement questions.';}
+   else if(a.u_need==='health'){id='health_general';reason='MOH provides guidance on healthcare support channels.';}
+   else if(a.u_need==='municipal'){id='oneservice';reason='OneService is the official municipal feedback channel.';}
+   else if(a.u_need==='employment'){id='work_general';reason='MOM can help identify the correct channel for your employment issue.';}
+   else if(a.u_need==='family'){id='family_fsc';reason='A Family Service Centre can help identify suitable family and community support.';}
+   else if(a.u_need==='fines'){id='fine_unknown';reason='Identify the issuing agency before choosing an appeal or payment route.';}
+   else {id='gov_directory';reason='The government directory can help identify the agency without guessing.';}
+  }
  }
  return {primary:services[id],secondary:extra.map(x=>services[x]).filter(s=>s.id!==id),reason};
 }
