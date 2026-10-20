@@ -338,6 +338,61 @@ export const guides:Record<string,GuideRecord>={
   inperson:['向幼儿园或托儿中心询问能否预约当面办理报名或补贴事宜。','先核实需要哪些正式文件，以及应通过 LifeSG 还是中心提交。','孩子的个人资料只应提供给获授权的托儿中心或 ECDA／LifeSG 服务。']
  },'1800-111-2222','Mon–Fri, 8:30 am–6 pm; Sat, 8:30 am–1 pm; excludes public holidays'),
 
+
+ gov_directory:g('https://www.sgdi.gov.sg/ministries','https://www.gov.sg/resources/',{
+  online:['Open the official Singapore Government Directory to identify a ministry, statutory board or public-service organisation. The directory does not submit an application or appeal.','If the agency remains unclear, explore topics on https://www.life.gov.sg/ and return to the verified agency website once you know the subject.','Use the agency’s own contact or enquiry channel for case-specific questions. Do not share personal information through NeighbourAssist.'],
+  phone:['Look up the responsible agency through the official Singapore Government Directory or LifeSG first.','Call the contact number published by the agency itself. SGDI does not provide one universal government helpdesk number.','Ask the agency what official process applies, whether documents are required and whether any deadlines need attention.'],
+  inperson:['Find the relevant public agency or service centre using the government directory.','Before travelling, check its official website for counter services, opening hours and whether an appointment is necessary.','Bring any relevant documents only if that agency asks; SGDI is not a walk-in service centre.']
+ },{
+  online:['打开新加坡政府官方目录 SGDI，查找部门、法定机构或公共服务单位。该目录不能代为申请或申诉。','如仍不清楚机构，可先从 https://www.life.gov.sg/ 官方网站按主题查找政府服务。','确定负责机构后，请使用其正式咨询渠道，勿通过 NeighbourAssist 提交私人资料。'],
+  phone:['先使用 SGDI 官方目录或 LifeSG 查找负责机构。','拨打该机构官方网站公布的电话；SGDI 并没有适用于所有政府问题的统一热线。','向有关机构询问正式办理方式、所需文件及期限。'],
+  inperson:['通过政府官方目录找出适当政府部门或服务中心。','出门前查看相关机构的官方网站，确认是否有柜台服务、开放时间及预约要求。','只有官方人员要求时才携带文件；SGDI 并非实体服务中心。']
+ }),
+ gov_letter:g('https://www.gov.sg/trusted-sites/','https://www.gov.sg/trusted-sites/',{
+  online:['Read the original letter or notice for a sender, the action requested and any deadline; do not upload it here.','Use gov.sg Trusted Sites guidance to check the correct official website. If the message looks suspicious, do not click its embedded links.','On the verified agency website, ask for help understanding the notice. The Singapore Government Directory can help you locate that agency.'],
+  phone:['Find the agency name on the letter. Look up its official number independently using gov.sg or the Singapore Government Directory, not a suspicious message.','Explain that you received a notice you want to understand, and ask if it is genuine and what action is required.','Read any response, payment or court deadline directly from the notice. Do not assume a phone call or MP request postpones it.'],
+  inperson:['Identify the agency from the letter and confirm the correct service counter or appointment through its official website.','Ask whether in-person assistance with the specific notice is available before travelling.','Take the letter only to authorised staff. For a court summons, follow its court instructions independently.']
+ },{
+  online:['查看信件原件上的发件机构、需要采取的行动和期限；无需在此上传信件。','通过 gov.sg 官方可信网站指南核实网址。如信息可疑，不要点击其中的链接。','通过已核实的机构网站查询通知详情；必要时使用 SGDI 目录寻找该机构。'],
+  phone:['从信件找出机构名称，并通过 gov.sg 或 SGDI 独立查找正式电话，不要使用可疑信息中的号码。','说明自己收到一封希望了解的通知，询问真实性及所需行动。','按信件原文核对任何回复、付款或出庭期限；不要假设电话咨询或议员求助会延长期限。'],
+  inperson:['从信件确定机构，并通过其官方网站确认正确服务柜台或预约方式。','出门前询问能否当面解释该通知。','只向获授权职员出示信件；如属于法庭传票，应另外遵守法庭指示。']
+ }),
+ gov_application:g('https://www.sgdi.gov.sg/ministries','https://www.gov.sg/resources/',{
+  online:['Locate the agency that processed your application using its official receipt or website.','Use that agency’s verified website to check whether status, correction, reconsideration or appeal services exist; SGDI helps locate the agency but is not an appeal form.','Check any applicable appeal or response deadline and submit personal details only through the agency’s official service.'],
+  phone:['Look up the correct agency’s official contact number independently using SGDI.','Ask which team handles the application or decision and what status or review procedure is available.','Confirm which deadlines and documents apply. Avoid waiting for an MP session if the notice requires action.'],
+  inperson:['Look up the responsible agency and check its official contact page for walk-in or assisted service arrangements.','Confirm opening hours, booking rules and the relevant service desk before travelling.','Take the decision or receipt and supporting records only to the authorised officer as requested.']
+ },{
+  online:['从正式回执或机构网站找出处理申请的单位。','在该机构官网查询进度、更正、重新考虑或申诉程序；SGDI 只帮助查找机构，并非申诉表格。','核实适用截止日期；私人资料只交给有关机构的正式服务。'],
+  phone:['通过 SGDI 独立查找负责机构的官方电话号码。','询问哪个部门处理申请或决定，以及可用的进度查询与复核方式。','核实相关期限和文件要求；如通知有必须办理的事项，不要等议员接见。'],
+  inperson:['查找负责机构，使用其官方联络网页确认是否提供柜台或协助服务。','出门前确认开放时间、预约方式及正确柜台。','按官方人员要求携带决定通知、回执和其他证明文件。']
+ }),
+ gov_followup:g('https://www.sgdi.gov.sg/ministries','https://www.gov.sg/resources/',{
+  online:['Find the agency from your previous acknowledgement or the Singapore Government Directory.','Use the same agency’s verified enquiry or feedback service to ask for a status update using its official reference number.','If the request was rejected or is unresolved, ask the agency what review or escalation procedures, if any, are available and by when.'],
+  phone:['Find the agency’s own contact number independently, preferably from its official website or SGDI.','Ask for the department handling your earlier case or enquiry and give your case reference only to official staff.','Ask when to expect a reply and whether deadlines, review processes or in-person help apply.'],
+  inperson:['Check whether the agency offers counter or appointment services for your type of enquiry.','Before travelling, confirm service location and booking rules.','Bring the acknowledgement and reference number only if requested by authorised staff.']
+ },{
+  online:['从之前的官方确认通知或 SGDI 目录找出负责机构。','通过该机构正式咨询或反馈服务查询进度，只在官方渠道使用参考编号。','如申请被拒或问题未解决，向该机构了解是否有正式复核或进一步反馈程序，以及期限。'],
+  phone:['从机构官网或 SGDI 独立查找官方电话。','询问哪个部门处理先前个案，仅向官方职员提供参考编号。','确认预计回复方式，以及是否有复核期限或当面协助。'],
+  inperson:['确认负责机构是否提供该类事项的柜台或预约服务。','出门前核实地点及预约规定。','只有在获授权职员要求时才携带确认通知和参考编号。']
+ }),
+ scamshield_check:g('https://www.scamshield.gov.sg/check-for-scams/','https://www.scamshield.gov.sg/check-for-scams/',{
+  online:['Do not click the suspicious link or share bank credentials while you are unsure.','Open the ScamShield website independently, not from the suspicious message. Follow its app or website guidance for checking suspected scams.','For a live check, call ScamShield 1799, 24 hours a day.'],
+  phone:['Call the official ScamShield helpline at 1799 (24 hours).','Ask how to check the suspicious message, number or link without revealing passwords or OTPs.','If you already sent money or exposed account access, contact your bank immediately instead of waiting for a scam verification.'],
+  inperson:['ScamShield’s published first-line checking channels are its app, website and 1799 helpline; it is not a general walk-in counter.','If you need help using these services, ask a trusted person without handing over passwords or bank access.','For an actual scam loss, contact your bank promptly and follow the official Police reporting steps.']
+ },{
+  online:['如不确定信息真假，请勿点击可疑链接或透露银行登录资料。','自行打开 ScamShield 官方网站，并按其应用或网页指引核实可疑诈骗。','如需即时咨询，可拨打全天候 ScamShield 热线 1799。'],
+  phone:['拨打 ScamShield 官方 24 小时热线 1799。','询问如何核实可疑短信、电话号码或链接，切勿提供密码或一次性验证码。','如已转账或泄露账户资料，请立即联系银行，不要先等诈骗核实结果。'],
+  inperson:['ScamShield 公布的主要核实渠道是应用、网站和 1799 热线，并非一般实体柜台。','如需协助使用这些服务，可找信任的人帮忙，但不要交出密码或银行登录资料。','如确实可能受骗损失，请尽快联系银行并按警方官方渠道报案。']
+ },'1799','24 hours'),
+ scamshield_loss:g('https://www.scamshield.gov.sg/i-have-been-scammed/','https://www.scamshield.gov.sg/i-have-been-scammed/',{
+  online:['First contact your bank immediately using its independently verified official hotline or banking app; activate available emergency account protection if appropriate.','Next, read ScamShield’s “I’ve been scammed” official guidance, including Police reporting and securing accounts.','If you need urgent Police assistance call 999. ScamShield 1799 can help with scam checks but is not a replacement for calling your bank first.'],
+  phone:['Call your bank immediately on its official number or use its banking app emergency controls. This site cannot know your bank or its number.','Ask the bank about freezing affected cards, accounts or transactions, and follow its instructions.','Report to Police using verified channels. If urgent Police assistance is needed, call 999.'],
+  inperson:['Call your bank first, even if you intend to visit a branch or Police station.','If the bank asks you to attend a branch or provide records, confirm official hours and the address first.','Follow ScamShield’s official Police report instructions and bring details only to authorised bank or Police personnel.']
+ },{
+  online:['首先通过独立核实的银行热线或银行应用立即联系银行，并按银行指引启动紧急账户保护功能。','再阅读 ScamShield 官方“我被骗了”指引，了解报警与保障账户的步骤。','如需警方紧急协助，请拨打 999。ScamShield 1799 可协助核实诈骗，但不能代替先联系银行。'],
+  phone:['立即拨打银行官方网站公布的热线或使用银行应用的紧急功能；本网站不知道您使用哪家银行。','向银行询问是否需要冻结受影响的银行卡、账户或交易，并遵守银行指示。','按正式渠道报警；如需警方紧急协助请拨打 999。'],
+  inperson:['即使打算前往银行或警局，也应先致电银行。','如银行要求到分行或出示记录，请先确认官方地点及开放时间。','按 ScamShield 官方报警指引办理，只向获授权银行或警方人员提供详情。']
+ }),
  lifesg:g('https://www.life.gov.sg/','https://www.life.gov.sg/',{
   online:['Open LifeSG’s official website and look for “Topics”.','Choose the area closest to the problem, such as “Financial support and benefits”, “Care and support services” or “Housing and property”.','Follow the linked government service. If you remain unsure, contact the responsible agency rather than submitting private details here.'],
   phone:['LifeSG is a general directory rather than a dedicated caseworker hotline.','Use LifeSG to identify the responsible agency, then find that agency’s official phone contact.','Describe the issue briefly and ask which service or form is relevant.'],
