@@ -145,7 +145,7 @@ test('CPF medical municipal and unsure flows ask meaningful follow-up questions'
  assert.ok(getQuestionIds('health',{m_type:'bill'}).includes('m_support'));
  assert.ok(!getQuestionIds('health',{m_type:'clinic'}).includes('m_support'));
  assert.deepEqual(getQuestionIds('municipal',{}),['n_issue','n_report','contact']);
- assert.deepEqual(getQuestionIds('unsure',{}),['u_need','agency_status','contact']);
+ assert.deepEqual(getQuestionIds('unsure',{}),['u_start']);
 });
 test('unsure users are sent toward the responsible agency without false assessment',()=>{
  assert.equal(rec('unsure',{u_need:'housing'}),'hdb_general');
@@ -489,4 +489,106 @@ test('family emergency MPS notes do not hide safety priority',()=>{
  const a=getMpsPreparation('family',{family_safety:'danger'},'en','self');
  assert.match(a.items[0].answer,/immediate danger/i);
  assert.ok(!JSON.stringify(a).includes('NRIC'));
+});
+
+test('unknown-issue entry first asks about the situation, not a guessed agency',()=>{
+ assert.deepEqual(getQuestionIds('unsure',{}),['u_start']);
+ assert.equal(questions.u_start.options.length,6);
+ assert.ok(questions.u_start.options.some(x=>x.value==='other'));
+});
+test('unknown-issue known topic provides normal category choice without unrelated notice questions',()=>{
+ assert.deepEqual(getQuestionIds('unsure',{u_start:'topic'}),['u_start','u_need','agency_status','contact']);
+ assert.equal(rec('unsure',{u_start:'topic',u_need:'financial'}),'sso');
+ assert.equal(rec('unsure',{u_start:'topic',u_need:'housing'}),'hdb_general');
+ assert.equal(rec('unsure',{u_start:'topic',u_need:'unsure'}),'gov_directory');
+});
+test('unknown-issue government letter leads to sender and deadline verification',()=>{
+ const a={u_start:'letter',u_agency_known:'unsure',u_deadline:'yes'};
+ assert.deepEqual(getQuestionIds('unsure',a),['u_start','u_agency_known','u_deadline','agency_status','contact']);
+ assert.equal(rec('unsure',a),'gov_letter');
+ assert.match(services.gov_letter.url,/gov\.sg\/trusted-sites/);
+ assert.match(services.gov_letter.caution,/court attendance/);
+});
+test('unknown-issue rejected application is not treated as a universal appeal',()=>{
+ assert.equal(rec('unsure',{u_start:'application',agency_status:'rejected'}),'gov_application');
+ assert.equal(getNextPathway('unsure',{u_start:'application',agency_status:'rejected'}),'review');
+ assert.match(services.gov_application.caution,/no universal appeals form/i);
+});
+test('unknown-issue unanswered agency request uses agency follow-up rather than LifeSG catch-all',()=>{
+ assert.equal(rec('unsure',{u_start:'followup',agency_status:'waiting'}),'gov_followup');
+ assert.equal(getNextPathway('unsure',{u_start:'followup',agency_status:'waiting'}),'followup');
+ assert.match(services.gov_followup.url,/sgdi\.gov\.sg/);
+});
+test('totally unknown issue ends in a short official-directory route',()=>{
+ assert.deepEqual(getQuestionIds('unsure',{u_start:'other'}),['u_start','contact']);
+ assert.equal(rec('unsure',{u_start:'other'}),'gov_directory');
+ assert.match(services.gov_directory.caution,/not a universal government appeal/i);
+});
+test('suspicious message uses ScamShield and shortens dangerous exposure',()=>{
+ const base={u_start:'suspicious'};
+ assert.deepEqual(getQuestionIds('unsure',{...base,u_scam_loss:'no'}),['u_start','u_scam_loss','contact']);
+ assert.equal(rec('unsure',{...base,u_scam_loss:'no'}),'scamshield_check');
+ assert.equal(services.scamshield_check.phone,'1799');
+ assert.match(services.scamshield_check.url,/scamshield\.gov\.sg/);
+});
+test('suspected scam monetary loss skips the contact-choice question',()=>{
+ const a={u_start:'suspicious',u_scam_loss:'yes'};
+ assert.deepEqual(getQuestionIds('unsure',a),['u_start','u_scam_loss']);
+ assert.equal(rec('unsure',a),'scamshield_loss');
+ assert.equal(getNextPathway('unsure',a),'urgent');
+ assert.match(getGuide(services.scamshield_loss,'en','phone').steps[0],/Call your bank immediately/);
+});
+test('urgent scam result cannot encourage waiting for an MP or calling ComCare',()=>{
+ const app=readFileSync(new URL('../src/App.tsx',import.meta.url),'utf8');
+ assert.match(app,/service\.id==='scamshield_loss'\)return/);
+ assert.match(app,/t\.unsureScamUrgent/);
+ assert.match(app,/category==='unsure'&&answers\.u_start==='suspicious'/);
+ assert.match(services.scamshield_loss.steps[0],/Contact your bank immediately/);
+});
+test('notice deadline warnings, agency context and topic handoff are rendered',()=>{
+ const app=readFileSync(new URL('../src/App.tsx',import.meta.url),'utf8');
+ assert.match(app,/t\.unsureDeadlineAlert/);
+ assert.match(app,/t\.unsureDeadlineCheck/);
+ assert.match(app,/t\.unsureAgencyKnown/);
+ assert.match(app,/t\.unsureAgencyUnknown/);
+ assert.match(app,/t\.unsureExploreTopic/);
+});
+test('new unknown-issue questions are fully bilingual with caregiver alternatives',()=>{
+ for(const id of ['u_start','u_agency_known','u_deadline','u_scam_loss']){
+  assert.ok(hasChineseQuestion(id),id);
+  assert.notEqual(questionText(questions[id],'zh').title,questions[id].title);
+  for(const lang of ['en','zh']){
+   assert.ok(hasCaregiverQuestion(id,lang),id+'/'+lang);
+   const x=audienceQuestionText(questions[id],lang,'caregiver');
+   assert.notEqual(x.title,questionText(questions[id],lang).title);
+   assert.deepEqual(x.options.map(y=>y.value),questions[id].options.map(y=>y.value));
+  }
+ }
+});
+test('all new directories and ScamShield records have complete bilingual guides',()=>{
+ for(const id of ['gov_directory','gov_letter','gov_application','gov_followup','scamshield_check','scamshield_loss']){
+  assert.ok(hasChineseService(id));
+  assert.notEqual(serviceText(services[id],'zh').name,services[id].name);
+  for(const lang of ['en','zh'])for(const method of ['online','phone','inperson']){
+   const x=getGuide(services[id],lang,method);
+   assert.ok(x.steps.length>=2,id+'/'+lang+'/'+method);
+   assert.ok(x.url.startsWith('https://'));
+   assert.match(new URL(x.source).hostname,/\.gov\.sg$/);
+  }
+ }
+});
+test('unsure agency history references its own agency rather than HDB and CPF examples',()=>{
+ const en=contextualQuestionText(questions.agency_status,'en','self','unsure');
+ const zh=contextualQuestionText(questions.agency_status,'zh','caregiver','unsure');
+ assert.match(en.title,/letter or enquiry/i);
+ assert.match(zh.title,/协助的人/);
+ assert.doesNotMatch(en.hint,/HDB|CPF/);
+});
+test('MPS notes protect official deadlines and do not show irrelevant ComCare advice for scams',()=>{
+ const a=getMpsPreparation('unsure',{u_start:'letter',u_deadline:'yes',u_agency_known:'yes'},'en','self');
+ const b=getMpsPreparation('unsure',{u_start:'suspicious',u_scam_loss:'yes'},'en','caregiver');
+ assert.match(a.preparation[0],/deadline/i);
+ assert.match(b.pathway,/ScamShield/);
+ assert.doesNotMatch(b.pathway,/ComCare/);
+ assert.ok(!b.items.some(x=>x.id==='u_deadline'));
 });
