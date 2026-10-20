@@ -117,3 +117,33 @@
 
 /* With nine topics, give the final “Not sure” choice the full row on wide screens. */
 @media (min-width:851px){.categories>.category-card:last-child:nth-child(odd){grid-column:1 / -1}}
+
+
+/* Small-screen resilience audit: 320px handsets, long Chinese labels and large text. */
+.category-card,.category-details,.question-card,.recommendation,.checklist,.support-card,
+.contact-guidance,.mps-section,.mps-notes,.result-layout>div,.result-layout>aside,
+.flow-layout>div,.flow-layout>aside{min-width:0}
+.category-details strong,.category-details small,.question-title,.question-hint,
+.answer span,.recommendation h2,.recommendation p,.guide-caveat,.caregiver-auth-note,
+.contact-guidance,.spoken-script,.instruction-list li,.mps-facts,.checklist .check-item,
+.top-inner,.top-actions,.result-footer,.source-line{overflow-wrap:anywhere}
+.category-card{max-width:100%}
+@media(max-width:390px){
+ .site .container{width:min(100% - 24px,1180px)}
+ .topbar .top-actions{width:100%;display:flex;flex-wrap:wrap}
+ .topbar .setting{flex:1 1 135px;min-width:0}
+ .topbar .setting select{max-width:100%;min-width:0;width:100%}
+ .site .category-card{padding:13px;gap:9px}
+ .site .category-details strong{line-height:1.35}
+ .site .question-card,.site .recommendation,.site .checklist{padding:15px}
+ .site .flow-actions{flex-wrap:wrap}
+ .site .flow-actions .btn{flex:1 1 120px;min-width:0}
+ .site .contact-options{grid-template-columns:minmax(0,1fr)}
+ .site .mps-section{padding:13px}
+ .site .mps-visit-guide{padding:13px}
+ .site .recommendation-top{gap:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ .site .category-card,.site .progress span{transition:none}
+ .site .category-card:hover{transform:none}
+}
