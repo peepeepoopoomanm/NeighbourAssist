@@ -80,6 +80,27 @@ The former 73-test build predates the new Work & Employment and Family & Social 
 - [ ] Redeploy from the commit with passing tests, confirm the Deployxa URL serves **nine categories**, and repeat urgent-safety and ordinary referral tests at the live URL.
 - [ ] Ask a non-developer to test at least one new work and one ordinary family scenario with fictional details; sensitive or emergency cases should not be simulated with real people or emergencies.
 
+## 20 October: Not sure / accessibility release gate
+
+These checks supplement the historical 73-test and 93-test release gates above. On 19 October, the user verified **93 tests passing**, the nine-category build, and successful deployment. The 20 October **Not sure** changes are not yet verified on a laptop or deployed.
+
+- [ ] `git pull` current `main`, followed by `npm.cmd test`: expect **107 tests**, all passing.
+- [ ] `npm.cmd run build`: TypeScript plus Vite production build must succeed.
+- [ ] Verify an unfamiliar letter → official sender verification plus visible deadline or court warnings.
+- [ ] Verify a rejected application and an unanswered agency enquiry → respective official agency contacts, without promising a universal appeal.
+- [ ] Verify an unrecognised topic → official SGDI or LifeSG, rather than a guessed eligibility decision.
+- [ ] Verify suspicious call, no known loss → **ScamShield 1799**.
+- [ ] Verify possible monetary scam exposure → **bank immediately**, then official ScamShield/Police guidance; no normal contact picker or MPS section.
+- [ ] From a broad topic in Not sure, use **See detailed guidance** to open its full questionnaire.
+- [ ] Check the previous nine categories continue to work, including urgent ComCare, court summonses, wrongful dismissal and family safety.
+- [ ] Switch both English/Chinese and self/caregiver through branches, then inspect printed non-sensitive MPS notes (not the scam route).
+- [ ] At 320px/375px/390px and a normal desktop width, check large text, no horizontal scroll, safe text wrapping, focus states and reduced-motion behaviour.
+- [ ] Confirm all external links lead to the intended current agency page; automated HTTPS checks do not validate logged-in external services.
+- [ ] Only **after** these pass, redeploy Deployxa and confirm the public homepage's Not sure category asks about a situation (not a compulsory topic category).
+- [ ] Ask someone fluent in Singapore Mandarin and at least one non-developer to test representative fictional scenarios.
+
+Audit findings, official links and limits: [20 October Content & Usability Audit](10-content-and-usability-audit.md).
+
 ## 2. Chinese and caregiver checks
 
 - [ ] Switch to Simplified Chinese and complete **all six** help categories.
