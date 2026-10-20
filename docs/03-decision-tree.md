@@ -31,7 +31,7 @@ Attending MPS is a resident's choice regardless of their answers. No MP letter, 
 | Fines and appeals | Issuer, court notice, appeal/payment/status and any deadline | HDB, URA, Traffic Police, LTA, Singapore Courts |
 | Work and employment | Unpaid salary, dismissal, workplace fairness, work injury and claim deadlines | TADM, TAFEP, MOM |
 | Family and social support | Safety first; otherwise relationships, caregiving, childcare and family difficulties | Police 999, NAVH, FAM, FSC, AIC, LifeSG/ECDA |
-| Not sure | Situation first: official letter, decision, unanswered agency request, suspicious call/message, broad topic or unknown problem | Gov.sg Trusted Sites / SGDI, agency, LifeSG, ScamShield; bank-first advice if account access or funds are at risk |
+| Not sure | Situation first: official letter, decision, unanswered agency request, suspicious call/message or unknown problem | Gov.sg Trusted Sites / SGDI, agency, LifeSG, ScamShield; bank-first advice if account access or funds are at risk |
 
 ## Important safeguards
 
@@ -54,7 +54,6 @@ The standalone `demo/` is an older development reference, not a maintained repli
 
 ```text
 Not sure → What brought you here?
-  ├─ Known topic → choose one of eight categories → relevant official agency; option to explore detailed category
   ├─ Government letter / notice → agency known? → deadline? → previous contact → verify source and agency
   ├─ Application / decision → agency known? → deadline? → status → issuing agency / SGDI
   ├─ Unresolved agency contact → agency known? → deadline? → status → original agency / SGDI
@@ -65,3 +64,5 @@ Not sure → What brought you here?
 ```
 
 Questions accept only preset choices and no identifying case information. This is not a universal appeals office. Court, response and application deadlines remain binding regardless of optional MPS assistance. Source research and manual acceptance tests: `docs/10-content-and-usability-audit.md`.
+
+**21 October simplification:** Removed the redundant “I know roughly what my issue is about” option and secondary topic-selection step. Residents who recognise a subject can use the existing eight categories on the homepage via **All topics**. All remaining Not sure branches are unchanged.
