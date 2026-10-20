@@ -110,4 +110,14 @@ The homepage now includes **nine** choices, adding two source-researched journey
 
 These are guidance routes, not advice from a lawyer, employer adviser, social worker or emergency responder. They do not submit claims, applications, protection reports or custody matters; no identifying family, workplace or medical details are collected. Read the official-source notes at [Work & Family research](docs/09-employment-family-research.md).
 
-**Validation status:** The previous **73 tests passed on the developer's main PC** before this update. Source coverage has been reviewed for nine categories, 33 questions and 35 service guides, and **93 tests are now present but not yet confirmed passing**. Run `git pull`, `npm test` and `npm run build` on the new code before another Deployxa release, followed by actual browser checks.
+**Validation status:** On 19 October the main PC confirmed **93/93 tests passing** and a successful production build for the nine-category release; the user subsequently redeployed that version. The 20 October Not sure expansion includes **107 test definitions**, but they have **not yet been run** on the laptop. Run `git pull`, `npm.cmd test`, `npm.cmd run build` and browser checks before any further Deployxa release.
+
+## October 20: Not sure and accessibility audit
+
+The former **Not sure** category assumed people could identify a policy topic. It now asks which situation prompted the visit: a broad topic, a government letter, a government application or decision, an unresolved enquiry, a suspicious message, or no identifiable issue. Depending on the choice, it asks only the relevant follow-ups (responsible agency, deadline, case status or possible scam exposure).
+
+Agency identification uses the official **Singapore Government Directory** and **LifeSG**, not a fictional universal appeals office. Letters refer to **gov.sg Trusted Sites** for verification. Suspicious-message checks use **ScamShield 1799 (24 hours)**; if money or account details may be compromised, residents are advised to **contact their bank immediately**, and the questionnaire skips extra contact questions and optional MPS notes.
+
+The results can direct someone who identifies a topic into its full questionnaire. Phone scripts were made more relevant to non-financial issues, and small-screen styles were tightened for 320px displays and large Chinese text. All content remains fixed-choice, bilingual and caregiver-aware.
+
+The new research and nine-category audit is in [20 October Content & Usability Audit](docs/10-content-and-usability-audit.md). The structural source check currently finds **9 categories, 37 questions, 41 bilingual referral services and 107 tests defined**; **passing tests and the next deployment remain unverified**. The earlier 93-test deployment should not be assumed to contain this update.
