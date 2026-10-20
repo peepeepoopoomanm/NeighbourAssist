@@ -24,7 +24,6 @@ Sources reviewed on 20 October 2026. Official websites and processes may change.
 
 | Initial situation | Follow-up | Official starting point | Critical safeguard |
 | --- | --- | --- | --- |
-| Know roughly what the question is about | Pick one of eight topic areas; history and contact preference | Relevant government source for the category, with button to open that category's detailed questionnaire | Generic routing does not make eligibility decisions |
 | Unexplained government letter or notice | Know agency? Deadline? Previous agency contact? Contact preference | Verify sender on gov.sg; use verified agency or SGDI | Government branding alone isn't proof of authenticity; court and response deadlines still apply |
 | Application or government decision | Know agency? Deadline? Status? Contact preference | SGDI to find issuing agency, then official agency review/status channel | No universal appeal form or guaranteed right to review |
 | Unanswered or unresolved government enquiry | Know agency? Deadline? Status? Contact preference | Original agency, its verified follow-up or feedback service; SGDI helps find it | SGDI cannot check or escalate case statuses by itself |
@@ -54,7 +53,7 @@ All questions are fixed choice. NRIC, address, account number, letter scan, case
 - Generic telephone scripts implied all enquiries were about financial assistance. Fines, work, family, government letters and scam checks now have context-specific templates.
 - Important deadlines lacked a prominent result alert in the unknown-issue route; the new result does not imply MPS assistance pauses a deadline.
 - Confirmed potential scam loss now triggers **bank-first guidance**, and the irrelevant method picker and MPS section are hidden.
-- In a broad "Not sure" topic selection, residents can open the full questionnaire for that specific issue without finding the homepage again.
+- **21 October adjustment:** The broad topic selection duplicated the homepage's dedicated categories. This option and its follow-up were removed; the **All topics** breadcrumb still takes residents back to the homepage.
 - Added 320–390px layout safeguards for long Chinese labels, large-text navigation, and word wrapping, and an explicit reduced-motion hover fallback.
 - Removed duplicate reason-translation keys discovered during static review.
 
@@ -63,7 +62,7 @@ All questions are fixed choice. NRIC, address, account number, letter scan, case
 A structural audit of the updated GitHub tree found:
 
 - **Nine** homepage categories.
-- **37** questionnaire questions, each with Simplified Chinese wording, all answer choices, and English/Chinese caregiver alternatives.
+- **36** questionnaire questions, each with Simplified Chinese wording, all answer choices, and English/Chinese caregiver alternatives.
 - **41** referral records, each with a complete Chinese service translation and matching English/Chinese online, phone and in-person guidance.
 - **107** Node test definitions, including **14 new tests** for the Not sure routes.
 - No duplicate keys in the Chinese or caregiver referral-reason dictionaries.
@@ -73,7 +72,7 @@ A structural audit of the updated GitHub tree found:
 ## Manual browser acceptance checklist
 
 - [ ] **First question:** Not sure → asks for situation, not a list of agencies or monetary amounts.
-- [ ] **Known topic:** Not sure → 'roughly know' → Housing → results → 'See detailed guidance' → new Housing questionnaire.
+- [ ] **No redundant option:** Not sure first question has five choices, beginning with a government letter. **All topics** remains available and returns to the eight existing service categories.
 - [ ] **Letter:** not sure of agency → deadline yes → result shows gov.sg verification plus an explicit deadline/court warning.
 - [ ] **Application:** rejected request → find agency and formal review instructions, no automatic right of appeal.
 - [ ] **Follow-up:** awaiting response → official directory and the agency's own enquiry channel, no promise of response times.
@@ -95,3 +94,7 @@ Human readability, the legal correctness of any individual agency decision, auth
 The public Deployxa website may still serve an earlier nine-category build. **Do not treat the latest changes as deployed until the new source has passed tests, compiled, and the live website shows the updated Not sure journey.**
 
 Follow-up: if the new suite passes, run manual checks and then redeploy latest `main`; verify the public URL again before showing it in the hackathon demo.
+
+## 21 October follow-up: Remove unnecessary first option
+
+During manual browser testing, the first choice **“I know roughly what my issue is about”** was identified as duplicating the eight purpose-built homepage categories. The question now begins with **“I received a government letter or notice I do not understand”**. The original second step to choose a broad topic was removed from routing, bilingual data, caregiver wording and results UI. A defensive regression test ensures older, unreachable `u_start='topic'` and `u_need` values cannot activate the removed route; they fall back to the official government directory. The five remaining options and the **All topics** breadcrumb preserve safe navigation. Source coverage is now nine categories, **36 questions**, 41 services and 107 defined tests. A fresh test run and build are required after this change.
