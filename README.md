@@ -114,10 +114,14 @@ These are guidance routes, not advice from a lawyer, employer adviser, social wo
 
 ## October 20: Not sure and accessibility audit
 
-The former **Not sure** category assumed people could identify a policy topic. It now asks which situation prompted the visit: a broad topic, a government letter, a government application or decision, an unresolved enquiry, a suspicious message, or no identifiable issue. Depending on the choice, it asks only the relevant follow-ups (responsible agency, deadline, case status or possible scam exposure).
+The former **Not sure** category assumed people could identify a policy topic. It now asks which situation prompted the visit: a government letter, a government application or decision, an unresolved enquiry, a suspicious message, or no identifiable issue. Depending on the choice, it asks only the relevant follow-ups (responsible agency, deadline, case status or possible scam exposure).
 
 Agency identification uses the official **Singapore Government Directory** and **LifeSG**, not a fictional universal appeals office. Letters refer to **gov.sg Trusted Sites** for verification. Suspicious-message checks use **ScamShield 1799 (24 hours)**; if money or account details may be compromised, residents are advised to **contact their bank immediately**, and the questionnaire skips extra contact questions and optional MPS notes.
 
-The results can direct someone who identifies a topic into its full questionnaire. Phone scripts were made more relevant to non-financial issues, and small-screen styles were tightened for 320px displays and large Chinese text. All content remains fixed-choice, bilingual and caregiver-aware.
+The homepage's eight specific service categories remain available through **All topics**. Phone scripts were made more relevant to non-financial issues, and small-screen styles were tightened for 320px displays and large Chinese text. All content remains fixed-choice, bilingual and caregiver-aware.
 
-The new research and nine-category audit is in [20 October Content & Usability Audit](docs/10-content-and-usability-audit.md). The structural source check currently finds **9 categories, 37 questions, 41 bilingual referral services and 107 tests defined**; **passing tests and the next deployment remain unverified**. The earlier 93-test deployment should not be assumed to contain this update.
+The new research and nine-category audit is in [20 October Content & Usability Audit](docs/10-content-and-usability-audit.md). The structural source check currently finds **9 categories, 36 questions, 41 bilingual referral services and 107 tests defined**; **passing tests and the next deployment remain unverified**. The earlier 93-test deployment should not be assumed to contain this update.
+
+## 21 October: Streamlined Not sure question
+
+The opening Not sure question now presents **five choices** instead of six. The redundant “I know roughly what my issue is about” option and its secondary topic-selection questionnaire were removed. Residents who already recognise their issue can choose one of the eight service categories directly on the homepage using **All topics**, which remains available above the questionnaire. English, Simplified Chinese and caregiver alternatives, result routing and automated tests were updated together. The new commit has not yet been run through the complete test and production-build commands.
