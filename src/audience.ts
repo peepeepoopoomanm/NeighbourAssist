@@ -205,8 +205,6 @@ const caregiverReasons:Record<string,{en:string;zh:string}>={
  'CPF Board is the right place to clarify CPF and retirement questions.':{en:'CPF Board can clarify their CPF and retirement enquiries.',zh:'公积金局可解答对方的公积金及退休问题。'},
  'MOH provides guidance on healthcare support channels.':{en:'MOH provides official information about their healthcare concerns.',zh:'卫生部可提供适用于对方情况的医疗服务资讯。'},
  'OneService is the official municipal feedback channel.':{en:'OneService provides official municipal feedback channels for their issue.',zh:'OneService 可协助对方反映市政设施问题。'},
- 'MOM can help identify the correct channel for your employment issue.':{en:'MOM can help identify a suitable employment service for them.',zh:'人力部可协助对方找到适当雇佣咨询渠道。'},
- 'A Family Service Centre can help identify suitable family and community support.':{en:'An FSC can help them explore appropriate family or community support.',zh:'家庭服务中心可协助对方了解相关支援。'},
  'You reported a court summons or required court date. Court instructions take priority.':{en:'The person you are helping may need to attend court. Their official summons takes priority.',zh:'您正在协助的人可能须出庭，应优先遵守对方传票的指示。'},
  'You identified HDB as the issuer of the parking notice.':{en:'They have an HDB parking notice, so HDB is the responsible agency.',zh:'对方收到建屋局停车罚单，应使用建屋局官方渠道。'},
  'You identified URA as the issuer of the parking notice.':{en:'They have a URA parking notice, so URA is the responsible agency.',zh:'对方收到 URA 停车罚单，应使用 URA 官方渠道。'},
