@@ -1,6 +1,6 @@
 # NeighbourAssist — referral decision tree
 
-**Last revised:** 19 October 2026  
+**Last revised:** 20 October 2026  
 **Source of truth:** `src/engine.ts` (questions and routing), `src/journeys.ts` (agency contact instructions), `src/mps.ts` (optional MPS preparation).
 
 This is a deterministic directory and preparation tool, **not** an eligibility checker, approval prediction or official MP appeal service.
@@ -14,8 +14,8 @@ This is a deterministic directory and preparation tool, **not** an eligibility c
    - **First contact** → ordinary official service as a starting point.
    - **Waiting for a reply** → encourage follow-up with the relevant agency, using an existing reference if available.
    - **Rejected / still unresolved** → explain the option to ask the agency about review and consider MPS assistance.
-   - **Unsure** → agency enquiry remains a safe starting point.
-5. Results always include an **optional Meet-the-People Session preparation** section: official Parliament MP lookup, what to prepare, and a printable fixed-choice summary.
+   - **Unsure** → start with a verified agency enquiry route, or the official SGDI directory if the agency is unknown.
+5. Non-safety results generally include optional MPS preparation: Parliament MP lookup, what to prepare and a printable fixed-choice summary. Immediate family-protection and possible-scam routes omit MPS so it cannot delay official action.
 
 Attending MPS is a resident's choice regardless of their answers. No MP letter, agency case or application is actually created or transmitted.
 
@@ -28,7 +28,10 @@ Attending MPS is a resident's choice regardless of their answers. No MP letter, 
 | CPF and retirement | Aged 55+, purpose, additional 65+ question for Silver Support, type of barrier and past agency contact | CPF general guidance, withdrawals at 55+ or automatically assessed Silver Support information at 65+ |
 | Medical costs | Care type, whether healthcare payment help was sought for bills, barrier and agency-contact status | CHAS, MediFund/Medical Social Worker, or MOH guidance |
 | Neighbourhood issues | Type of issue and whether previously reported | OneService (not an emergency response service) |
-| Not sure | Broad problem identification and previous contact | SSO, HDB, CPF, MOH, OneService, or LifeSG |
+| Fines and appeals | Issuer, court notice, appeal/payment/status and any deadline | HDB, URA, Traffic Police, LTA, Singapore Courts |
+| Work and employment | Unpaid salary, dismissal, workplace fairness, work injury and claim deadlines | TADM, TAFEP, MOM |
+| Family and social support | Safety first; otherwise relationships, caregiving, childcare and family difficulties | Police 999, NAVH, FAM, FSC, AIC, LifeSG/ECDA |
+| Not sure | Situation first: official letter, decision, unanswered agency request, suspicious call/message, broad topic or unknown problem | Gov.sg Trusted Sites / SGDI, agency, LifeSG, ScamShield; bank-first advice if account access or funds are at risk |
 
 ## Important safeguards
 
@@ -46,3 +49,19 @@ Attending MPS is a resident's choice regardless of their answers. No MP letter, 
 Run `npm test` and `npm run build` after each change to question options, routes or translations. Use `docs/04-mps-preparation.md` for acceptance scenarios. Verify programme requirements and link destinations against primary agency websites before public distribution.
 
 The standalone `demo/` is an older development reference, not a maintained replica of this decision tree. The React source in `src/` is the authoritative application.
+
+## 20 October — Situation-first Not sure branch
+
+```text
+Not sure → What brought you here?
+  ├─ Known topic → choose one of eight categories → relevant official agency; option to explore detailed category
+  ├─ Government letter / notice → agency known? → deadline? → previous contact → verify source and agency
+  ├─ Application / decision → agency known? → deadline? → status → issuing agency / SGDI
+  ├─ Unresolved agency contact → agency known? → deadline? → status → original agency / SGDI
+  ├─ Suspicious message → money or account access at risk?
+  │     ├─ Yes → bank immediately + ScamShield post-scam instructions; NO optional MPS
+  │     └─ No / unsure → ScamShield official site / 1799; NO optional MPS
+  └─ Truly unknown → SGDI / LifeSG for service discovery
+```
+
+Questions accept only preset choices and no identifying case information. This is not a universal appeals office. Court, response and application deadlines remain binding regardless of optional MPS assistance. Source research and manual acceptance tests: `docs/10-content-and-usability-audit.md`.
