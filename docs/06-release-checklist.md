@@ -91,7 +91,7 @@ These checks supplement the historical 73-test and 93-test release gates above. 
 - [ ] Verify an unrecognised topic → official SGDI or LifeSG, rather than a guessed eligibility decision.
 - [ ] Verify suspicious call, no known loss → **ScamShield 1799**.
 - [ ] Verify possible monetary scam exposure → **bank immediately**, then official ScamShield/Police guidance; no normal contact picker or MPS section.
-- [ ] From a broad topic in Not sure, use **See detailed guidance** to open its full questionnaire.
+- [ ] Not sure first screen offers **five** choices (government letter, application/decision, agency follow-up, possible scam, or none); the redundant topic option is gone. **All topics** still navigates back to the homepage categories.
 - [ ] Check the previous nine categories continue to work, including urgent ComCare, court summonses, wrongful dismissal and family safety.
 - [ ] Switch both English/Chinese and self/caregiver through branches, then inspect printed non-sensitive MPS notes (not the scam route).
 - [ ] At 320px/375px/390px and a normal desktop width, check large text, no horizontal scroll, safe text wrapping, focus states and reduced-motion behaviour.
