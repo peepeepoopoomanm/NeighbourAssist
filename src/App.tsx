@@ -147,8 +147,9 @@ export default function App(){
     <p className="result-desc">{primary.description}</p>
     {category==='unsure'&&answers.u_start==='topic'&&categories.some(c=>c.id===answers.u_need&&c.id!=='unsure')&&<button className="btn btn-outline" type="button" onClick={()=>start(answers.u_need as Category)}>{t.unsureExploreTopic}: {topicName(answers.u_need as Category)} →</button>}<div className="reason"><strong>{forWhom==='caregiver'?caregiverUi[language].why:t.why}</strong> {audienceReasonText(result.reason,language,forWhom)}</div>
     {situation&&<div className="situation-note"><strong>{forWhom==='caregiver'?caregiverUi[language].situation:t.situationTitle}</strong><p>{forWhom==='caregiver'?caregiverUi[language].suggestedMessage:t.suggestedMessage} “{situation}”</p></div>}
-    <div className="contact-heading eyebrow">{t.contactPath}</div>
+    {result.primary.id!=='scamshield_loss'&&<><div className="contact-heading eyebrow">{t.contactPath}</div>
     <div className="contact-options" role="group" aria-label={t.contactPath}>{(['online','phone','inperson','unsure'] as Contact[]).map(method=><button key={method} type="button" aria-pressed={chosenMethod===method} className={'contact-option '+(chosenMethod===method?'active':'')} onClick={()=>setContactOverride(method)}>{method==='online'?t.onlineTitle:method==='phone'?t.phoneTitle:method==='inperson'?t.inpersonTitle:t.unsureTitle}</button>)}</div>
+    </>}
     {forWhom==='caregiver'&&<p className="caregiver-auth-note" role="note">{caregiverUi[language].authNote}</p>}
     <ContactGuidance service={guidedService} method={chosenMethod} lang={language} audience={forWhom}/>
     <h3>{t.guideStepsTitle}</h3><ol className="instruction-list detailed-instructions">{guide.steps.map((step,i)=><li key={i}>{step}</li>)}</ol><p className="source-line">{t.guideVerified}: <a href={guide.source} target="_blank" rel="noopener noreferrer">{t.guideSource} ↗</a> <span>· {t.guideChecked}</span></p><p className="guide-caveat">{t.guideMayChange}</p>
