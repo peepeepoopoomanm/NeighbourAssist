@@ -162,6 +162,8 @@ export const caregiverUi={
 
 // Use third-person reasoning instead of implying the caregiver is the applicant.
 const caregiverReasons:Record<string,{en:string;zh:string}>={
+ 'This is a suitable official starting point for further information.':{en:'This is an official information source that may help the person you are supporting find a starting point.',zh:'这里是官方资讯渠道，可协助您正在照顾的人了解从哪里开始。'},
+ 'An SSO can help clarify which programme may apply.':{en:'An SSO can explain which financial assistance options may be relevant to the person you are helping.',zh:'社会服务办事处可向您正在协助的人说明可能适用的经济援助。'},
  'You indicated that food or other essential expenses need urgent attention.':{en:'The person you are helping may urgently need food or other essentials.',zh:'您正在协助的人可能急需食物或其他必需品。'},
  'You indicated that you already receive ComCare support.':{en:'You indicated that they are already receiving ComCare assistance.',zh:'您表示对方目前正在领取 ComCare 援助。'},
  'You mentioned being unable to work and needing support over a longer period.':{en:'You indicated that they cannot work and may need longer-term support.',zh:'您表示对方无法工作，并可能需要较长期援助。'},
