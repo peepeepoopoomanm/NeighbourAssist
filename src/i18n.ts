@@ -19,6 +19,7 @@ const en={
  fineCourtPathway:'A court summons is different from an ordinary agency enquiry. Follow the court\'s attendance and procedural directions first; an MP request is optional and does not replace court proceedings.',fineCourtWarning:'You selected a court summons or required court appearance. Follow the court notice immediately; an agency appeal or MP request does not postpone the hearing.',finePaidWarning:'You indicated that the fine has already been paid. Some agencies do not consider appeals after payment. Check the issuing agency’s published policy before taking further action.',fineDeadlineWarning:'Check the payment, appeal or court deadline on the original notice. NeighbourAssist cannot extend deadlines or cancel penalties.',
  emergencyPoliceTitle:'Immediate danger: contact Police now',emergencyPoliceAction:'Call Police 999',emergencyPoliceSms:'If you cannot speak safely, SMS 70999. Do not wait for this website or an MP appointment.',
  familySafetyBanner:'If someone is in immediate danger, call Police 999 now (SMS 70999 if unable to speak safely). You do not need to finish this questionnaire.',familyDangerPathway:'Immediate safety comes first. Call Police 999 now, or SMS 70999 if unable to speak safely. Do not wait for an MP session or online reply.',familyConcernPathway:'For non-immediate concerns about abuse, neglect or domestic violence, contact the 24-hour NAVH helpline. If danger becomes immediate, call Police 999.',workDeadlineWarning:'Employment claims can have strict deadlines: commonly one month from the last day for wrongful dismissal; salary claims generally one year while employed or six months after leaving. Check your specific route with TADM promptly.',
+ unsureDeadlineAlert:'You indicated a deadline or required appointment. Read the original notice and contact the issuing agency promptly. An MP enquiry does not extend deadlines or postpone court attendance.',unsureDeadlineCheck:'Check the original notice for deadlines, court dates or required actions before waiting for an agency reply.',unsureAgencyKnown:'Since you know the agency, use its independently verified official contact channel rather than a general directory.',unsureAgencyUnknown:'If you cannot identify the agency, start with the official Singapore Government Directory; do not guess which agency can approve or waive a decision.',unsureScamUrgent:'If money or account access may be compromised, contact your bank immediately using an independently verified hotline or banking app, then follow official ScamShield and Police steps.',unsureExploreTopic:'See detailed guidance for this topic',
  urgentNote:'If you cannot afford food or essentials in the next few days, contact ComCare promptly. This guide does not submit requests or provide emergency response.',
 };
 const zh:typeof en={
@@ -37,6 +38,7 @@ const zh:typeof en={
  fineCourtPathway:'法庭传票与一般机构咨询不同。请优先遵守法庭规定的出庭和程序要求；即使另向议员求助，也不能代替法庭程序。',fineCourtWarning:'您选择了法庭传票或须出庭的情况。请立即按传票指示办理；向机构或议员求情不会自动延迟聆讯。',finePaidWarning:'您表示罚款已经缴清。部分机构付款后不再考虑申诉。请先查阅发出机构的官方规定。',fineDeadlineWarning:'请核对罚单上的缴费、申诉或出庭期限。本网站不能延长期限或取消处罚。',
  emergencyPoliceTitle:'即时危险：立即联系警方',emergencyPoliceAction:'拨打警方 999',emergencyPoliceSms:'如无法安全通话，请发短信至 70999。不要等候本网站或议员接见活动。',
  familySafetyBanner:'如果有人正面临即时危险，请立即拨打警方 999；如无法安全通话，可发送短信至 70999。无需完成本问卷。',familyDangerPathway:'人身安全最重要。如有即时危险，请立即拨打警方 999；无法安全通话时可发短信至 70999。不要等候议员接见活动或网上回复。',familyConcernPathway:'如担心家人遭受虐待、忽视或家庭暴力，但暂无即时危险，请联系全天候 NAVH 热线。如出现即时危险，请拨打警方 999。',workDeadlineWarning:'劳动纠纷可能有严格期限：一般非正当解雇申诉须在离职后一个月内提出；薪资索偿通常为在职期间纠纷发生后一年内，或离职后六个月内。请尽快向 TADM 核实。',
+ unsureDeadlineAlert:'您表示通知上有截止日期或必须赴约。请尽快核实原件，并向负责机构查询。议员求助不会自动延长期限或推迟法庭聆讯。',unsureDeadlineCheck:'等候机构回复前，请先查看通知是否有截止日期、出庭日期或其他必须采取的行动。',unsureAgencyKnown:'既然您知道负责机构，请直接使用独立核实的官方网站联络，而非只浏览一般目录。',unsureAgencyUnknown:'如不清楚哪个机构负责，请从新加坡政府官方目录查找；不要猜测哪个机构可以批准或撤销决定。',unsureScamUrgent:'如资金或账户可能受影响，请立即通过独立核实的银行热线或银行应用联系银行，再遵循 ScamShield 和警方的官方指引。',unsureExploreTopic:'查看此类别的详细指引',
  urgentNote:'如果您未来几天无法负担食物或必需品，请尽快联络 ComCare。本网站不会提交申请，也不是紧急救援服务。',
 };
 export const messages={en,zh};
@@ -82,6 +84,11 @@ const questionZh:Record<string,QuestionZh>={
  w_recency:{title:'您是什么时候离职的？',hint:'一般非正当解雇索偿须在离职后一个月内向 TADM 提出。不要为了等待议员接见而错过期限。',options:{month:'大约一个月内',older:'已经超过一个月',unsure:'不清楚／不愿透露'}},
  family_safety:{title:'家中是否有人正面临危险，或您担心出现暴力或虐待？',hint:'如有人正面临即时危险，请立即拨打警方 999。无需在本网站说明姓名或事件详情。',options:{danger:'有人正面临即时危险',concern:'可能出现虐待、忽视或家庭暴力，但未表示有即时危险',no:'没有，这涉及其他家庭问题',unsure:'不确定／不愿透露'}},
  family_issue:{title:'您希望了解哪一类家庭或照护支持？',hint:'只需选择大致类别，无需填写家人的姓名、私人情况或文件。',options:{relationship:'家庭关系压力或家庭辅导',divorce:'婚姻、分居或离婚相关支持',caregiving:'照顾长者或其他需要帮助的家人',childcare:'学前教育、托儿费用或补贴',financial:'家庭基本生活开销或其他综合困难',other:'其他家庭问题／不确定'}},
+
+ u_start:{title:'以下哪种情况最符合您目前遇到的问题？',hint:'即使不知道哪个政府机构负责，也可以选择。',options:{topic:'我大致知道问题属于哪一方面',letter:'我收到看不懂的政府信件或通知',application:'我已申请某项服务，或想了解政府决定',followup:'我已经联系政府机构，但还需要查询进度',suspicious:'我收到可能是诈骗的短信、来电或信息',other:'以上都不适合／我仍不确定'}},
+ u_agency_known:{title:'您知道是哪一个政府机构发出信件或处理此事吗？',hint:'可查看官方信件、邮件或回执上的机构名称；无需在此输入姓名、编号或上传文件。',options:{yes:'是，我知道负责机构',no:'否，我不知道是哪个机构',unsure:'不清楚／不愿透露'}},
+ u_deadline:{title:'信件、通知或申请是否列明截止日期或必须到场的安排？',hint:'若要求在指定日期前付款、回复、申诉或出庭，请尽快按官方指示办理；议员接见活动不会延长期限。',options:{yes:'是，通知中有截止日期或必须到场的安排',no:'没有列明期限',unsure:'我不知道／还没检查'}},
+ u_scam_loss:{title:'您是否已因该信息转账，或透露银行或登录资料？',hint:'如资金或银行账户可能受影响，请立即联系银行；本网站不需要知道任何私密详情。',options:{yes:'是，资金或账户资料可能受影响',no:'没有，我只是想核实信息是否真实',unsure:'我不确定'}},
  u_need:{title:'以下哪项最接近您需要帮助的方面？',options:{financial:'日常生活开销',housing:'住房与租金',cpf:'公积金与退休',health:'医疗费用',municipal:'邻里设施',fines:'罚单或处罚',employment:'工作与雇佣',family:'家庭与照护',unsure:'其他／我不确定'}},
  contact:{title:'您希望用哪种方式寻求帮助？',hint:'我们仍会显示官方网站。',options:{online:'使用官方网站',phone:'通过电话联系',inperson:'亲自前往寻求协助',unsure:'我不确定'}},
 };
@@ -128,6 +135,13 @@ const serviceZh:Record<string,{name:string;description:string;steps:string[];che
  family_fsc:{name:'寻找家庭服务中心 FSC',description:'家庭服务中心为面对社会及情绪困难的家庭提供资讯、社会工作支持和转介服务。',steps:['打开 MSF 官方家庭服务中心目录，选择 Family Service Centres。','通过政府网站的定位工具查询服务地点；无需在 NeighbourAssist 输入住址。','联系合适的中心，询问能否处理相关需要或转介其他服务。'],checklist:['家庭或社会支持需求的大致类别','如何联系附近中心和预约的问题'],caution:'查询不等于任何计划已批准。如有人面临即时危险，应先联系紧急或保护服务。'},
  family_caregiving:{name:'向 AIC 咨询照护与乐龄支援',description:'护联中心（AIC）的 AIC Link 可向照顾者及长者提供社区护理和相关援助资讯。',steps:['通过 AIC 官方网站或 AIC Link 询问照护与社区护理服务。','按实际需要了解照护培训、暂托、长者支持及有关补助计划。','如正式申请要求医疗或身份资料，只能通过获授权官方渠道提供；本网站无法决定资格。'],checklist:['需要哪一类照护帮助','有关服务地点、补贴或支持方式的问题'],caution:'AIC 官方热线或服务可能会询问身份证资料；不要将这些资料交给 NeighbourAssist。由相关机构评估服务和补贴资格。',offline:'通过 AIC 官网查找附近的 AIC Link 服务地点。'},
  family_childcare:{name:'了解学前教育及托儿补贴',description:'LifeSG 和幼儿培育署 ECDA 说明学前教育报名及符合条件的托儿补贴申请方法。',steps:['使用 LifeSG 学前教育及托儿指南，了解报名方式和相关补贴。','孩子确认入学后，符合条件的家庭可根据托儿中心发送的指引使用官方 LifeSG Form 1 处理 ECDA 入学及补贴申请。','如不确定申请手续，请通过托儿中心或 ECDA 公布的渠道查询。'],checklist:['想咨询的学前教育和补贴类别','如已报名，托儿中心提供的官方申请指引'],caution:'本网站不计算补贴资格，也不会提交托儿申请；由 ECDA 及获授权的官方服务评估并接收家庭个人资料。'},
+
+ gov_directory:{name:'查找负责的政府机构',description:'新加坡政府目录（SGDI）列出各政府机构的联络方式，但不是统一申诉服务。',steps:['如知道部门或机构名称，请在官方 SGDI 目录中查询。','如仍无法确定问题类别，可先通过 LifeSG 官方网站浏览相关政府服务。','使用已核实的官方联络渠道询问适用的咨询或申请程序。'],checklist:['问题的大致类别','已知的机构名称（如有），仅供官方目录查询'],caution:'SGDI 只是目录，并非统一的政府申诉办事处。不要通过 NeighbourAssist 提供私人案情，也不要假设议员能改变政府决定。'},
+ gov_letter:{name:'核实及了解政府信件或通知',description:'首先确认发件机构及信件真实性，并留意需要采取的行动和截止日期。不同通知有不同处理程序。',steps:['查看原件上的机构名称、指示以及付款、回复、申诉或出庭日期；无需在此上传信件。','通过 gov.sg 官方可信网站指南独立核实发件机构，不要直接信任可疑信息中的链接或电话号码。','通过机构官方网站或 SGDI 目录找到官方联络方式，询问信件的意思及下一步。'],checklist:['通知原件上的机构名称','任何回复、缴费、赴约或出庭期限','准备通过官方渠道询问的问题'],caution:'自称政府发出的信件未必是真的。切勿透露 Singpass、银行密码或验证码。议员求助不会自动延长期限或推迟出庭。'},
+ gov_application:{name:'向负责机构查询申请或决定',description:'负责处理申请或发出决定的机构，通常最适合解释进度、改正或复核程序。',steps:['从官方回执、决定通知或网站找出处理申请的机构。','通过官方联络渠道询问能否查询进度、更正资料、要求复核或申诉，以及是否有期限。','参考编号和证明文件只应交给获授权官方渠道；议员求助不能取代正式程序。'],checklist:['机构名称和申请或决定的大致类别','决定或复核期限（如有）','仅供官方渠道使用的参考编号'],caution:'没有适用于所有政府申请的统一申诉表格。是否可以复核、适用条件及期限由负责机构决定；本网站无法判断。'},
+ gov_followup:{name:'找出处理政府查询进度的官方渠道',description:'如政府查询未获回复或仍未解决，可向原本负责机构了解进度及正式复核渠道。',steps:['从原本的官方回执或 SGDI 目录找出已联系过的机构。','使用该机构的正式咨询或反馈渠道查询进度，仅通过官方渠道提供参考编号。','如请求被拒或问题仍未解决，询问是否有正式复核程序和时限。'],checklist:['最初联系的政府机构','首次查询日期及确认通知（如有）','任何回复或复核期限'],caution:'SGDI 不提供个案进度，也不保证回复时间。议员求助不能代替正式行政申诉、法庭出庭或其他必需程序。'},
+ scamshield_check:{name:'通过 ScamShield 核实可疑信息',description:'ScamShield 提供全天候 1799 热线，协助公众核实可疑来电或信息。',steps:['在无法确定真假时，不要点击可疑链接、转账、安装软件或提供密码。','拨打 ScamShield 热线 1799，或使用其官方网站／应用核实信息。','若对方自称政府机构，请从独立找到的官方网站核实，不要使用可疑信息中的联络方式。'],checklist:['可疑信息或来电的大致类别','仅在官方 ScamShield 渠道提供需要核实的信息'],caution:'本示范网站无法验证任何具体信息。切勿在此填写身份证号码、银行登录资料或一次性验证码。',phoneHours:'24 小时'},
+ scamshield_loss:{name:'如疑似受骗，立即采取保护账户的行动',description:'ScamShield 建议可能被骗走钱财或泄露账户资料的人，立即联系银行、向警方报案并保障账户安全。',steps:['立即通过已核实的银行热线或银行应用联系银行，询问冻结交易或启动紧急保护功能。','阅读 ScamShield 官方“我被骗了”指引，向警方报案并保障受影响账户；如需警方紧急协助请拨打 999。','如仍不确定是否受骗，可拨打 1799；但不要因此延迟联系银行。'],checklist:['银行已经核实的紧急联络方式','仅供银行或警方官方渠道使用的相关参考编号'],caution:'NeighbourAssist 无法冻结账户、追回款项或代为报警。如资金或账号可能受影响，请立即通过银行及警方正式渠道处理，不要等候议员接见或本问卷。'},
  lifesg:{name:'通过 LifeSG 寻找政府服务',description:'LifeSG 提供政府服务的官方资料和入口。',steps:['打开 LifeSG 官方网站。','浏览符合您需要的服务。','如有需要，可请值得信任的照顾者帮忙。'],checklist:['简要说明需要哪方面的帮助'],caution:'这是独立学生示范网站，不能代表政府提交申请。'},
 };
 export function hasChineseService(id:string):boolean{return !!serviceZh[id]}
@@ -172,6 +186,21 @@ const reasonsZh:Record<string,string>={
  'You asked about preschool, childcare or related subsidies; LifeSG and ECDA provide official guidance.':'您希望了解学前教育、托儿或补贴，LifeSG 与 ECDA 有相关官方指引。',
  'You mentioned broader family difficulties; an FSC can discuss social needs and referrals.':'您提到家庭生活和社会支持困难，家庭服务中心可协助了解相关资源。',
  'A Family Service Centre can help identify suitable family and community support.':'家庭服务中心可协助了解相关家庭与社区支持。',
+
+ 'You have a letter or notice to understand; verify its sender and deadline before acting.':'您收到一封需要理解的信件或通知，先核实发件机构与期限。',
+ 'You have an application or decision to follow up; the issuing agency can explain formal options.':'您希望查询申请或决定，应先向发出决定的机构询问正式程序。',
+ 'You already contacted an agency; use its official status or review channels.':'您已联系有关机构，可通过它的官方渠道查询进度或复核方式。',
+ 'Your account or money might be at risk; contacting your bank takes priority.':'您的资金或账户可能受影响，应立即优先联系银行。',
+ 'You want to check a suspicious message or call with an official service.':'您希望通过官方渠道核实可疑短信或来电。',
+ 'The government directory can help identify the agency without guessing.':'政府官方目录可协助找到负责机构，无需自行猜测。',
+ 'An SSO can help identify financial assistance routes.':'社会服务办事处可解释可能适用的经济援助。',
+ 'HDB can explain housing services and next steps.':'建屋局可解释住房服务及下一步。',
+ 'CPF Board is the right place to clarify CPF and retirement questions.':'有关公积金或退休问题，可向公积金局查询。',
+ 'MOH provides guidance on healthcare support channels.':'卫生部提供医疗援助及服务渠道指引。',
+ 'OneService is the official municipal feedback channel.':'OneService 是政府市政反馈的官方渠道。',
+ 'MOM can help identify the correct channel for your employment issue.':'人力部可协助找出工作问题的正确咨询渠道。',
+ 'A Family Service Centre can help identify suitable family and community support.':'家庭服务中心可提供家庭与社区支持的相关资料。',
+ 'Identify the issuing agency before choosing an appeal or payment route.':'应先确认罚单发出机构，再选择正确的申诉或缴费渠道。',
  'You reported a court summons or required court date. Court instructions take priority.':'您已收到法庭传票或须出庭的通知；必须优先遵守法庭指示。',
  'You identified HDB as the issuer of the parking notice.':'您表示停车罚单由建屋局发出，应使用建屋局的官方渠道。',
  'You identified URA as the issuer of the parking notice.':'您表示停车罚单由市区重建局发出，应使用 URA 的官方渠道。',
