@@ -198,15 +198,12 @@ const reasonsZh:Record<string,string>={
  'CPF Board is the right place to clarify CPF and retirement questions.':'有关公积金或退休问题，可向公积金局查询。',
  'MOH provides guidance on healthcare support channels.':'卫生部提供医疗援助及服务渠道指引。',
  'OneService is the official municipal feedback channel.':'OneService 是政府市政反馈的官方渠道。',
- 'MOM can help identify the correct channel for your employment issue.':'人力部可协助找出工作问题的正确咨询渠道。',
- 'A Family Service Centre can help identify suitable family and community support.':'家庭服务中心可提供家庭与社区支持的相关资料。',
  'Identify the issuing agency before choosing an appeal or payment route.':'应先确认罚单发出机构，再选择正确的申诉或缴费渠道。',
  'You reported a court summons or required court date. Court instructions take priority.':'您已收到法庭传票或须出庭的通知；必须优先遵守法庭指示。',
  'You identified HDB as the issuer of the parking notice.':'您表示停车罚单由建屋局发出，应使用建屋局的官方渠道。',
  'You identified URA as the issuer of the parking notice.':'您表示停车罚单由市区重建局发出，应使用 URA 的官方渠道。',
  'You identified Traffic Police as the issuer of the offence notice.':'您表示通知由交通警察发出，应查阅交通警察的申诉规定。',
  'You identified LTA as the issuer; vehicle and active-mobility procedures may differ.':'您表示通知由陆交局发出；车辆与个人代步工具案件的程序可能不同。',
- 'Identify the issuing agency before choosing an appeal or payment route.':'请先确认发出罚单的机构，再选择安全、正确的缴费或申诉渠道。',
 
 };
 export function reasonText(reason:string,lang:Language):string{return lang==='en'?reason:reasonsZh[reason]??'根据您的答案，以下官方渠道可能有帮助。'}
