@@ -57,11 +57,10 @@ export const questions:Record<string,Question>={
  family_safety:{id:'family_safety',title:'Is anyone facing immediate danger or concerned about violence or abuse at home?',hint:'If there is immediate danger, call Police 999 now. You do not need to tell this website any names or details.',options:opt(['danger','Someone is in immediate danger'],['concern','There may be abuse, neglect or violence, but no immediate danger stated'],['no','No, this is a different family support issue'],['unsure','I am not sure / I would rather not say'])},
  family_issue:{id:'family_issue',title:'What type of family or caregiving help would be useful?',hint:'Please choose a general topic. Do not enter private family circumstances, names or documents here.',options:opt(['relationship','Relationship stress or family counselling'],['divorce','Marriage, separation or divorce support'],['caregiving','Caring for an older person or a family member needing support'],['childcare','Preschool, childcare fees or subsidies'],['financial','Essential household expenses or broader family difficulties'],['other','Another family issue / I am not sure'])},
 
- u_start:{id:'u_start',title:'Which situation sounds closest to yours?',hint:'You do not need to know the government agency. Choose why you came here.',options:opt(['topic','I know roughly what my issue is about'],['letter','I received a government letter or notice I do not understand'],['application','I applied for something or received a decision I want to understand'],['followup','I contacted an agency but need help following up'],['suspicious','I received a message or call that might be a scam'],['other','None of these / I am still not sure'])},
+ u_start:{id:'u_start',title:'Which situation sounds closest to yours?',hint:'You do not need to know which government agency is responsible. Choose the situation that best describes your concern.',options:opt(['letter','I received a government letter or notice I do not understand'],['application','I applied for something or received a decision I want to understand'],['followup','I contacted an agency but need help following up'],['suspicious','I received a message or call that might be a scam'],['other','None of these / I am still not sure'])},
  u_agency_known:{id:'u_agency_known',title:'Do you know which government agency sent the letter or handled the matter?',hint:'Check the agency name on an official letter, email or receipt. Do not enter names, reference numbers or attachments here.',options:opt(['yes','Yes, I know the agency'],['no','No, I am unsure which agency it is'],['unsure','I cannot tell / prefer not to say'])},
  u_deadline:{id:'u_deadline',title:'Does the letter, notice or application mention a deadline or required appointment?',hint:'If it says to pay, respond, appeal or attend court by a date, follow those directions promptly. MPS assistance does not extend deadlines.',options:opt(['yes','Yes, a deadline or appointment is mentioned'],['no','No deadline is mentioned'],['unsure','I do not know / have not checked'])},
  u_scam_loss:{id:'u_scam_loss',title:'Have you already sent money or shared banking or login details because of this message?',hint:'If money or bank access may be compromised, contact your bank immediately. This website does not need any details.',options:opt(['yes','Yes, money or sensitive account access may be affected'],['no','No, I only want to check if the message is real'],['unsure','I am not sure'])},
- u_need:{id:'u_need',title:'Which area seems closest to your concern?',options:opt(['financial','Money for essentials'],['housing','Housing or rental'],['cpf','CPF or retirement'],['health','Healthcare costs'],['municipal','Neighbourhood facilities'],['fines','Fine or penalty'],['employment','Work or employment'],['family','Family or caregiving'],['unsure','Something else / not sure'])},
  contact:{id:'contact',title:'How would you prefer to receive assistance?',hint:'We will always show the official website as well.',options:opt(['online','Use an official website'],['phone','Speak to someone by phone'],['inperson','Ask someone in person'],['unsure','I am not sure'])},
 };
 
@@ -130,7 +129,6 @@ export function getQuestionIds(category:Category,answers:Answers):string[]{
   case 'fines':return answers.p_stage==='court'?['p_issuer','p_stage','contact']:['p_issuer','p_stage','p_goal',...(answers.p_goal==='appeal'?['p_reason']:[]),...(answers.p_goal==='appeal'||answers.p_goal==='status'?['agency_status']:[]),'contact'];
   case 'unsure':
    if(answers.u_start==='suspicious')return answers.u_scam_loss==='yes'?['u_start','u_scam_loss']:['u_start','u_scam_loss','contact'];
-   if(answers.u_start==='topic')return ['u_start','u_need','agency_status','contact'];
    if(['letter','application','followup'].includes(answers.u_start))return ['u_start','u_agency_known','u_deadline','agency_status','contact'];
    if(answers.u_start==='other')return ['u_start','contact'];
    return ['u_start'];
@@ -202,17 +200,7 @@ export function getRecommendations(category:Category,a:Answers):{primary:Service
   else if(a.u_start==='followup'){id='gov_followup';reason='You already contacted an agency; use its official status or review channels.';}
   else if(a.u_start==='suspicious'){id=a.u_scam_loss==='yes'?'scamshield_loss':'scamshield_check';reason=a.u_scam_loss==='yes'?'Your account or money might be at risk; contacting your bank takes priority.':'You want to check a suspicious message or call with an official service.';}
   else if(a.u_start==='other'){id='gov_directory';reason='The government directory can help identify the agency without guessing.';}
-  else if(a.u_start==='topic'||a.u_need){
-   if(a.u_need==='financial'){id='sso';reason='An SSO can help identify financial assistance routes.';}
-   else if(a.u_need==='housing'){id='hdb_general';reason='HDB can explain housing services and next steps.';}
-   else if(a.u_need==='cpf'){id='cpf_general';reason='CPF Board is the right place to clarify CPF and retirement questions.';}
-   else if(a.u_need==='health'){id='health_general';reason='MOH provides guidance on healthcare support channels.';}
-   else if(a.u_need==='municipal'){id='oneservice';reason='OneService is the official municipal feedback channel.';}
-   else if(a.u_need==='employment'){id='work_general';reason='MOM can help identify the correct channel for your employment issue.';}
-   else if(a.u_need==='family'){id='family_fsc';reason='A Family Service Centre can help identify suitable family and community support.';}
-   else if(a.u_need==='fines'){id='fine_unknown';reason='Identify the issuing agency before choosing an appeal or payment route.';}
-   else {id='gov_directory';reason='The government directory can help identify the agency without guessing.';}
-  }
+  else {id='gov_directory';reason='The government directory can help identify the agency without guessing.';}
  }
  return {primary:services[id],secondary:extra.map(x=>services[x]).filter(s=>s.id!==id),reason};
 }
